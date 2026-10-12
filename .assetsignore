@@ -1,0 +1,6 @@
+﻿.git/
+.gitignore
+.gitattributes
+wrangler.jsonc
+wrangler.json
+wrangler.toml

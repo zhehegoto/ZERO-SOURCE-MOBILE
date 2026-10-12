@@ -1,0 +1,1740 @@
+/* ============================================================
+   零源机构 · 移动端 Z℮R∅‑SOURCE / MOD
+   base.css — 移动端专用设计系统
+   仅面向手机/平板竖屏，不包含任何桌面端布局分支
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. 设计令牌
+   ------------------------------------------------------------ */
+:root {
+    /* 品牌色（与 PC 端保持一致） */
+    --grad-pink: #ff6b9d;
+    --grad-purple: #c44dff;
+    --grad-blue: #4dd0ff;
+    --grad-green: #4dffb8;
+    --grad: linear-gradient(135deg, #4a9eff, #6c5ce7);
+    --accent: #4a9eff;
+    --accent2: #6c5ce7;
+
+    /* 文本与底色 */
+    --bg-base: #f5f0ff;
+    --text-dark: #1a1530;
+    --text-mid: #5a5078;
+    --text-light: #9a90b8;
+
+    /* 液态玻璃 */
+    --glass-bg: rgba(255, 255, 255, 0.46);
+    --glass-bg-strong: rgba(255, 255, 255, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.62);
+    --glass-shadow: 0 8px 28px rgba(120, 80, 200, 0.12);
+    --glass-shadow-lg: 0 14px 40px rgba(120, 80, 200, 0.2);
+    --blur: 16px;
+
+    /* 有机圆角（延续 PC 端不规则圆角语言） */
+    --r-card: 22px 34px 24px 38px;
+    --r-card-sm: 16px 24px 18px 26px;
+    --r-btn: 50px;
+    --r-sheet: 28px 28px 0 0;
+    --r-pill: 50px;
+
+    /* 尺寸骨架 */
+    --appbar-h: 54px;
+    --tabbar-h: 58px;
+    --gap: 16px;
+    --pad: 16px;
+    --maxw: 720px;
+
+    /* 顶部/底部安全区（刘海屏、手势条） */
+    --sat: env(safe-area-inset-top, 0px);
+    --sab: env(safe-area-inset-bottom, 0px);
+    --sal: env(safe-area-inset-left, 0px);
+    --sar: env(safe-area-inset-right, 0px);
+
+    /* 动效 */
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --dur: 0.28s;
+
+    /* 层级 */
+    --z-bg: 0;
+    --z-main: 1;
+    --z-appbar: 60;
+    --z-tabbar: 70;
+    --z-fab: 80;
+    --z-sheet: 100;
+    --z-toast: 120;
+}
+
+/* ------------------------------------------------------------
+   1b. 图标字体覆盖
+   自带的 font-awesome.min.css 依次引用 eot / woff2 / woff / ttf / svg，
+   但资源里只有 .woff 一个文件，其余会各产生一次 404。
+   这里用同一个 family 重新声明 src，只保留真实存在的 woff，
+   （后声明的 @font-face 生效）从而去掉无谓的失败请求。
+   ------------------------------------------------------------ */
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('../assets/font-awesome/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ------------------------------------------------------------
+   2. 复位与基础
+   ------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* 移动端不显示桌面自定义光标 */
+    cursor: auto;
+}
+
+html {
+    /* 单一流体根字号：320px→15px，390px→16px，480px 以上→17px
+       全站尺寸用 rem 表达，从而一次性适配各种分辨率，无需断点堆叠 */
+    font-size: clamp(15px, 4.1vw, 17px);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC',
+        'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: var(--bg-base);
+    color: var(--text-dark);
+    line-height: 1.6;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+}
+
+body.no-scroll {
+    overflow: hidden;
+    touch-action: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+button {
+    /* 去掉移动端 300ms 点击延迟与双击缩放 */
+    touch-action: manipulation;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+:focus-visible {
+    outline: 2px solid var(--grad-purple);
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+/* 滚动条在移动端隐藏 */
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+/* ------------------------------------------------------------
+   3. 背景层（纯渐变，不用 filter: blur，移动端 GPU 开销更低）
+   ------------------------------------------------------------ */
+.app-bg {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-bg);
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 78% 52% at 8% 12%, rgba(255, 107, 157, 0.16), transparent 70%),
+        radial-gradient(ellipse 70% 50% at 96% 22%, rgba(196, 77, 255, 0.14), transparent 70%),
+        radial-gradient(ellipse 76% 46% at 46% 84%, rgba(77, 208, 255, 0.14), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 88% 96%, rgba(77, 255, 184, 0.12), transparent 70%),
+        var(--bg-base);
+}
+
+/* 单层缓慢漂移的液态光斑 */
+.app-bg::after {
+    content: '';
+    position: absolute;
+    top: -18%;
+    left: -18%;
+    width: 136%;
+    height: 136%;
+    background:
+        radial-gradient(circle 34% at 30% 34%, rgba(196, 77, 255, 0.16), transparent 62%),
+        radial-gradient(circle 30% at 74% 62%, rgba(77, 208, 255, 0.15), transparent 62%),
+        radial-gradient(circle 26% at 46% 82%, rgba(255, 107, 157, 0.13), transparent 62%);
+    will-change: transform;
+    animation: bgDrift 26s ease-in-out infinite alternate;
+}
+
+@keyframes bgDrift {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(-3%, 2.5%, 0) scale(1.06);
+    }
+
+    100% {
+        transform: translate3d(3%, -2%, 0) scale(1.02);
+    }
+}
+
+/* ------------------------------------------------------------
+   4. 页面骨架
+   ------------------------------------------------------------ */
+.app-main {
+    position: relative;
+    z-index: var(--z-main);
+    /* 顶部让开 AppBar，底部让开标签栏 + 手势条 */
+    padding-top: calc(var(--appbar-h) + var(--sat));
+    padding-bottom: calc(var(--tabbar-h) + var(--sab) + 8px);
+    padding-left: var(--sal);
+    padding-right: var(--sar);
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+/* 无标签栏的页面（节日页、彩蛋页、内页） */
+body[data-tabbar='off'] .app-main {
+    padding-bottom: calc(var(--sab) + 24px);
+}
+
+.wrap {
+    width: 100%;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+}
+
+/* ------------------------------------------------------------
+   5. 顶部应用栏
+   ------------------------------------------------------------ */
+.appbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-appbar);
+    padding-top: var(--sat);
+    background: rgba(245, 240, 255, 0.72);
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(1.5);
+    backdrop-filter: blur(var(--blur)) saturate(1.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    transition: box-shadow var(--dur) var(--ease-out), background var(--dur) var(--ease-out);
+}
+
+.appbar.scrolled {
+    background: rgba(245, 240, 255, 0.92);
+    box-shadow: 0 2px 18px rgba(120, 80, 200, 0.1);
+}
+
+/* 顶部彩色流光分隔线 */
+.appbar::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--grad-pink), var(--grad-purple), var(--grad-blue), transparent);
+    background-size: 200% 100%;
+    animation: flowLine 5s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes flowLine {
+    from {
+        background-position: 0% 0;
+    }
+
+    to {
+        background-position: 200% 0;
+    }
+}
+
+.appbar-inner {
+    height: var(--appbar-h);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+    padding-left: max(12px, var(--sal));
+    padding-right: max(12px, var(--sar));
+}
+
+.appbar-title {
+    flex: 1;
+    min-width: 0;
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    color: var(--text-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.appbar-logo {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    min-width: 0;
+    flex: 1;
+}
+
+.appbar-logo .lg-cn {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-size: 1.22rem;
+    letter-spacing: 2px;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+}
+
+.appbar-logo .lg-en {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 1px;
+    color: var(--text-light);
+    white-space: nowrap;
+}
+
+/* 通用图标按钮：保证 ≥44px 触摸目标 */
+.icon-btn {
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    border-radius: 14px 18px 14px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    color: var(--text-mid);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s var(--ease-spring), background 0.2s, color 0.2s;
+}
+
+.icon-btn:active {
+    transform: scale(0.9);
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.icon-btn.accent {
+    color: #fff;
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
+    border-color: transparent;
+}
+
+/* ------------------------------------------------------------
+   6. 底部标签栏
+   ------------------------------------------------------------ */
+.tabbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--z-tabbar);
+    display: flex;
+    align-items: stretch;
+    padding-bottom: var(--sab);
+    padding-left: var(--sal);
+    padding-right: var(--sar);
+    background: rgba(250, 247, 255, 0.86);
+    -webkit-backdrop-filter: blur(18px) saturate(1.6);
+    backdrop-filter: blur(18px) saturate(1.6);
+    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 -6px 24px rgba(120, 80, 200, 0.08);
+}
+
+body[data-tabbar='off'] .tabbar {
+    display: none;
+}
+
+.tab-item {
+    flex: 1 1 0;
+    min-width: 0;
+    height: var(--tabbar-h);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    position: relative;
+    color: var(--text-light);
+    transition: color 0.25s var(--ease-out);
+}
+
+.tab-item i {
+    font-size: 1.16rem;
+    line-height: 1;
+    transition: transform 0.3s var(--ease-spring);
+}
+
+.tab-item span {
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/* 激活态：渐变文字 + 顶部指示球 */
+.tab-item.active {
+    color: transparent;
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.tab-item.active i {
+    transform: translateY(-2px) scale(1.1);
+}
+
+.tab-item.active::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    width: 22px;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--grad-pink), var(--grad-purple));
+    box-shadow: 0 0 10px rgba(196, 77, 255, 0.6);
+}
+
+.tab-item:active i {
+    transform: scale(0.88);
+}
+
+/* ------------------------------------------------------------
+   7. 液态玻璃与卡片
+   ------------------------------------------------------------ */
+.glass {
+    position: relative;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(1.5);
+    backdrop-filter: blur(var(--blur)) saturate(1.5);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--r-card);
+    box-shadow: var(--glass-shadow);
+    overflow: hidden;
+}
+
+/* 高光描边 */
+.glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.1) 42%, transparent 62%, rgba(255, 255, 255, 0.42));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* 不支持毛玻璃时提高不透明度，保证可读性 */
+@supports not ((-webkit-backdrop-filter: blur(4px)) or (backdrop-filter: blur(4px))) {
+
+    .glass,
+    .appbar,
+    .tabbar,
+    .icon-btn,
+    .sheet-panel {
+        background: rgba(255, 255, 255, 0.92);
+    }
+}
+
+.card {
+    padding: 18px;
+}
+
+/* 可点击卡片的按压反馈（移动端用 :active 代替 :hover） */
+.tap {
+    transition: transform 0.22s var(--ease-spring), box-shadow 0.22s;
+}
+
+.tap:active {
+    transform: scale(0.975);
+}
+
+/* ------------------------------------------------------------
+   8. 区块标题
+   ------------------------------------------------------------ */
+.section {
+    margin-bottom: 30px;
+}
+
+.section-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.section-tag {
+    display: inline-block;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--grad-purple);
+    background: rgba(196, 77, 255, 0.09);
+    border: 1px solid rgba(196, 77, 255, 0.22);
+    border-radius: var(--r-pill);
+    padding: 4px 14px;
+    margin-bottom: 9px;
+}
+
+.section-title {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
+    color: var(--text-dark);
+    line-height: 1.25;
+}
+
+.section-desc {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: 6px;
+}
+
+/* ------------------------------------------------------------
+   9. 按钮
+   ------------------------------------------------------------ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 12px 24px;
+    border-radius: var(--r-btn);
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s var(--ease-spring), box-shadow 0.2s, background 0.2s;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn.primary {
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(196, 77, 255, 0.32);
+}
+
+.btn.ghost {
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    color: var(--text-dark);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.btn.line {
+    border: 1px solid rgba(196, 77, 255, 0.35);
+    color: var(--grad-purple);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.btn.block {
+    display: flex;
+    width: 100%;
+}
+
+.btn.sm {
+    min-height: 38px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+}
+
+.btn:disabled,
+.btn[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* ------------------------------------------------------------
+   10. 标签 / 徽章
+   ------------------------------------------------------------ */
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 11px;
+    border-radius: var(--r-pill);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.tag.grad {
+    color: #fff;
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
+}
+
+.tag.important {
+    color: var(--grad-pink);
+    background: rgba(255, 107, 157, 0.13);
+}
+
+.tag.info {
+    color: #2f8fd8;
+    background: rgba(77, 208, 255, 0.15);
+}
+
+.tag.plain {
+    color: var(--text-mid);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+/* ------------------------------------------------------------
+   11. 横向吸附滚动（轮播）
+   注意：不要用负 margin 做「全出血」——那会让内容宽于视口，
+   在窄屏上产生横向溢出。请把 .hscroll 直接放在 <section> 下，
+   不要放进 .wrap 里。
+   ------------------------------------------------------------ */
+.hscroll {
+    display: flex;
+    gap: 13px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-left: var(--pad);
+    padding: 4px var(--pad) 14px;
+    scrollbar-width: none;
+}
+
+.hscroll>* {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+}
+
+.hscroll.center>* {
+    scroll-snap-align: center;
+}
+
+/* 分页圆点 */
+.dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 2px;
+}
+
+.dots i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(120, 80, 200, 0.22);
+    transition: width 0.3s var(--ease-spring), background 0.3s;
+}
+
+.dots i.on {
+    width: 18px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--grad-pink), var(--grad-purple));
+}
+
+/* ------------------------------------------------------------
+   12. 底部弹层（Sheet）—— 移动端替代桌面弹窗
+   ------------------------------------------------------------ */
+.sheet {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-sheet);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.sheet.open {
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.sheet-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(28, 18, 56, 0.42);
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease-out);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+}
+
+.sheet.open .sheet-backdrop {
+    opacity: 1;
+}
+
+.sheet-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 88vh;
+    max-height: 88dvh;
+    display: flex;
+    flex-direction: column;
+    background: rgba(250, 247, 255, 0.96);
+    -webkit-backdrop-filter: blur(22px) saturate(1.5);
+    backdrop-filter: blur(22px) saturate(1.5);
+    border-radius: var(--r-sheet);
+    border-top: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 -12px 44px rgba(70, 40, 140, 0.24);
+    padding-bottom: var(--sab);
+    transform: translate3d(0, 100%, 0);
+    transition: transform 0.36s var(--ease-out);
+    will-change: transform;
+}
+
+.sheet.open .sheet-panel {
+    transform: translate3d(0, 0, 0);
+}
+
+/* 顶部拖动条 */
+.sheet-grip {
+    flex: 0 0 auto;
+    padding: 9px 0 4px;
+    display: flex;
+    justify-content: center;
+    touch-action: none;
+    cursor: grab;
+}
+
+.sheet-grip::before {
+    content: '';
+    width: 38px;
+    height: 4px;
+    border-radius: 4px;
+    background: rgba(120, 80, 200, 0.24);
+}
+
+.sheet-head {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 6px 18px 12px;
+    border-bottom: 1px solid rgba(120, 80, 200, 0.08);
+}
+
+.sheet-head .sh-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.sheet-title {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-weight: 400;
+    font-size: 1.22rem;
+    letter-spacing: 0.5px;
+    color: var(--text-dark);
+    line-height: 1.3;
+}
+
+.sheet-sub {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-top: 3px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.sheet-close {
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: var(--text-mid);
+    background: rgba(120, 80, 200, 0.08);
+    transition: transform 0.2s var(--ease-spring), background 0.2s;
+}
+
+.sheet-close:active {
+    transform: scale(0.88) rotate(90deg);
+    background: rgba(120, 80, 200, 0.16);
+}
+
+.sheet-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: 16px 18px calc(20px + var(--sab));
+}
+
+/* 全屏弹层：用于长内容（详情、历史公告） */
+.sheet.fullscreen .sheet-panel {
+    max-height: 100dvh;
+    height: 100dvh;
+    border-radius: 0;
+    padding-top: var(--sat);
+}
+
+.sheet.fullscreen .sheet-body {
+    padding-bottom: calc(24px + var(--sab));
+}
+
+/* 详情头图 */
+.sheet-hero {
+    height: 168px;
+    margin: -16px -18px 14px;
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.sheet-hero:empty {
+    display: none;
+}
+
+/* 正文排版 */
+.prose {
+    font-size: 0.92rem;
+    line-height: 1.9;
+    color: var(--text-mid);
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.prose strong {
+    color: var(--text-dark);
+}
+
+/* ------------------------------------------------------------
+   13. 列表
+   ------------------------------------------------------------ */
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--r-card-sm);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    transition: transform 0.2s var(--ease-spring), background 0.2s;
+}
+
+.list-item:active {
+    transform: scale(0.98);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.list-item .li-icon {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 13px 17px 13px 19px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    color: #fff;
+    background: linear-gradient(135deg, var(--grad-purple), #7c3aed);
+}
+
+.list-item .li-icon.pink {
+    background: linear-gradient(135deg, var(--grad-pink), #ff8e53);
+}
+
+.list-item .li-icon.blue {
+    background: linear-gradient(135deg, var(--grad-blue), #3b82f6);
+}
+
+.list-item .li-icon.green {
+    background: linear-gradient(135deg, var(--grad-green), #22c55e);
+}
+
+.list-item .li-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.list-item .li-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.35;
+}
+
+.list-item .li-desc {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.list-item .li-arrow {
+    flex: 0 0 auto;
+    color: var(--text-light);
+    font-size: 0.85rem;
+}
+
+/* ------------------------------------------------------------
+   14. 时间线
+   ------------------------------------------------------------ */
+.timeline {
+    position: relative;
+    padding-left: 26px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, var(--grad-pink), var(--grad-purple), var(--grad-blue));
+    opacity: 0.5;
+}
+
+.tl-item {
+    position: relative;
+    margin-bottom: 14px;
+}
+
+.tl-item::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 20px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
+    border: 2.5px solid var(--bg-base);
+    box-shadow: 0 0 0 3px rgba(196, 77, 255, 0.16);
+}
+
+.tl-item:last-child {
+    margin-bottom: 0;
+}
+
+/* ------------------------------------------------------------
+   15. 数字统计
+   ------------------------------------------------------------ */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.stat-card {
+    padding: 18px 14px;
+    text-align: center;
+    border-radius: var(--r-card-sm);
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 10px;
+    border-radius: 13px 19px 14px 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    color: #fff;
+}
+
+.icon-pink {
+    background: linear-gradient(135deg, var(--grad-pink), #ff8e53);
+}
+
+.icon-purple {
+    background: linear-gradient(135deg, var(--grad-purple), #7c3aed);
+}
+
+.icon-blue {
+    background: linear-gradient(135deg, var(--grad-blue), #3b82f6);
+}
+
+.icon-green {
+    background: linear-gradient(135deg, var(--grad-green), #22c55e);
+}
+
+.stat-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1.1;
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple), var(--grad-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-label {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+}
+
+/* ------------------------------------------------------------
+   16. 折叠面板（隐私政策 / 使用条款）
+   ------------------------------------------------------------ */
+.acc {
+    border-radius: var(--r-card-sm);
+    overflow: hidden;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    margin-bottom: 10px;
+}
+
+.acc>summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 16px;
+    min-height: 52px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    touch-action: manipulation;
+}
+
+.acc>summary::-webkit-details-marker {
+    display: none;
+}
+
+.acc .acc-num {
+    flex: 0 0 auto;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    min-width: 22px;
+}
+
+.acc .acc-name {
+    flex: 1;
+    min-width: 0;
+}
+
+.acc .acc-caret {
+    flex: 0 0 auto;
+    color: var(--text-light);
+    font-size: 0.8rem;
+    transition: transform 0.28s var(--ease-spring);
+}
+
+.acc[open] .acc-caret {
+    transform: rotate(180deg);
+}
+
+.acc .acc-body {
+    padding: 0 16px 16px 16px;
+    font-size: 0.85rem;
+    line-height: 1.85;
+    color: var(--text-mid);
+    animation: accIn 0.26s var(--ease-out);
+}
+
+@keyframes accIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.acc .acc-body p+p {
+    margin-top: 10px;
+}
+
+.acc .acc-body ul {
+    margin: 8px 0 0;
+    padding-left: 0;
+}
+
+.acc .acc-body li {
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 6px;
+}
+
+.acc .acc-body li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--grad-purple);
+}
+
+/* 目录胶囊（隐私政策快速跳转）—— 同样是全出血元素，直接放在 section 下 */
+.toc-chips {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 2px var(--pad) 12px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.toc-chips a {
+    flex: 0 0 auto;
+    padding: 7px 14px;
+    border-radius: var(--r-pill);
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--text-mid);
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    white-space: nowrap;
+}
+
+.toc-chips a.on {
+    color: #fff;
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
+    border-color: transparent;
+}
+
+/* ------------------------------------------------------------
+   17. 表单
+   ------------------------------------------------------------ */
+.field {
+    margin-bottom: 14px;
+}
+
+.field-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-mid);
+    margin-bottom: 6px;
+}
+
+.input,
+.textarea,
+.select {
+    width: 100%;
+    /* ≥16px 可避免 iOS 聚焦时页面自动放大 */
+    font-size: max(16px, 0.95rem);
+    padding: 12px 14px;
+    border-radius: 14px 20px 15px 22px;
+    background: rgba(255, 255, 255, 0.66);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    color: var(--text-dark);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.textarea {
+    min-height: 96px;
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+    color: var(--text-light);
+}
+
+.input:focus,
+.textarea:focus {
+    border-color: rgba(196, 77, 255, 0.5);
+    box-shadow: 0 0 0 3px rgba(196, 77, 255, 0.12);
+}
+
+.input.invalid,
+.textarea.invalid {
+    border-color: rgba(255, 71, 87, 0.6);
+    box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.1);
+    animation: shake 0.34s;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+.field-error {
+    font-size: 0.72rem;
+    color: #ff4757;
+    margin-top: 5px;
+    min-height: 1em;
+}
+
+/* 开关 */
+.switch {
+    position: relative;
+    width: 46px;
+    height: 27px;
+    border-radius: 27px;
+    background: rgba(120, 80, 200, 0.2);
+    transition: background 0.25s;
+    flex: 0 0 auto;
+}
+
+.switch::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.25s var(--ease-spring);
+}
+
+.switch.on {
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
+}
+
+.switch.on::after {
+    transform: translateX(19px);
+}
+
+/* ------------------------------------------------------------
+   18. 浮动按钮 / 悬浮反馈入口
+   ------------------------------------------------------------ */
+.fab {
+    position: fixed;
+    right: max(14px, var(--sar));
+    bottom: calc(var(--tabbar-h) + var(--sab) + 14px);
+    z-index: var(--z-fab);
+    width: 52px;
+    height: 52px;
+    border-radius: 18px 24px 18px 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: #fff;
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
+    box-shadow: 0 8px 24px rgba(196, 77, 255, 0.42);
+    transition: transform 0.24s var(--ease-spring);
+}
+
+.fab:active {
+    transform: scale(0.9);
+}
+
+.fab.pulse::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 2px solid rgba(196, 77, 255, 0.55);
+    animation: fabPulse 2.2s ease-out infinite;
+}
+
+@keyframes fabPulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.85;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+body[data-tabbar='off'] .fab {
+    bottom: calc(var(--sab) + 18px);
+}
+
+/* ------------------------------------------------------------
+   19. 轻提示
+   ------------------------------------------------------------ */
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: calc(var(--tabbar-h) + var(--sab) + 26px);
+    z-index: var(--z-toast);
+    transform: translate3d(-50%, 14px, 0);
+    max-width: min(88vw, 340px);
+    padding: 11px 20px;
+    border-radius: var(--r-pill);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #fff;
+    text-align: center;
+    background: rgba(26, 21, 48, 0.9);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 26px rgba(30, 18, 60, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.26s, transform 0.26s var(--ease-spring), visibility 0.26s;
+}
+
+.toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(-50%, 0, 0);
+}
+
+/* ------------------------------------------------------------
+   19b. 页脚 / 回到顶部
+   ------------------------------------------------------------ */
+.page-footer {
+    margin-top: 34px;
+    padding: 20px var(--pad) 8px;
+    text-align: center;
+    border-top: 1px solid rgba(120, 80, 200, 0.1);
+    position: relative;
+}
+
+/* 页脚顶部彩色流光 */
+.page-footer::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--grad-pink), var(--grad-purple), var(--grad-blue), var(--grad-green), transparent);
+    background-size: 200% 100%;
+    animation: flowLine 7s linear infinite;
+    opacity: 0.7;
+}
+
+.pf-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 18px;
+    margin-bottom: 14px;
+}
+
+.pf-nav a {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text-mid);
+    padding: 4px 2px;
+    position: relative;
+    transition: color 0.22s;
+}
+
+.pf-nav a.on,
+.pf-nav a:active {
+    color: var(--grad-purple);
+}
+
+.pf-nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1.5px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--grad-pink), var(--grad-purple));
+    transform: scaleX(0);
+    transition: transform 0.26s var(--ease-out);
+}
+
+.pf-nav a.on::after {
+    transform: scaleX(1);
+}
+
+.pf-copy {
+    font-size: 0.74rem;
+    color: var(--text-light);
+    -webkit-user-select: none;
+    user-select: none;
+    padding: 4px;
+    display: inline-block;
+}
+
+.pf-runtime {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.6px;
+    color: var(--text-light);
+    margin-top: 4px;
+    opacity: 0.9;
+}
+
+.back-top {
+    position: fixed;
+    left: max(14px, var(--sal));
+    bottom: calc(var(--tabbar-h) + var(--sab) + 14px);
+    z-index: var(--z-fab);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    color: var(--text-mid);
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 6px 20px rgba(120, 80, 200, 0.18);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px) scale(0.85);
+    transition: opacity 0.26s, transform 0.26s var(--ease-spring), visibility 0.26s;
+}
+
+.back-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+}
+
+.back-top:active {
+    transform: scale(0.88);
+}
+
+body[data-tabbar='off'] .back-top {
+    bottom: calc(var(--sab) + 18px);
+}
+
+/* ------------------------------------------------------------
+   20. 空态 / 加载
+   ------------------------------------------------------------ */
+.empty {
+    text-align: center;
+    padding: 40px 18px;
+    color: var(--text-light);
+}
+
+.empty i {
+    font-size: 2.4rem;
+    opacity: 0.45;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.empty p {
+    font-size: 0.85rem;
+}
+
+.skeleton {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.4) 25%, rgba(255, 255, 255, 0.75) 37%, rgba(255, 255, 255, 0.4) 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.3s infinite linear;
+    border-radius: 12px;
+}
+
+@keyframes shimmer {
+    from {
+        background-position: 100% 50%;
+    }
+
+    to {
+        background-position: 0 50%;
+    }
+}
+
+.spinner {
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 滚动进场动画
+   只在 JS 正常运行时才隐藏内容（<html> 上的 .has-js 由页面头部内联脚本添加），
+   这样禁用 JS 或脚本出错时，内容依然完整可见，不会白屏。 */
+.has-js .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out);
+}
+
+.has-js .reveal.in {
+    opacity: 1;
+    transform: none;
+}
+
+/* ------------------------------------------------------------
+   21. 工具类
+   ------------------------------------------------------------ */
+.row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.between {
+    justify-content: space-between;
+}
+
+.center {
+    justify-content: center;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.grow {
+    flex: 1;
+    min-width: 0;
+}
+
+.mt-0 {
+    margin-top: 0;
+}
+
+.mt-1 {
+    margin-top: 8px;
+}
+
+.mt-2 {
+    margin-top: 16px;
+}
+
+.mt-3 {
+    margin-top: 24px;
+}
+
+.mb-1 {
+    margin-bottom: 8px;
+}
+
+.mb-2 {
+    margin-bottom: 16px;
+}
+
+.mb-3 {
+    margin-bottom: 24px;
+}
+
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.muted {
+    color: var(--text-light);
+}
+
+.small {
+    font-size: 0.76rem;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.grad-text {
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple), var(--grad-blue));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradShift 6s ease infinite;
+}
+
+@keyframes gradShift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* ------------------------------------------------------------
+   22. 极窄屏（折叠屏外屏 280-340px）微调
+   ------------------------------------------------------------ */
+@media (max-width: 340px) {
+    :root {
+        --pad: 13px;
+        --gap: 12px;
+    }
+
+    .stat-grid {
+        gap: 9px;
+    }
+
+    .tab-item span {
+        font-size: 0.6rem;
+    }
+
+    .appbar-logo .lg-en {
+        display: none;
+    }
+}
+
+/* 平板竖屏：内容居中收窄，避免拉伸 */
+@media (min-width: 600px) {
+    :root {
+        --pad: 22px;
+    }
+}
+
+/* 横屏矮屏：压缩纵向留白 */
+@media (max-height: 460px) and (orientation: landscape) {
+    :root {
+        --appbar-h: 46px;
+        --tabbar-h: 50px;
+    }
+
+    .tab-item i {
+        font-size: 1rem;
+    }
+
+    .tab-item span {
+        font-size: 0.58rem;
+    }
+}
+
+/* ------------------------------------------------------------
+   23. 无障碍：尊重系统「减弱动态效果」
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .app-bg::after {
+        animation: none;
+    }
+
+    .has-js .reveal {
+        opacity: 1;
+        transform: none;
+    }
+}

@@ -1,0 +1,460 @@
+/* ============================================================
+   零源机构 · 移动端 / MOD
+   wzdt.css — 网站地图（地图卡 · 联系方式 · 线上平台）
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. 页面头部
+   ------------------------------------------------------------ */
+.map-hero {
+    text-align: center;
+    padding: 6px 0 2px;
+}
+
+.hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    margin-bottom: 12px;
+    border-radius: var(--r-pill);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--accent);
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.hero-title {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-weight: 400;
+    /* 流体字号：窄屏收缩，宽屏封顶，任何宽度都不溢出 */
+    font-size: min(11vw, 2.6rem);
+    line-height: 1.2;
+    letter-spacing: min(2.4vw, 10px);
+    margin-right: calc(min(2.4vw, 10px) * -1);
+    background: linear-gradient(135deg, var(--text-dark), var(--accent2), var(--grad-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: min(3.6vw, 0.9rem);
+    letter-spacing: min(1vw, 3px);
+    color: var(--text-light);
+    margin-top: 6px;
+}
+
+/* ------------------------------------------------------------
+   2. 地图卡（高度流体：短屏跟着屏高缩，长屏封顶）
+   ------------------------------------------------------------ */
+.map-card {
+    position: relative;
+    height: min(52vh, 340px);
+    border-radius: 24px 40px 26px 44px;
+    /* 地图内部可自由变换，超出部分裁掉，避免任何横向溢出 */
+    overflow: hidden;
+    /* 手势完全由脚本接管，阻止页面跟着滚 */
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    background: linear-gradient(135deg, rgba(240, 245, 255, 0.72), rgba(230, 240, 255, 0.5));
+}
+
+.map-stage {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.map-grid {
+    position: absolute;
+    /* 上下左右各留 50%，拖到边界也不会露白 */
+    inset: -50%;
+    background-image:
+        linear-gradient(rgba(74, 158, 255, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 158, 255, 0.12) 1px, transparent 1px),
+        linear-gradient(rgba(124, 58, 237, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124, 58, 237, 0.06) 1px, transparent 1px);
+    background-size: 52px 52px, 52px 52px, 13px 13px, 13px 13px;
+    will-change: transform;
+    transform-origin: 50% 50%;
+}
+
+.map-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 78%;
+    aspect-ratio: 1 / 1;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.14), rgba(6, 182, 212, 0.07), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* 经纬度读数 */
+.coord-display {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    pointer-events: none;
+}
+
+.coord-line {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: rgba(74, 158, 255, 0.75);
+    font-variant-numeric: tabular-nums;
+}
+
+/* 缩放控制：竖排 ≥44px 触摸目标 */
+.map-zoom {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 7;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.zoom-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px 18px 14px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    color: var(--text-mid);
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 14px rgba(120, 80, 200, 0.14);
+    touch-action: manipulation;
+    transition: transform 0.2s var(--ease-spring), color 0.2s, background 0.2s;
+}
+
+.zoom-btn:active {
+    transform: scale(0.9);
+    color: #fff;
+    background: linear-gradient(135deg, var(--grad-purple), var(--grad-blue));
+}
+
+.zoom-btn[disabled] {
+    opacity: 0.45;
+}
+
+/* 图钉 */
+.map-pin-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 8;
+    pointer-events: none;
+}
+
+.pin-pulse-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(124, 58, 237, 0.42);
+    transform: translate(-50%, -50%);
+    animation: pinPulse 2.6s ease-out infinite;
+    pointer-events: none;
+}
+
+.pin-pulse-ring.delay {
+    animation-delay: 1.3s;
+}
+
+@keyframes pinPulse {
+    0% {
+        width: 40px;
+        height: 40px;
+        opacity: 0.7;
+    }
+
+    100% {
+        width: 150px;
+        height: 150px;
+        opacity: 0;
+    }
+}
+
+.pin-marker {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    touch-action: manipulation;
+    color: #fff;
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
+    box-shadow: 0 8px 26px rgba(236, 72, 153, 0.42);
+    animation: pinBounce 2.4s ease-in-out infinite;
+}
+
+.pin-marker i {
+    transform: rotate(45deg);
+    font-size: 1.15rem;
+}
+
+.pin-marker:active {
+    filter: brightness(1.08);
+}
+
+@keyframes pinBounce {
+
+    0%,
+    100% {
+        transform: rotate(-45deg) translateY(0);
+    }
+
+    50% {
+        transform: rotate(-45deg) translateY(-8px);
+    }
+}
+
+/* 地址气泡：用 vw 流体宽度（不能按 % 算，父元素是零宽定位锚点），
+   这样窄屏也不会顶到右侧缩放按钮或左侧坐标读数 */
+.pin-bubble {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    width: max-content;
+    min-width: min(48vw, 200px);
+    max-width: min(56vw, 220px);
+    padding: 9px 12px;
+    text-align: center;
+    border-radius: 16px 24px 20px 28px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 8px 28px rgba(100, 150, 220, 0.18);
+    transform: translateX(-50%);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.24s var(--ease-out), transform 0.24s var(--ease-spring), visibility 0.24s;
+    pointer-events: none;
+}
+
+.pin-bubble.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(6px) scale(0.94);
+}
+
+.bubble-title {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-size: 1rem;
+    color: var(--text-dark);
+}
+
+.bubble-addr {
+    font-size: 0.76rem;
+    color: var(--text-mid);
+    line-height: 1.5;
+}
+
+.bubble-arrow {
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    transform: translateX(-50%) rotate(45deg);
+    background: rgba(255, 255, 255, 0.92);
+    border-right: 1px solid rgba(255, 255, 255, 0.85);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+/* 说明：地图操作提示改为右上角「手型」按钮（点按弹 toast），
+   不再用常驻文字，避免在小屏上压住图钉气泡与百度地图按钮 */
+
+/* 百度地图 */
+.baidumap-btn {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 7;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 44px;
+    padding: 10px 16px;
+    border-radius: var(--r-pill);
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, var(--grad-purple), #06b6d4);
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.32);
+    touch-action: manipulation;
+    transition: transform 0.2s var(--ease-spring);
+}
+
+.baidumap-btn:active {
+    transform: scale(0.95);
+}
+
+/* ------------------------------------------------------------
+   3. 联系方式（点击复制）
+   ------------------------------------------------------------ */
+.contact-item {
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    touch-action: manipulation;
+}
+
+.contact-item.static {
+    background: rgba(255, 255, 255, 0.34);
+}
+
+.contact-item .li-title {
+    font-size: 0.86rem;
+}
+
+.contact-item .li-desc {
+    font-size: 0.8rem;
+    color: var(--text-mid);
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.contact-copy {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 13px 17px 13px 19px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.86rem;
+    color: var(--text-light);
+    background: rgba(255, 255, 255, 0.6);
+    transition: transform 0.2s var(--ease-spring), color 0.2s, background 0.2s;
+}
+
+.contact-item:active .contact-copy {
+    color: #fff;
+    background: linear-gradient(135deg, var(--grad-purple), var(--grad-blue));
+}
+
+/* 复制成功的一次性反馈 */
+.contact-item.copied {
+    border-color: rgba(77, 255, 184, 0.6);
+}
+
+.contact-item.copied .contact-copy {
+    color: #fff;
+    background: linear-gradient(135deg, var(--grad-green), #22c55e);
+}
+
+/* ------------------------------------------------------------
+   4. 线上平台卡片（竖排单列，触摸友好）
+   ------------------------------------------------------------ */
+.platform-cards {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+}
+
+.platform-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    padding: 20px 18px;
+    border-radius: var(--r-card-sm);
+    touch-action: manipulation;
+}
+
+.platform-card.disabled {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.platform-icon {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 6px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.32rem;
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(60, 30, 120, 0.18);
+}
+
+.platform-name {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    color: var(--text-dark);
+}
+
+.platform-handle {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    overflow-wrap: anywhere;
+}
+
+.platform-status {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 12px;
+    border-radius: var(--r-pill);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.platform-status.on {
+    color: #27ae60;
+    background: rgba(46, 204, 113, 0.13);
+    border: 1px solid rgba(46, 204, 113, 0.26);
+}
+
+.platform-status.off {
+    color: #8b8b8b;
+    background: rgba(153, 153, 153, 0.13);
+    border: 1px solid rgba(153, 153, 153, 0.26);
+}
+
+/* ------------------------------------------------------------
+   5. 横屏矮屏：压缩地图高度，避免整屏只剩地图
+   ------------------------------------------------------------ */
+@media (max-height: 460px) and (orientation: landscape) {
+    .map-card {
+        height: min(78vh, 300px);
+    }
+
+    .map-hero {
+        padding-top: 0;
+    }
+}

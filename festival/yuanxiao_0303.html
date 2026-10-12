@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#fff5eb">
+    <meta name="description" content="零源机构 · 元宵节 · 正月十五 — 去年元夜时，花市灯如昼">
+    <meta name="format-detection" content="telephone=no,email=no,address=no">
+    <title>元宵节 · 正月十五 | 零源机构</title>
+
+    <!-- 标记 JS 可用：进场动画只在此时才隐藏内容，保证禁用 JS 也能看到全部内容 -->
+    <script>document.documentElement.classList.add('has-js');</script>
+
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+    <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/fonts-google.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/festival.css">
+    <link rel="stylesheet" href="../css/yuanxiao_0303.css">
+</head>
+
+<body class="festival-page" data-page="festival" data-title="元宵节 · 正月十五" data-base="../" data-tabbar="off"
+    data-back="1">
+
+    <div class="app-bg" aria-hidden="true"></div>
+
+    <!-- 浮动光斑 / 天灯背景（纯装饰，不接收触摸） -->
+    <canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+    <main class="app-main">
+        <div class="wrap container">
+
+            <!-- ==================== 首屏 ==================== -->
+            <div class="hero">
+                <div class="hero-tag liquid-glass">丙午年 · 正月十五</div>
+                <h1 class="hero-title" aria-label="花好月圆">
+                    <span class="char">花</span><span class="char">好</span><span class="char">月</span><span
+                        class="char">圆</span>
+                </h1>
+                <p class="hero-sub">去年元夜时 · 花市灯如昼</p>
+            </div>
+
+            <!-- ==================== 猜灯谜 ==================== -->
+            <section class="liquid-glass riddle-section fst-in">
+                <div class="riddle-header">
+                    <span class="riddle-icon" aria-hidden="true">🏮</span>
+                    <h2>猜灯谜</h2>
+                    <span class="riddle-count" id="riddleCount">1 / 12</span>
+                </div>
+                <div class="riddle-card" id="riddleCard" role="button" tabindex="0" aria-label="点击查看谜底">
+                    <p class="riddle-question" id="riddleQuestion">加载中...</p>
+                    <p class="riddle-answer" id="riddleAnswer" style="display:none;"></p>
+                </div>
+                <div class="riddle-actions">
+                    <button class="liquid-btn ghost" id="showAnswerBtn" type="button">显示谜底</button>
+                    <button class="liquid-btn primary next" id="nextRiddleBtn" type="button">下一题 →</button>
+                </div>
+            </section>
+
+            <!-- ==================== 元宵习俗 ==================== -->
+            <section class="cards-grid">
+                <div class="liquid-glass card fst-in">
+                    <div class="card-icon" aria-hidden="true">🥣</div>
+                    <h3 class="card-title">吃汤圆</h3>
+                    <p class="card-desc">软糯香甜的汤圆，寓意团团圆圆。一口咬下，满嘴都是幸福的味道。</p>
+                </div>
+                <div class="liquid-glass card fst-in d1">
+                    <div class="card-icon" aria-hidden="true">🏮</div>
+                    <h3 class="card-title">赏花灯</h3>
+                    <p class="card-desc">大街小巷张灯结彩，各式花灯璀璨夺目，映照出节日的喜庆。</p>
+                </div>
+                <div class="liquid-glass card fst-in d2">
+                    <div class="card-icon" aria-hidden="true">🎭</div>
+                    <h3 class="card-title">猜灯谜</h3>
+                    <p class="card-desc">灯笼上贴着谜语，猜中有奖。智慧与欢乐并存，是元宵节的传统乐趣。</p>
+                </div>
+                <div class="liquid-glass card fst-in d3">
+                    <div class="card-icon" aria-hidden="true">🌕</div>
+                    <h3 class="card-title">观满月</h3>
+                    <p class="card-desc">正月十五月儿圆，抬头仰望皎洁明月，寄托对团圆的美好期盼。</p>
+                </div>
+            </section>
+
+            <!-- ==================== 元宵祝福 ==================== -->
+            <section class="blessing-row">
+                <div class="liquid-glass blessing-item fst-in">
+                    <span class="b-num">01</span>
+                    <span class="b-text">团团圆圆</span>
+                </div>
+                <div class="liquid-glass blessing-item fst-in d1">
+                    <span class="b-num">02</span>
+                    <span class="b-text">甜甜蜜蜜</span>
+                </div>
+                <div class="liquid-glass blessing-item fst-in d2">
+                    <span class="b-num">03</span>
+                    <span class="b-text">和和美美</span>
+                </div>
+            </section>
+
+            <!-- ==================== 返回节日总览 ==================== -->
+            <nav class="festival-back" aria-label="返回传统节日">
+                <p class="fb-hint">更多传统节日</p>
+                <a class="liquid-btn ghost" href="../body/ctjr.html">
+                    <i class="fa fa-calendar" aria-hidden="true"></i> 返回传统节日
+                </a>
+            </nav>
+
+        </div>
+    </main>
+
+    <script src="../js/core.js"></script>
+    <script src="../js/yuanxiao_0303.js"></script>
+</body>
+
+</html>

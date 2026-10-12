@@ -1,0 +1,717 @@
+/* ============================================================
+   零源机构 · 移动端 / MOD
+   cyjs.css — 成员介绍（3D 翻转卡牌）
+   与 PC 端 pc/css/cyjs.css 视觉语言一致，交互改为「轻触翻转」
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   团队头部
+   ------------------------------------------------------------ */
+.team-hero {
+    text-align: center;
+    padding-top: 6px;
+}
+
+.team-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 18px;
+    margin-bottom: 14px;
+    border-radius: var(--r-pill);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 2.4px;
+    color: var(--grad-purple);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.team-badge i {
+    color: var(--grad-pink);
+}
+
+.team-title {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-weight: 400;
+    /* 与首页主标题同一套流体写法，任何屏宽都完整显示且不溢出 */
+    font-size: min(12.5vw, 2.8rem);
+    line-height: 1.2;
+    letter-spacing: min(2.2vw, 8px);
+    /* 抵消末字后的字距，保证视觉居中 */
+    margin-right: calc(min(2.2vw, 8px) * -1);
+    color: var(--text-dark);
+    white-space: nowrap;
+}
+
+.team-subtitle {
+    font-size: min(3.9vw, 1.05rem);
+    letter-spacing: min(0.9vw, 2px);
+    color: var(--text-mid);
+    margin-top: 8px;
+}
+
+.team-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 9px 16px;
+    border-radius: var(--r-pill);
+    font-size: 0.73rem;
+    line-height: 1.45;
+    color: var(--text-light);
+    text-align: left;
+    background: rgba(255, 255, 255, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.team-hint i {
+    flex: 0 0 auto;
+    color: var(--grad-purple);
+}
+
+/* ------------------------------------------------------------
+   卡牌网格：流体列宽，不写任何像素宽度
+   ------------------------------------------------------------ */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 244px), 1fr));
+    gap: 14px;
+    align-items: stretch;
+    justify-items: center;
+}
+
+/* ------------------------------------------------------------
+   3D 翻转卡牌
+   性能：只用 transform / opacity，正交布局，无 filter，
+        不会触发布局或大面积重绘；will-change 仅在按下时挂上
+   ------------------------------------------------------------ */
+.flip-card {
+    --card-color-1: var(--grad-pink);
+    --card-color-2: var(--grad-purple);
+
+    position: relative;
+    display: block;
+    /* 宽度随列宽流体缩放；上限保证卡牌始终是纵向比例，不会在平板上被拉扁 */
+    width: 100%;
+    max-width: 340px;
+    min-width: 0;
+    min-height: 320px;
+    /* 高度只与屏宽相关，同样是流体量，不写死像素 */
+    height: min(122vw, 430px);
+    max-height: 74dvh;
+    /* 整卡热区远大于 44px，触控反馈用 :active */
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 卡牌内部字号跟着卡片宽度走，整张卡等比缩放 */
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    font-size: min(4vw, 16px);
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    transition: transform 0.62s var(--ease-out);
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* 按下反馈（移动端没有 hover，一律用 :active） */
+.flip-card:active .flip-card-inner {
+    transform: scale(0.975);
+}
+
+.flip-card.flipped:active .flip-card-inner {
+    transform: rotateY(180deg) scale(0.975);
+}
+
+/* 正反面 */
+.fc-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--r-card);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+/* 顶部品牌渐变条（与 PC 版一致：每条卡用自己的配色） */
+.fc-face::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--card-color-1), var(--card-color-2));
+    z-index: 2;
+}
+
+/* ---------------- 正面 ---------------- */
+.fc-front {
+    align-items: center;
+    justify-content: center;
+    padding: 1.4em 1.15em 1.3em;
+    text-align: center;
+}
+
+.fc-avatar-wrap {
+    position: relative;
+    width: 6.2em;
+    height: 6.2em;
+    margin: 0.2em 0 0.75em;
+}
+
+.fc-avatar-ring {
+    position: absolute;
+    inset: -0.32em;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--card-color-1), var(--card-color-2), var(--card-color-1));
+    opacity: 0.42;
+    animation: ringSpin 7s linear infinite;
+}
+
+@keyframes ringSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.fc-avatar {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid rgba(255, 255, 255, 0.82);
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.fc-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 头像加载失败时的渐变字母占位，不留白框 */
+.fc-avatar-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 2.1em;
+    font-weight: 800;
+    color: #fff;
+    background: linear-gradient(135deg, var(--card-color-1), var(--card-color-2));
+}
+
+.fc-name {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-weight: 400;
+    font-size: 1.35em;
+    line-height: 1.25;
+    letter-spacing: 2px;
+    color: var(--text-dark);
+}
+
+.fc-code {
+    margin-top: 0.4em;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7em;
+    font-weight: 600;
+    line-height: 1.45;
+    word-break: break-word;
+    background: linear-gradient(135deg, var(--card-color-1), var(--card-color-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.fc-role {
+    margin-top: 0.6em;
+    padding: 0.32em 0.95em;
+    border-radius: var(--r-pill);
+    font-size: 0.8em;
+    color: var(--text-mid);
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    white-space: nowrap;
+}
+
+.fc-flip-hint {
+    margin-top: 1.1em;
+    padding-top: 0.85em;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-size: 0.7em;
+    color: var(--text-light);
+    border-top: 1px solid rgba(120, 80, 200, 0.1);
+}
+
+.fc-flip-hint i {
+    display: inline-block;
+    color: var(--grad-purple);
+    animation: flipHint 2.4s ease-in-out infinite;
+}
+
+@keyframes flipHint {
+
+    0%,
+    60%,
+    100% {
+        transform: rotateY(0deg);
+    }
+
+    30% {
+        transform: rotateY(180deg);
+    }
+}
+
+/* ---------------- 背面 ---------------- */
+.fc-back {
+    transform: rotateY(180deg) translateZ(0);
+    padding: 1.25em 1em 0.95em;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.38));
+    /* 顶部信息条与底部按钮各贴一端，中间空白由两侧均分，
+       不会在简介和按钮之间堆出一大块空档 */
+    justify-content: space-between;
+}
+
+.fc-back-head {
+    display: flex;
+    align-items: center;
+    gap: 0.65em;
+    padding-bottom: 0.6em;
+    margin-bottom: 0.65em;
+    border-bottom: 1px solid rgba(120, 80, 200, 0.12);
+}
+
+.fc-back-avatar {
+    flex: 0 0 auto;
+    width: 2.85em;
+    height: 2.85em;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.78);
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.fc-back-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.fc-back-avatar .fc-avatar-fallback {
+    font-size: 1.2em;
+}
+
+.fc-back-headmain {
+    flex: 1;
+    min-width: 0;
+}
+
+.fc-back-name {
+    font-size: 1.06em;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-dark);
+}
+
+.fc-back-code {
+    margin-top: 2px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.6em;
+    line-height: 1.4;
+    color: var(--grad-purple);
+    word-break: break-word;
+}
+
+.fc-back-info {
+    /* 不抢空闲高度，让 space-between 把留白平摊到
+       顶部信息条与底部按钮两侧，避免简介和按钮之间出现大空档 */
+    flex: 0 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    font-size: 0.8em;
+    line-height: 1.5;
+    color: var(--text-mid);
+}
+
+.fc-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55em;
+}
+
+.fc-info-item i {
+    flex: 0 0 auto;
+    width: 1.1em;
+    margin-top: 0.18em;
+    text-align: center;
+    color: var(--grad-purple);
+}
+
+.fc-info-item span {
+    flex: 1;
+    min-width: 0;
+    word-break: break-word;
+}
+
+/* 信息行的小标题（代号 / 定位 / 联系方式 / 电话） */
+.fc-info-item b {
+    display: block;
+    font-size: 0.78em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--text-light);
+    margin-bottom: 0.1em;
+}
+
+.fc-info-quote {
+    position: relative;
+    padding: 0.55em 0.7em;
+    border-radius: var(--r-card-sm);
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    color: var(--text-dark);
+    font-size: 0.96em;
+}
+
+.fc-back-actions {
+    padding-top: 0.7em;
+    display: flex;
+    gap: 0.5em;
+}
+
+/* 卡牌内的按钮：高度用 em 缩放，卡片放大时热区同步放大 */
+.fc-btn {
+    flex: 1;
+    min-height: 2.75em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+    padding: 0.55em 0.8em;
+    border-radius: var(--r-card-sm);
+    font-size: 0.8em;
+    font-weight: 600;
+    text-align: center;
+    touch-action: manipulation;
+    transition: transform 0.2s var(--ease-spring), box-shadow 0.2s, background 0.2s;
+}
+
+.fc-btn:active {
+    transform: scale(0.93);
+}
+
+.fc-btn.primary {
+    color: #fff;
+    background: linear-gradient(135deg, var(--card-color-1), var(--card-color-2));
+    box-shadow: 0 4px 14px rgba(196, 77, 255, 0.28);
+}
+
+.fc-btn.ghost {
+    color: var(--text-mid);
+    background: rgba(255, 255, 255, 0.66);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+/* 卡牌进场：轻量位移 + 淡入（不做 3D 翻入，低端机更稳）
+   自己一套类名（不用基类的 .reveal），避免与 base.css 里
+   .has-js .reveal 的 !important 级联打架；类名由 cyjs.js 按次序添加 */
+.card-grid.is-in .flip-card {
+    animation: cardRise 0.5s var(--ease-out) both;
+}
+
+.card-grid.is-in .flip-card:nth-child(1) {
+    animation-delay: 0.16s;
+}
+
+.card-grid.is-in .flip-card:nth-child(2) {
+    animation-delay: 0.22s;
+}
+
+.card-grid.is-in .flip-card:nth-child(3) {
+    animation-delay: 0.28s;
+}
+
+.card-grid.is-in .flip-card:nth-child(4) {
+    animation-delay: 0.34s;
+}
+
+.card-grid.is-in .flip-card:nth-child(5) {
+    animation-delay: 0.4s;
+}
+
+@keyframes cardRise {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* 团队信息卡：轻量淡入上浮 */
+.info-card {
+    animation: cardRise 0.5s var(--ease-out) both;
+    animation-delay: 0.42s;
+}
+
+.info-card:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.info-card:nth-child(3) {
+    animation-delay: 0.58s;
+}
+
+/* ------------------------------------------------------------
+   矮屏（横屏手机、分屏小窗）微调：
+   卡牌改为等比方形偏长（aspect-ratio），并收紧内部留白，
+   保证背面信息在矮屏上依然完整、不被裁切。
+   只针对「屏高不足」，不是分辨率断点。
+   ------------------------------------------------------------ */
+@media (max-height: 520px) {
+    .flip-card {
+        min-height: 0;
+        height: auto;
+        max-height: none;
+        aspect-ratio: 1 / 1.2;
+    }
+
+    .fc-front,
+    .fc-back {
+        padding: 0.7em 0.9em 0.65em;
+    }
+
+    .fc-avatar-wrap {
+        width: 4.2em;
+        height: 4.2em;
+        margin: 0 0 0.4em;
+    }
+
+    .fc-name {
+        font-size: 1.15em;
+    }
+
+    .fc-code {
+        display: none;
+    }
+
+    .fc-role {
+        margin-top: 0.4em;
+        padding: 0.22em 0.75em;
+        font-size: 0.72em;
+    }
+
+    .fc-flip-hint {
+        margin-top: 0.55em;
+        padding-top: 0.5em;
+    }
+
+    .fc-back-head {
+        padding-bottom: 0.4em;
+        margin-bottom: 0.45em;
+    }
+
+    .fc-back-avatar {
+        width: 2.2em;
+        height: 2.2em;
+    }
+
+    .fc-back-code {
+        display: none;
+    }
+
+    .fc-back-info {
+        gap: 0.3em;
+        font-size: 0.72em;
+    }
+
+    .fc-info-quote {
+        padding: 0.4em 0.55em;
+    }
+
+    .fc-back-actions {
+        padding-top: 0.45em;
+    }
+
+    .fc-btn {
+        min-height: 2.3em;
+        font-size: 0.72em;
+    }
+}
+
+/* ------------------------------------------------------------
+   数据面板：给渐变数字加一层同形同色的实底
+   部分合成器（含无头 Chromium）在「-webkit-background-clip:text +
+   text-fill-color:transparent」下只绘制字形的一部分，会让数字被裁掉。
+   text-shadow 会先画出完整字形轮廓，再用渐变覆盖，
+   因此无论合成器行为如何，数字都完整可读。
+   ------------------------------------------------------------ */
+#teamStats .stat-number {
+    text-shadow: 0 0 0 #b44dff;
+}
+
+/* ------------------------------------------------------------
+   团队信息卡
+   ------------------------------------------------------------ */.info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+    gap: 12px;
+}
+
+.info-card {
+    padding: 1.35rem 1.15rem;
+    text-align: center;
+    border-radius: var(--r-card-sm);
+}
+
+.info-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 12px;
+    border-radius: 15px 21px 16px 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(120, 80, 200, 0.16);
+}
+
+.info-card h3 {
+    font-family: 'Syne', 'Noto Sans SC', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 7px;
+}
+
+.info-card p {
+    font-size: 0.81rem;
+    line-height: 1.75;
+    color: var(--text-mid);
+    word-break: break-word;
+}
+
+/* ------------------------------------------------------------
+   成员详情弹层（bottom sheet 内的排版）
+   ------------------------------------------------------------ */
+.member-detail {
+    text-align: center;
+}
+
+.member-detail-avatar {
+    width: 108px;
+    height: 108px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: var(--glass-shadow);
+}
+
+.member-detail-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.member-detail-avatar .fc-avatar-fallback {
+    font-size: 2.2rem;
+}
+
+.member-detail-name {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-size: 1.35rem;
+    letter-spacing: 2px;
+    color: var(--text-dark);
+}
+
+.member-detail-code {
+    margin-top: 4px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    color: var(--grad-purple);
+    word-break: break-word;
+}
+
+.member-detail-role {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 4px 15px;
+    border-radius: var(--r-pill);
+    font-size: 0.8rem;
+    color: var(--text-mid);
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.member-detail-list {
+    margin-top: 18px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.member-detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 13px;
+    border-radius: var(--r-card-sm);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    font-size: 0.84rem;
+    line-height: 1.6;
+    color: var(--text-mid);
+    word-break: break-word;
+}
+
+.member-detail-item i {
+    flex: 0 0 auto;
+    width: 18px;
+    margin-top: 2px;
+    text-align: center;
+    color: var(--grad-purple);
+}
+
+.member-detail-item b {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 1px;
+    color: var(--text-light);
+    font-weight: 600;
+    margin-bottom: 2px;
+}

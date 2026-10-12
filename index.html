@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f5f0ff">
+    <meta name="description" content="零源机构 Z℮R∅‑SOURCE — 你所热爱的 就是你的生活（移动端）">
+    <meta name="format-detection" content="telephone=no,email=no,address=no">
+    <title>零源机构 | Z℮R∅‑SOURCE</title>
+
+    <!-- 标记 JS 可用：进场动画只在此时才隐藏内容，保证禁用 JS 也能看到全部内容 -->
+    <script>document.documentElement.classList.add('has-js');</script>
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts-google.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body data-page="home" data-title="" data-base="">
+
+    <div class="app-bg" aria-hidden="true"></div>
+
+    <main class="app-main">
+
+        <!-- ==================== 首屏 ==================== -->
+        <section class="hero" id="hero">
+            <div class="hero-inner">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    ZERO SOURCE · EST.2025
+                </div>
+
+                <h1 class="hero-title">
+                    <span class="title-line">零源机构</span>
+                    <span class="title-gradient">Z℮R∅‑SOURCE</span>
+                </h1>
+
+                <p class="hero-slogan">你所热爱的&nbsp;&nbsp;就是你的生活</p>
+
+                <div class="hero-chips">
+                    <span class="hero-chip"><i class="fa fa-users"></i> 5 位成员</span>
+                    <span class="hero-chip"><i class="fa fa-image"></i> 118 份记忆</span>
+                </div>
+            </div>
+
+            <a class="hero-cue" href="#news" aria-label="向下浏览">
+                <span>SCROLL</span>
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </a>
+        </section>
+
+        <!-- ==================== 最新动态 ==================== -->
+        <section class="section" id="news">
+            <div class="wrap">
+                <div class="section-head">
+                    <span class="section-tag">MOMENTS</span>
+                    <h2 class="section-title">最新动态</h2>
+                </div>
+            </div>
+
+            <div class="hscroll" id="newsTrack" aria-label="动态列表"></div>
+            <div class="dots" id="newsDots" aria-hidden="true"></div>
+        </section>
+
+        <!-- ==================== 站点公告 ==================== -->
+        <section class="section" id="bottom">
+            <div class="wrap">
+                <div class="section-head">
+                    <span class="section-tag">NOTICE</span>
+                    <h2 class="section-title">站点公告</h2>
+                </div>
+
+                <div class="timeline" id="announcementTimeline"></div>
+
+                <button class="btn line block mt-2" id="historyAnnBtn" type="button">
+                    <i class="fa fa-history"></i> 历史公告
+                </button>
+            </div>
+        </section>
+
+        <!-- ==================== 零源数据 ==================== -->
+        <section class="section" id="stats">
+            <div class="wrap">
+                <div class="section-head">
+                    <span class="section-tag">STATS</span>
+                    <h2 class="section-title">零源数据</h2>
+                </div>
+
+                <div class="stat-grid">
+                    <div class="stat-card glass reveal">
+                        <div class="stat-icon icon-pink"><i class="fa fa-users"></i></div>
+                        <div class="stat-number" data-count="5">0</div>
+                        <div class="stat-label">核心成员</div>
+                    </div>
+
+                    <div class="stat-card glass reveal">
+                        <div class="stat-icon icon-purple"><i class="fa fa-camera"></i></div>
+                        <div class="stat-number" data-count="118">0</div>
+                        <div class="stat-label">记忆碎片</div>
+                    </div>
+
+                    <div class="stat-card glass reveal">
+                        <div class="stat-icon icon-blue"><i class="fa fa-clock-o"></i></div>
+                        <div class="stat-number" id="runtimeDays" data-count="0">0</div>
+                        <div class="stat-label">天运行</div>
+                    </div>
+
+                    <div class="stat-card glass reveal">
+                        <div class="stat-icon icon-green"><i class="fa fa-circle-o-notch"></i></div>
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">可能性</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="js/core.js"></script>
+    <script src="js/wtfk.js"></script>
+    <script src="js/home.js"></script>
+</body>
+
+</html>

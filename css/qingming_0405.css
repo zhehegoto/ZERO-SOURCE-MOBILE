@@ -1,0 +1,130 @@
+/* ============================================================
+   零源机构 · 移动端 / 清明节 · 慎终追远
+   qingming_0405.css — 液态玻璃素雅青灰主题
+   对应 PC 端 pc/festival/css/qingming_0405.css
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. 清明配色（与 PC 端 --grad-1/2/3、文字色一一对应）
+   ------------------------------------------------------------ */
+.festival-page {
+    --fst-grad-1: #5a7a6a;
+    --fst-grad-2: #7a9a8a;
+    --fst-grad-3: #9abaaa;
+    --fst-text: #2a3a32;
+    --fst-text-light: rgba(42, 58, 50, 0.6);
+    --fst-glass: rgba(255, 255, 255, 0.32);
+    --fst-glass-line: rgba(255, 255, 255, 0.55);
+    --fst-glass-shadow: 0 8px 26px rgba(90, 122, 106, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    --fst-shadow: rgba(90, 122, 106, 0.32);
+    --fst-bg: linear-gradient(135deg, #e8edea 0%, #d8e0dc 30%, #c8d4d0 60%, #e0e8e4 100%);
+    --fst-glow-1: rgba(90, 122, 106, 0.15);
+    --fst-glow-2: rgba(122, 154, 138, 0.12);
+    --fst-glow-3: rgba(154, 186, 170, 0.1);
+}
+
+/* 清明首屏标题只有两个字，给更大的字号与字距 */
+.hero-title .char {
+    font-size: clamp(3.2rem, 24vw, 6.2rem);
+}
+
+.hero-title {
+    gap: clamp(14px, 7vw, 34px);
+}
+
+/* ------------------------------------------------------------
+   2. 诗句区
+   ------------------------------------------------------------ */
+.poem-section {
+    text-align: center;
+    padding: var(--fst-pad);
+    margin-bottom: clamp(20px, 5.4vw, 32px);
+}
+
+.poem-icon {
+    font-size: clamp(1.6rem, 7vw, 2rem);
+    line-height: 1;
+    margin-bottom: 14px;
+    opacity: 0.75;
+}
+
+.poem-lines p {
+    font-size: clamp(0.94rem, 4vw, 1.16rem);
+    font-weight: 500;
+    line-height: 2.15;
+    color: var(--fst-text);
+    letter-spacing: clamp(1.5px, 1.1vw, 4px);
+    /* 字距行尾补偿，保证视觉居中且不右侧溢出 */
+    margin-right: calc(clamp(1.5px, 1.1vw, 4px) * -1);
+    overflow-wrap: break-word;
+}
+
+.poem-author {
+    font-size: clamp(0.74rem, 3.2vw, 0.85rem);
+    color: var(--fst-text-light);
+    letter-spacing: 2px;
+    margin-top: 16px;
+    margin-right: -2px;
+}
+
+/* ------------------------------------------------------------
+   3. 追思区
+   ------------------------------------------------------------ */
+.remembrance-section {
+    text-align: center;
+    padding: var(--fst-pad);
+    margin-bottom: clamp(24px, 6.4vw, 40px);
+}
+
+.remembrance-section .section-title {
+    font-size: clamp(1.2rem, 6vw, 1.8rem);
+    font-weight: 800;
+    letter-spacing: clamp(4px, 3.4vw, 12px);
+    /* 字距会向右多一格，向左补偿保证居中 */
+    padding-left: clamp(4px, 3.4vw, 12px);
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--fst-grad-1), var(--fst-grad-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--fst-grad-1);
+}
+
+.remembrance-text {
+    font-size: clamp(0.82rem, 3.5vw, 0.95rem);
+    line-height: 2.1;
+    letter-spacing: 0.5px;
+    color: var(--fst-text-light);
+    overflow-wrap: break-word;
+}
+
+/* ------------------------------------------------------------
+   4. 页脚引用
+   ------------------------------------------------------------ */
+.footer-quote {
+    text-align: center;
+    padding: clamp(18px, 5vw, 30px);
+}
+
+.footer-quote p {
+    font-size: clamp(0.82rem, 3.5vw, 1rem);
+    font-style: italic;
+    line-height: 2;
+    letter-spacing: clamp(1px, 0.6vw, 3px);
+    color: var(--fst-text-light);
+    margin-right: calc(clamp(1px, 0.6vw, 3px) * -1);
+}
+
+/* ------------------------------------------------------------
+   5. 极窄屏微调
+   ------------------------------------------------------------ */
+@media (max-width: 340px) {
+    .hero-title .char {
+        font-size: clamp(2.8rem, 22vw, 3.6rem);
+    }
+
+    .poem-lines p {
+        letter-spacing: 1px;
+        margin-right: -1px;
+    }
+}

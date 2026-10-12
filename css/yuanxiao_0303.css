@@ -1,0 +1,154 @@
+/* ============================================================
+   零源机构 · 移动端 / 元宵节 · 正月十五
+   yuanxiao_0303.css — 液态玻璃暖橙金主题
+   对应 PC 端 pc/festival/css/yuanxiao_0303.css
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. 元宵配色（与 PC 端 --grad-1/2/3、文字色一一对应）
+   ------------------------------------------------------------ */
+.festival-page {
+    --fst-grad-1: #ff8c42;
+    --fst-grad-2: #ffb347;
+    --fst-grad-3: #ffd700;
+    --fst-text: #3a2010;
+    --fst-text-light: rgba(58, 32, 16, 0.65);
+    --fst-glass: rgba(255, 255, 255, 0.32);
+    --fst-glass-line: rgba(255, 255, 255, 0.5);
+    --fst-glass-shadow: 0 8px 26px rgba(255, 140, 66, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    --fst-shadow: rgba(255, 140, 66, 0.36);
+    --fst-bg: linear-gradient(135deg, #fff5eb 0%, #ffe8d6 30%, #ffddc0 60%, #fff8e6 100%);
+    --fst-glow-1: rgba(255, 140, 66, 0.18);
+    --fst-glow-2: rgba(255, 179, 71, 0.15);
+    --fst-glow-3: rgba(255, 215, 0, 0.12);
+    --fst-count-bg: rgba(255, 255, 255, 0.45);
+    --fst-card-bg: rgba(255, 255, 255, 0.38);
+    --fst-card-bg-strong: rgba(255, 255, 255, 0.56);
+    --fst-dash: rgba(255, 140, 66, 0.32);
+}
+
+/* ------------------------------------------------------------
+   2. 猜灯谜
+   ------------------------------------------------------------ */
+.riddle-section {
+    max-width: 620px;
+    margin: 0 auto clamp(26px, 7vw, 46px);
+    padding: var(--fst-pad);
+}
+
+.riddle-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: clamp(16px, 4.6vw, 26px);
+    text-align: center;
+}
+
+.riddle-icon {
+    flex: 0 0 auto;
+    font-size: clamp(1.4rem, 6vw, 1.8rem);
+    line-height: 1;
+}
+
+.riddle-header h2 {
+    font-size: clamp(1.2rem, 5.6vw, 1.6rem);
+    font-weight: 800;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, var(--fst-grad-1), var(--fst-grad-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--fst-grad-1);
+}
+
+.riddle-count {
+    flex: 0 0 auto;
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(0.72rem, 3vw, 0.85rem);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--fst-text-light);
+    background: var(--fst-count-bg);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    padding: 4px 13px;
+    border-radius: var(--r-pill);
+}
+
+.riddle-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    min-height: 132px;
+    padding: clamp(20px, 5.6vw, 32px) clamp(16px, 4.6vw, 26px);
+    margin-bottom: clamp(16px, 4.4vw, 24px);
+    border-radius: var(--r-organic);
+    background: var(--fst-card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: background 0.3s var(--ease-out);
+    touch-action: manipulation;
+}
+
+.riddle-card:active {
+    background: var(--fst-card-bg-strong);
+}
+
+.riddle-question {
+    font-size: clamp(0.96rem, 4.1vw, 1.15rem);
+    font-weight: 500;
+    line-height: 1.85;
+    color: var(--fst-text);
+    overflow-wrap: break-word;
+}
+
+.riddle-answer {
+    font-size: clamp(0.92rem, 3.9vw, 1.08rem);
+    font-weight: 700;
+    color: var(--fst-grad-1);
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--fst-dash);
+    overflow-wrap: break-word;
+}
+
+.riddle-answer.on {
+    display: block;
+    animation: fstFadeUp 0.36s var(--ease-out);
+}
+
+.riddle-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+/* 窄屏时两个按钮各占一行，避免挤压 */
+.riddle-actions .liquid-btn {
+    flex: 1 1 140px;
+    max-width: 100%;
+}
+
+.riddle-actions .liquid-btn.next {
+    flex-grow: 0;
+}
+
+/* ------------------------------------------------------------
+   3. 极窄屏微调
+   ------------------------------------------------------------ */
+@media (max-width: 340px) {
+    .riddle-header {
+        gap: 8px;
+    }
+
+    .riddle-actions {
+        gap: 9px;
+    }
+
+    .riddle-actions .liquid-btn {
+        flex: 1 1 120px;
+        padding: 11px 14px;
+    }
+}

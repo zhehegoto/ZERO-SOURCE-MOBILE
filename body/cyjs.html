@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f5f0ff">
+    <meta name="description" content="零源机构成员介绍 — 翻转卡牌，认识每一位伙伴">
+    <meta name="format-detection" content="telephone=no,email=no,address=no">
+    <title>成员介绍 | 零源机构</title>
+
+    <!-- 标记 JS 可用：进场动画只在此时才隐藏内容，保证禁用 JS 也能看到全部内容 -->
+    <script>document.documentElement.classList.add('has-js');</script>
+
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/fonts-google.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/wtfk.css">
+    <link rel="stylesheet" href="../css/cyjs.css">
+</head>
+
+<body data-page="cyjs" data-title="成员介绍" data-base="../">
+
+    <div class="app-bg" aria-hidden="true"></div>
+
+    <main class="app-main">
+        <div class="wrap">
+
+            <!-- ==================== 团队头部 ==================== -->
+            <section class="section team-hero">
+                <span class="team-badge"><i class="fa fa-id-card-o"></i> TEAM CARDS</span>
+                <h1 class="team-title">零源卡牌</h1>
+                <p class="team-subtitle">翻转卡牌，认识每一位伙伴</p>
+                <p class="team-hint">
+                    <i class="fa fa-hand-pointer-o" aria-hidden="true"></i>
+                    <span>点击卡牌翻转查看详情 · 再次点击翻回</span>
+                </p>
+            </section>
+
+            <!-- ==================== 3D 翻转卡牌 ==================== -->
+            <section class="section">
+                <!-- 由 js/cyjs.js 依据成员数据生成 -->
+                <div class="card-grid" id="cardGrid"></div>
+            </section>
+
+            <!-- ==================== 团队成员统计 ==================== -->
+            <section class="section" id="teamStats">
+                <div class="section-head">
+                    <span class="section-tag">STATS</span>
+                    <h2 class="section-title">团队数据</h2>
+                </div>
+
+                <div class="stat-grid">
+                    <div class="stat-card glass">
+                        <div class="stat-icon icon-pink"><i class="fa fa-users"></i></div>
+                        <div class="stat-number" data-count="5">0</div>
+                        <div class="stat-label">核心成员</div>
+                    </div>
+
+                    <div class="stat-card glass">
+                        <div class="stat-icon icon-purple"><i class="fa fa-camera"></i></div>
+                        <div class="stat-number" data-count="118">0</div>
+                        <div class="stat-label">记忆碎片</div>
+                    </div>
+
+                    <div class="stat-card glass">
+                        <div class="stat-icon icon-blue"><i class="fa fa-clock-o"></i></div>
+                        <div class="stat-number" id="teamRuntimeDays" data-count="0">0</div>
+                        <div class="stat-label">天运行</div>
+                    </div>
+
+                    <div class="stat-card glass">
+                        <div class="stat-icon icon-green"><i class="fa fa-circle-o-notch"></i></div>
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">可能性</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== 团队信息卡 ==================== -->
+            <section class="section" id="teamInfo">
+                <div class="info-cards">
+                    <div class="info-card glass">
+                        <div class="info-icon icon-pink"><i class="fa fa-map-marker"></i></div>
+                        <h3>团队坐标</h3>
+                        <p>晴空万里~</p>
+                        <p>突然暴风雨~</p>
+                    </div>
+
+                    <div class="info-card glass">
+                        <div class="info-icon icon-purple"><i class="fa fa-clock-o"></i></div>
+                        <h3>运行轨道</h3>
+                        <p>周一至周五 8:00 - 01:00</p>
+                        <p>周末 24小时在线</p>
+                    </div>
+
+                    <div class="info-card glass">
+                        <div class="info-icon icon-blue"><i class="fa fa-comments"></i></div>
+                        <h3>信号频道</h3>
+                        <p>公众号：ZERO零零号</p>
+                        <p>邮箱：无处躲避总是让人始料不及~</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="../js/core.js"></script>
+    <script src="../js/wtfk.js"></script>
+    <script src="../js/cyjs.js"></script>
+</body>
+
+</html>

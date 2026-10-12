@@ -1,0 +1,146 @@
+/* ============================================================
+   零源机构 · 移动端 / 春节 · 正月初一
+   chunjie_0217.css — 液态玻璃红金主题
+   对应 PC 端 pc/festival/css/chunjie_0217.css
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. 春节配色（与 PC 端 --grad-1/2/3、文字色一一对应）
+   ------------------------------------------------------------ */
+.festival-page {
+    --fst-grad-1: #ff4d6d;
+    --fst-grad-2: #ff8c42;
+    --fst-grad-3: #ffd166;
+    --fst-text: #3a1010;
+    --fst-text-light: rgba(58, 16, 16, 0.65);
+    --fst-glass: rgba(255, 255, 255, 0.32);
+    --fst-glass-line: rgba(255, 255, 255, 0.5);
+    --fst-glass-shadow: 0 8px 26px rgba(255, 77, 109, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    --fst-shadow: rgba(255, 77, 109, 0.36);
+    --fst-bg: linear-gradient(135deg, #fff0f0 0%, #ffe4e0 30%, #ffd8d0 60%, #fff5e6 100%);
+    --fst-glow-1: rgba(255, 77, 109, 0.18);
+    --fst-glow-2: rgba(255, 140, 66, 0.15);
+    --fst-glow-3: rgba(255, 209, 102, 0.12);
+    --fst-shadow-fu: 0 10px 30px rgba(255, 77, 109, 0.4);
+    --fst-shadow-fu-back: 0 10px 30px rgba(255, 209, 102, 0.42);
+}
+
+/* ------------------------------------------------------------
+   2. 福字区（正反面翻转）
+   ------------------------------------------------------------ */
+.fu-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: clamp(20px, 6vw, 36px);
+    padding: var(--fst-pad);
+    margin-bottom: clamp(26px, 7vw, 50px);
+}
+
+.fu-card {
+    position: relative;
+    flex: 0 0 auto;
+    width: clamp(126px, 40vw, 178px);
+    height: clamp(126px, 40vw, 178px);
+    perspective: 800px;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.fu-front,
+.fu-back {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--r-organic);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transition: transform 0.66s var(--ease-spring);
+}
+
+.fu-front {
+    background: linear-gradient(135deg, var(--fst-grad-1), var(--fst-grad-2));
+    box-shadow: var(--fst-shadow-fu);
+}
+
+.fu-back {
+    background: linear-gradient(135deg, var(--fst-grad-3), var(--fst-grad-2));
+    box-shadow: var(--fst-shadow-fu-back);
+    transform: rotateY(180deg);
+}
+
+.fu-card.flipped .fu-front {
+    transform: rotateY(180deg);
+}
+
+.fu-card.flipped .fu-back {
+    transform: rotateY(360deg);
+}
+
+.fu-card:active .fu-front,
+.fu-card:active .fu-back {
+    /* 按压反馈：保持翻转角度，仅轻微缩放（用内层避免覆盖 rotateY） */
+    filter: brightness(1.06);
+}
+
+.fu-text {
+    font-size: clamp(3rem, 15vw, 5rem);
+    font-weight: 900;
+    line-height: 1;
+    color: #fff;
+    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+}
+
+.fu-hint {
+    font-size: clamp(0.7rem, 3vw, 0.8rem);
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 6px;
+}
+
+.fu-words {
+    width: 100%;
+    min-width: 0;
+}
+
+.fu-words h2 {
+    font-size: clamp(1.3rem, 6.4vw, 2rem);
+    font-weight: 800;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--fst-grad-1), var(--fst-grad-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--fst-grad-1);
+}
+
+.fu-words p {
+    font-size: clamp(0.84rem, 3.5vw, 0.95rem);
+    line-height: 1.85;
+    color: var(--fst-text-light);
+    margin-bottom: 20px;
+}
+
+.fu-words .liquid-btn {
+    width: 100%;
+    max-width: 340px;
+}
+
+/* ------------------------------------------------------------
+   3. 极窄屏微调
+   ------------------------------------------------------------ */
+@media (max-width: 340px) {
+    .fu-card {
+        width: 118px;
+        height: 118px;
+    }
+
+    .fu-text {
+        font-size: 2.6rem;
+    }
+}

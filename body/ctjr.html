@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f5f0ff">
+    <meta name="description" content="零源机构传统节日 — 中国传统节日一览">
+    <meta name="format-detection" content="telephone=no,email=no,address=no">
+    <title>传统节日 | 零源机构</title>
+
+    <!-- 标记 JS 可用：进场动画只在此时才隐藏内容，保证禁用 JS 也能看到全部内容 -->
+    <script>document.documentElement.classList.add('has-js');</script>
+
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/fonts-google.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/wtfk.css">
+    <link rel="stylesheet" href="../css/ctjr.css">
+</head>
+
+<body data-page="ctjr" data-title="传统节日" data-base="../">
+
+    <div class="app-bg" aria-hidden="true"></div>
+
+    <main class="app-main">
+        <div class="wrap">
+
+            <!-- ==================== 节日头部 ==================== -->
+            <section class="section festival-hero">
+                <span class="festival-badge"><i class="fa fa-star"></i> CHINESE FESTIVALS</span>
+                <h1 class="festival-title">传统节日</h1>
+                <p class="festival-subtitle">一岁一节，一节一俗，华夏千年的浪漫</p>
+            </section>
+
+            <!-- ==================== 节日卡片 ==================== -->
+            <section class="section">
+                <!-- 由 js/ctjr.js 依据节日数据生成 -->
+                <div class="festival-grid" id="festivalGrid"></div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="../js/core.js"></script>
+    <script src="../js/wtfk.js"></script>
+    <script src="../js/ctjr.js"></script>
+</body>
+
+</html>

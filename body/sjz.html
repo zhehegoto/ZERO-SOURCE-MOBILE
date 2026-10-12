@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f5f0ff">
+    <meta name="description" content="零源机构 Z℮R∅‑SOURCE 零源编年史 — 从 2019 到今天，每一步都是我们热爱生活的证明">
+    <meta name="format-detection" content="telephone=no,email=no,address=no">
+    <title>时间轴 | 零源机构</title>
+
+    <!-- 标记 JS 可用：进场动画只在此时才隐藏内容，保证禁用 JS 也能看到全部内容 -->
+    <script>document.documentElement.classList.add('has-js');</script>
+
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+    <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/fonts-google.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/wtfk.css">
+    <link rel="stylesheet" href="../css/sjz.css">
+</head>
+
+<body data-page="sjz" data-title="时间轴" data-base="../">
+
+    <div class="app-bg" aria-hidden="true"></div>
+
+    <main class="app-main">
+
+        <!-- ==================== 首屏 · 英雄区 ==================== -->
+        <section class="tz-hero" id="page-hero">
+            <div class="tz-hero-bg">
+                <img src="../assets/images/1.jpg" alt="零源机构" loading="eager" decoding="async">
+            </div>
+            <div class="tz-hero-overlay" aria-hidden="true"></div>
+            <canvas class="tz-particles" id="tzParticles" aria-hidden="true"></canvas>
+
+            <div class="tz-hero-inner">
+                <div class="tz-hero-badge">TIMELINE</div>
+                <h1 class="tz-hero-title">
+                    <span class="tz-title-main">Z℮R∅‑SOURCE</span>
+                    <span class="tz-title-sub">零源编年史</span>
+                </h1>
+                <p class="tz-hero-desc">从2019到今天，每一步都是我们热爱生活的证明</p>
+
+                <a class="tz-hero-cue" href="#page-origin" id="heroCue">
+                    <span>向下滚动探索</span>
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- ==================== 吸顶进度 · 当前时代 ==================== -->
+        <div class="tz-progress" id="tzProgress">
+            <div class="tz-progress-inner">
+                <div class="tz-progress-row">
+                    <span class="tz-progress-current" id="tzCurrent">起源</span>
+                    <span class="tz-progress-count" id="tzCount">01 / 08</span>
+                </div>
+                <div class="tz-progress-track" aria-hidden="true">
+                    <span class="tz-progress-bar" id="tzBar"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 故事从这里开始 ==================== -->
+        <section class="section tz-origin" id="page-origin" data-era="起源" data-year="START">
+            <div class="wrap">
+                <article class="tz-origin-card reveal">
+                    <div class="tz-origin-icon-wrap">
+                        <span class="tz-origin-ring" aria-hidden="true"></span>
+                        <span class="tz-origin-icon"><i class="fa fa-flag" aria-hidden="true"></i></span>
+                    </div>
+                    <h2 class="tz-origin-title">故事从这里开始</h2>
+                    <p class="tz-origin-desc">2019年，一段旅程的起点。从这里出发，我们一路走到了今天。</p>
+                    <div class="tz-origin-line" aria-hidden="true">
+                        <span></span>
+                        <i class="fa fa-star"></i>
+                        <span></span>
+                    </div>
+                    <span class="tz-era-mark" aria-hidden="true">START</span>
+                </article>
+            </div>
+        </section>
+
+        <!-- ==================== 时代编年史 ==================== -->
+        <section class="section tz-tl-section" id="tzTimeline">
+            <div class="wrap">
+                <div class="timeline tz-list" id="tzList">
+
+                    <!-- 2019 -->
+                    <div class="tl-item tz-era" id="era-2019" data-era="2019" data-year="2019">
+                        <article class="tz-card glass reveal">
+                            <div class="tz-img">
+                                <img src="../assets/images/2.jpg" alt="第一章 盛夏寒冬" loading="lazy" decoding="async">
+                                <span class="tz-chip">第一章</span>
+                            </div>
+                            <div class="tz-body">
+                                <div class="tz-year">2019</div>
+                                <h3 class="tz-title">盛夏寒冬</h3>
+                                <p class="tz-sub">一切的起点</p>
+                                <p class="tz-desc">结束了过去的故事，回忆画上句点，新的旅程开始了。新的生活即将开始，未来将会如何？过去的回忆似乎还是挥之不去，在今年夏天得到答案。</p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- 2020-2021 -->
+                    <div class="tl-item tz-era" id="era-2020" data-era="2020" data-year="2020">
+                        <article class="tz-card glass reveal">
+                            <div class="tz-img">
+                                <img src="../assets/images/2.jpg" alt="模拟校园2 重夏" loading="lazy" decoding="async">
+                                <span class="tz-chip">第二章</span>
+                            </div>
+                            <div class="tz-body">
+                                <div class="tz-year">2020-2021</div>
+                                <h3 class="tz-title">重夏</h3>
+                                <p class="tz-sub">全新的生活，全新的回忆</p>
+                                <p class="tz-desc">全新的生活，全新的回忆，精彩的故事还在继续。全新的回忆，最好的三人组。我们的巅峰。未来可期。活在当下，新的故事继续精彩上演！</p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- 2021-2022 -->
+                    <div class="tl-item tz-era" id="era-2021" data-era="2021" data-year="2021">
+                        <article class="tz-card glass reveal">
+                            <div class="tz-img">
+                                <img src="../assets/images/2.jpg" alt="模拟校园3" loading="lazy" decoding="async">
+                                <span class="tz-chip">第三章</span>
+                            </div>
+                            <div class="tz-body">
+                                <div class="tz-year">2021-2022</div>
+                                <h3 class="tz-title">模拟校园3</h3>
+                                <p class="tz-sub">离别并不代表结束</p>
+                                <p class="tz-desc">离别并不代表结束，分开并不代表一切。新的故事还在继续。回忆满满，准备迈上新的旅程，迈上成熟。未来的故事依旧精彩，依旧继续。</p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- 2023 -->
+                    <div class="tl-item tz-era" id="era-2023" data-era="2023" data-year="2023">
+                        <article class="tz-card glass reveal">
+                            <div class="tz-img">
+                                <img src="../assets/images/2.jpg" alt="成都特辑" loading="lazy" decoding="async">
+                                <span class="tz-chip">特别篇</span>
+                            </div>
+                            <div class="tz-body">
+                                <div class="tz-year">2023</div>
+                                <h3 class="tz-title">成都特辑</h3>
+                                <p class="tz-sub">成都的插曲，思绪万千的见证</p>
+                                <p class="tz-desc">生活中的插曲，思绪万千的见证。挥之不去的她。一切问题得到解决。看清迷雾中的道路。这一年的经历让我们更加成熟，也让我们看清了未来的方向。</p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- 2026 · 当前时代 -->
+                    <div class="tl-item tz-era current" id="era-2025" data-era="2026" data-year="2026">
+                        <article class="tz-card glass reveal">
+                            <div class="tz-img">
+                                <img src="../assets/images/1.jpg" alt="Z℮R∅零号团队" loading="lazy" decoding="async">
+                                <span class="tz-chip">当前时代</span>
+                            </div>
+                            <div class="tz-body">
+                                <div class="tz-year">2026</div>
+                                <h3 class="tz-title">Z℮R∅零号 时代</h3>
+                                <p class="tz-sub">全新篇章，正式启航</p>
+                                <p class="tz-desc">Z℮R∅零号正式启航，团队成员各司其职，共同打造属于我们的线上家园。从网站建设到线下聚会，每一步都见证着我们的成长与友谊。</p>
+                                <div class="tz-stats">
+                                    <div class="tz-stat"><span class="tz-num">5</span><span class="tz-label">核心成员</span></div>
+                                    <div class="tz-stat"><span class="tz-num">7+</span><span class="tz-label">网站页面</span></div>
+                                    <div class="tz-stat"><span class="tz-num">∞</span><span class="tz-label">精彩故事</span></div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <div class="tz-milestones reveal">
+                            <div class="tz-ms glass">
+                                <span class="tz-ms-icon"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                <div class="tz-ms-main">
+                                    <h4>官方网站上线</h4>
+                                    <p>搭建了属于团队的官方网站，包含多个功能模块</p>
+                                </div>
+                            </div>
+                            <div class="tz-ms glass">
+                                <span class="tz-ms-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
+                                <div class="tz-ms-main">
+                                    <h4>团队组建完成</h4>
+                                    <p>核心成员齐聚，各展所长，共同推动团队向前发展</p>
+                                </div>
+                            </div>
+                            <div class="tz-ms glass">
+                                <span class="tz-ms-icon"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                                <div class="tz-ms-main">
+                                    <h4>线下聚会</h4>
+                                    <p>2026年元旦在西安举行了第一次线下聚会</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 结尾 ==================== -->
+        <section class="section tz-end" id="page-end" data-era="∞" data-year="">
+            <div class="wrap">
+                <article class="tz-end-card glass reveal">
+                    <div class="tz-end-glow" aria-hidden="true"></div>
+                    <h2 class="tz-end-title">我们的故事还在继续</h2>
+                    <p class="tz-end-desc">每一段时光都值得被铭记，每一个明天都充满期待</p>
+                    <button class="btn primary tz-end-btn" id="endBtn" type="button">
+                        <i class="fa fa-star" aria-hidden="true"></i> 一直继续下去
+                    </button>
+                    <div class="tz-end-stars" aria-hidden="true">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </div>
+                    <span class="tz-era-mark" aria-hidden="true">∞</span>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="../js/core.js"></script>
+    <script src="../js/wtfk.js"></script>
+    <script src="../js/sjz.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,600 @@
+/* ============================================================
+   零源机构 · 移动端 sr/hehe —— ETUI 生日彩蛋页
+   沉浸式深色主题：流体尺寸（无断点），全部按 280~768px 自适应
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. 页面令牌（字号流体：320px 约 11.4px，768px 封顶 18px）
+   ------------------------------------------------------------ */
+.sr-page {
+    --sr-pink: #ffb7c5;
+    --sr-pink-deep: #ff8da9;
+    --sr-purple: #d583ff;
+    --sr-ink: rgba(8, 6, 22, 0.62);
+    --sr-line: rgba(255, 255, 255, 0.18);
+    --sr-fs: min(3.56vw, 18px);
+    font-size: var(--sr-fs);
+    color: #fff;
+}
+
+/* ------------------------------------------------------------
+   2. 背景层（静态渐变与光斑，动画只跑 transform/opacity）
+   ------------------------------------------------------------ */
+.sr-page {
+    background: #150f26;
+}
+
+.sr-page .app-bg {
+    display: none;
+}
+
+.sr-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(125deg, #2b1b3a, #1f2a4e, #3a2c5f, #5e3a6b);
+    background-size: 400% 400%;
+    animation: srAurora 14s ease infinite;
+}
+
+.sr-glow {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 28% 26%, rgba(255, 150, 200, 0.32), transparent 58%),
+        radial-gradient(circle at 80% 72%, rgba(200, 130, 255, 0.34), transparent 60%);
+    animation: srGlowShift 9s ease infinite alternate;
+}
+
+@keyframes srAurora {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes srGlowShift {
+    0% { opacity: 0.55; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.06); }
+}
+
+#particleCanvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#fireworks-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+    z-index: 15;
+}
+
+/* 顶部栏在深色场景里改成暗色玻璃 */
+.sr-page .appbar {
+    background: rgba(18, 14, 34, 0.82);
+    border-bottom-color: rgba(255, 255, 255, 0.14);
+}
+
+.sr-page .appbar.scrolled {
+    background: rgba(18, 14, 34, 0.94);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+}
+
+.sr-page .appbar-title {
+    color: #fff;
+}
+
+.sr-page .appbar .icon-btn {
+    color: #fff;
+}
+
+.sr-page .appbar .icon-btn:active {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+/* ------------------------------------------------------------
+   3. 主容器
+   ------------------------------------------------------------ */
+.sr-main {
+    position: relative;
+    z-index: 5;
+}
+
+.sr-main .wrap {
+    /* 底部留出悬浮音乐按钮的空间，滚到底时不会把文字压在按钮下面 */
+    padding-bottom: 4.2rem;
+}
+
+/* ------------------------------------------------------------
+   4. 首屏标题
+   ------------------------------------------------------------ */
+.sr-hero {
+    text-align: center;
+    margin: 1.4rem 0 0.6rem;
+}
+
+.sr-hero-name {
+    font-size: 3.4rem;
+    line-height: 1.12;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    background: linear-gradient(135deg, #ffe6f0, #ffb7c5, #ff8da9, #d583ff);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: srShimmer 4s ease infinite;
+}
+
+.sr-hero-sub {
+    font-size: 1.7rem;
+    line-height: 1.2;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    margin-top: -0.15rem;
+    background: linear-gradient(135deg, #ffe6f0, #ffb7c5, #ff8da9, #d583ff);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: srShimmer 4s ease infinite;
+}
+
+@keyframes srShimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.sr-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.9rem;
+    padding: 0.45rem 1.1rem;
+    border-radius: 999px;
+    font-size: 0.92rem;
+    letter-spacing: 0.03em;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 25px rgba(255, 180, 50, 0.28);
+}
+
+.sr-hero-badge i {
+    color: #ffd966;
+}
+
+/* ------------------------------------------------------------
+   5. 3D 翻转卡（点按翻转，不依赖 :hover）
+   ------------------------------------------------------------ */
+.sr-card-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 1.9rem 0 2rem;
+    perspective: 1500px;
+}
+
+.sr-card {
+    position: relative;
+    width: min(78vw, 340px);
+    height: min(115vw, 400px);
+    transform-style: preserve-3d;
+    transition: transform 0.75s cubic-bezier(0.2, 0.85, 0.4, 1.1);
+    will-change: transform;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.sr-card.flipped {
+    transform: rotateY(180deg);
+}
+
+.sr-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 32px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(255, 255, 255, 0.18) inset;
+}
+
+.sr-face-front {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #2a2038;
+    background-image:
+        linear-gradient(135deg, rgba(28, 20, 48, 0.72), rgba(58, 34, 66, 0.78)),
+        url("../assets/images/hehe.jpg");
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(255, 200, 100, 0.6);
+}
+
+.sr-avatar {
+    width: min(42%, 8.6rem);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 0.9rem;
+    background-image: url("../assets/images/hehe.jpg");
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 1.6rem rgba(255, 100, 150, 0.85);
+    animation: srPulse 2.4s infinite;
+}
+
+.sr-avatar i {
+    font-size: 3.4rem;
+    color: #ffe6b0;
+    text-shadow: 0 0 0.8rem rgba(255, 215, 0, 0.9);
+}
+
+@keyframes srPulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 100, 150, 0.65), 0 0 1.6rem rgba(255, 100, 150, 0.85); }
+    70% { box-shadow: 0 0 0 1.1rem rgba(255, 100, 150, 0), 0 0 1.6rem rgba(255, 100, 150, 0.85); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 100, 150, 0), 0 0 1.6rem rgba(255, 100, 150, 0.85); }
+}
+
+.sr-card-name {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    margin: 0.35rem 0 0.2rem;
+    background: linear-gradient(120deg, #fff2b5, #ffd966);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.sr-card-role {
+    font-size: 1rem;
+    opacity: 0.92;
+}
+
+.sr-click-hint {
+    margin-top: 0.7rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    background: rgba(0, 0, 0, 0.5);
+    animation: srHint 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes srHint {
+    0% { opacity: 0.65; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.04); }
+}
+
+.sr-face-back {
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1.1rem;
+    background: linear-gradient(135deg, #ffb7c5, #e85d8e, #b76eff);
+}
+
+/* 背面底色：内联 SVG 不规则圆角，正反面圆角完全吻合 */
+.sr-face-fill {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.sr-msg,
+.sr-bless,
+.sr-face-back > i {
+    position: relative;
+    z-index: 1;
+}
+
+.sr-msg {
+    font-size: 1.65rem;
+    font-weight: 800;
+    margin-bottom: 0.7rem;
+    text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.42);
+}
+
+.sr-bless {
+    width: 100%;
+    font-size: 0.95rem;
+    line-height: 1.62;
+    padding: 0.9rem 0.8rem;
+    border-radius: 26px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.sr-face-back > i {
+    font-size: 2.4rem;
+    margin-top: 0.85rem;
+    opacity: 0.92;
+    color: #ffd0e8;
+}
+
+/* ------------------------------------------------------------
+   6. 惊喜卡片网格（流体两列，极窄屏自动单列）
+   ------------------------------------------------------------ */
+.sr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.5rem), 1fr));
+    gap: 0.9rem;
+    margin: 1.6rem 0;
+}
+
+.sr-feature {
+    padding: 1.15rem 0.85rem;
+    border-radius: 26px;
+    text-align: center;
+    background: rgba(20, 25, 55, 0.62);
+    border: 1px solid var(--sr-line);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
+    transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+
+.sr-feature:active {
+    transform: translateY(-4px) scale(0.99);
+    box-shadow: 0 0 26px rgba(255, 120, 160, 0.5);
+    border-color: var(--sr-pink);
+}
+
+.sr-feature-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(145deg, #ffb7c5, #ff8da9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.sr-feature h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.04em;
+}
+
+.sr-feature p {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+/* ------------------------------------------------------------
+   7. 生日倒计时
+   ------------------------------------------------------------ */
+.sr-countdown {
+    margin: 1.4rem 0;
+    padding: 1.25rem 0.9rem;
+    border-radius: 34px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.55);
+    box-shadow: 0 0 30px rgba(255, 160, 0, 0.32);
+}
+
+.sr-countdown h3 {
+    font-size: 1.02rem;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+}
+
+.sr-countdown h3 i {
+    color: #ffd966;
+}
+
+.sr-timer {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: min(2.2vw, 0.9rem);
+    margin-top: 0.95rem;
+}
+
+.sr-time-box {
+    flex: 0 1 auto;
+    min-width: 0;
+    padding: 0.6rem 0.35rem 0.5rem;
+    border-radius: 1.5rem;
+    background: rgba(0, 0, 0, 0.6);
+    border-bottom: 3px solid var(--sr-pink);
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.5);
+    font-size: 0.85rem;
+    line-height: 1.3;
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.sr-time-num {
+    display: block;
+    font-size: clamp(1.35rem, 7.4vw, 2.35rem);
+    font-weight: 800;
+    line-height: 1.15;
+    background: linear-gradient(135deg, #ffd966, #ff8da9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    font-variant-numeric: tabular-nums;
+}
+
+.sr-countdown-foot {
+    margin-top: 0.95rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* ------------------------------------------------------------
+   8. 页尾祝福 + 返回首页
+   ------------------------------------------------------------ */
+.sr-outro {
+    text-align: center;
+    margin: 2.2rem 0 0.6rem;
+}
+
+.sr-outro p {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+}
+
+.sr-sign {
+    margin-top: 0.6rem;
+    font-size: 0.86rem;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.sr-home-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    min-height: 44px;
+    margin: 1.2rem 0 0.6rem;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    touch-action: manipulation;
+    transition: transform var(--dur) var(--ease-out), background var(--dur) var(--ease-out);
+}
+
+.sr-home-link:active {
+    transform: scale(0.97);
+    background: rgba(255, 255, 255, 0.24);
+}
+
+/* ------------------------------------------------------------
+   9. 音乐按钮（点按播放 / 暂停，图标随状态切换）
+   ------------------------------------------------------------ */
+.sr-music {
+    position: fixed;
+    right: max(0.9rem, var(--sar));
+    bottom: calc(0.9rem + var(--sab));
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sr-music-btn {
+    width: 3.1rem;
+    height: 3.1rem;
+    min-width: 46px;
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid var(--sr-pink);
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1.4rem;
+    /* 半透明 + 背景模糊：滚动经过的文字仍能透出来，不会被完全遮住 */
+    background: rgba(14, 10, 28, 0.42);
+    backdrop-filter: blur(7px) saturate(1.2);
+    -webkit-backdrop-filter: blur(7px) saturate(1.2);
+    box-shadow: 0 0 16px rgba(255, 180, 100, 0.45);
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sr-music-btn:active {
+    transform: scale(1.08);
+    background: var(--sr-pink-deep);
+    color: #1a1530;
+}
+
+.sr-music-btn.is-playing {
+    background: rgba(255, 141, 169, 0.9);
+    color: #1a1530;
+    box-shadow: 0 0 26px rgba(255, 183, 197, 0.95);
+}
+
+.sr-music-btn.is-playing i {
+    animation: srSpin 3.6s linear infinite;
+}
+
+@keyframes srSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ------------------------------------------------------------
+   10. 极窄屏 / 横屏矮屏微调（仅允许这两类媒体查询）
+   ------------------------------------------------------------ */
+@media (max-width: 340px) {
+    .sr-card {
+        width: min(84vw, 300px);
+        height: min(122vw, 360px);
+    }
+
+    .sr-bless {
+        font-size: 0.9rem;
+        padding: 0.7rem 0.6rem;
+    }
+
+    .sr-hero-name {
+        font-size: 3rem;
+    }
+}
+
+@media (max-height: 460px) and (orientation: landscape) {
+    .sr-hero {
+        margin-top: 0.6rem;
+    }
+
+    .sr-card {
+        width: min(52vw, 320px);
+        height: min(74vh, 340px);
+    }
+
+    .sr-card-wrap {
+        margin: 1rem 0 1.2rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sr-bg,
+    .sr-glow,
+    .sr-hero-name,
+    .sr-hero-sub,
+    .sr-avatar,
+    .sr-click-hint,
+    .sr-music-btn.is-playing i {
+        animation: none;
+    }
+}

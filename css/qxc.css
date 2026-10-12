@@ -1,0 +1,577 @@
+/* ============================================================
+   零源机构 · 移动端 / MOD
+   qxc.css — 群相册：液态头部 + 2 列紧凑网格 + 全屏滑动预览
+   与 pc/css/qxc.css 视觉语言对齐，但为纯移动端流体写法，
+   不含任何 max-width 布局断点。
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. 液态头部
+   ------------------------------------------------------------ */
+.gallery-hero {
+    position: relative;
+    padding: 26px var(--pad) 22px;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* 头部光斑：用径向渐变代替 filter: blur()，移动端更便宜 */
+.gallery-hero::before,
+.gallery-hero::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.gallery-hero::before {
+    width: 62%;
+    max-width: 320px;
+    aspect-ratio: 1;
+    top: -16%;
+    left: -6%;
+    background: radial-gradient(circle, rgba(255, 107, 157, 0.34), rgba(255, 107, 157, 0) 68%);
+    animation: blobFloat1 17s ease-in-out infinite;
+}
+
+.gallery-hero::after {
+    width: 56%;
+    max-width: 290px;
+    aspect-ratio: 1;
+    top: -6%;
+    right: -8%;
+    background: radial-gradient(circle, rgba(77, 208, 255, 0.32), rgba(77, 208, 255, 0) 68%);
+    animation: blobFloat2 21s ease-in-out infinite;
+}
+
+@keyframes blobFloat1 {
+
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(24px, 26px, 0) scale(1.14);
+    }
+}
+
+@keyframes blobFloat2 {
+
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(-24px, 18px, 0) scale(1.1);
+    }
+}
+
+.hero-inner {
+    position: relative;
+    z-index: 2;
+}
+
+.gallery-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    margin-bottom: 14px;
+    border-radius: var(--r-pill);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--grad-purple);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.gallery-badge i {
+    color: var(--grad-pink);
+}
+
+/* 长标题用流体字号，窄屏自动折行，任何宽度都不会溢出 */
+.gallery-title {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.3rem, 6.4vw, 2rem);
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    overflow-wrap: break-word;
+}
+
+.gallery-subtitle {
+    font-size: 0.86rem;
+    letter-spacing: 1.5px;
+    color: var(--text-mid);
+    margin-bottom: 14px;
+}
+
+.gallery-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 15px;
+    border-radius: var(--r-pill);
+    font-size: 0.72rem;
+    color: var(--text-light);
+    background: rgba(255, 255, 255, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.gallery-hint i {
+    color: var(--grad-purple);
+}
+
+/* 照片补齐前的说明（可选提示，刻意做得轻） */
+.gallery-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    color: var(--text-light);
+    opacity: 0.9;
+}
+
+.gallery-note i {
+    color: var(--grad-pink);
+    opacity: 0.8;
+}
+
+/* ------------------------------------------------------------
+   2. 照片网格：固定 2 列紧凑网格
+   （横向平分，宽度再小也保持 2 列，不会退化成过小的 3 列）
+   ------------------------------------------------------------ */
+.photo-desk {
+    position: relative;
+    padding: 4px var(--pad) 6px;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    align-items: start;
+}
+
+/* 网格行：把已加载完的照片两两一行，行高可冻结，
+   保证分批加载时新照片不会把已读内容顶下去 */
+.photo-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    align-items: start;
+}
+
+/* 拍立得风格照片卡 */
+.gallery-photo {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    padding: 7px 7px 26px;
+    border-radius: var(--r-card-sm);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    overflow: hidden;
+    touch-action: manipulation;
+    transition: transform 0.24s var(--ease-spring), box-shadow 0.24s;
+}
+
+.gallery-photo:active {
+    transform: scale(0.965);
+    box-shadow: var(--glass-shadow-lg);
+}
+
+/* 顶部彩色流光条 */
+.gallery-photo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--grad-pink), var(--grad-purple), var(--grad-blue));
+    opacity: 0.75;
+}
+
+.photo-shot {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 10px 14px 10px 15px;
+    overflow: hidden;
+    /* 图片加载中 / 失败时的渐变占位，保证不留白框 */
+    background: linear-gradient(135deg,
+            rgba(255, 107, 157, 0.18), rgba(196, 77, 255, 0.16) 52%, rgba(77, 208, 255, 0.18));
+}
+
+.photo-shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-out);
+}
+
+.photo-shot.is-loaded img {
+    opacity: 1;
+}
+
+/* 加载失败 / 没有图：隐藏破图图标，只留渐变底 + 自绘图标，
+   不会出现浏览器默认的破图标记或白框 */
+.photo-shot.is-broken img {
+    opacity: 0;
+}
+
+.photo-shot.has-media.is-loading::after,
+.photo-shot.is-broken::after {
+    content: '\f03e';
+    /* fa-image */
+    font-family: 'FontAwesome';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--grad-purple);
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.photo-label {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 5px;
+    text-align: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.66rem;
+    letter-spacing: 0.5px;
+    color: var(--text-light);
+}
+
+/* 每张照片的进场（延迟由 JS 写入 animation-delay） */
+@keyframes photoIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.gallery-photo.photo-enter {
+    animation: photoIn 0.5s var(--ease-out) both;
+}
+
+/* ------------------------------------------------------------
+   3. 加载更多
+   ------------------------------------------------------------ */
+.desk-load-more {
+    padding: 20px var(--pad) 6px;
+    text-align: center;
+}
+
+.load-more-btn {
+    min-height: 48px;
+    padding: 12px 28px;
+    letter-spacing: 1px;
+}
+
+.load-more-btn i {
+    font-size: 0.9em;
+}
+
+.loading-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 0.78rem;
+    color: var(--text-light);
+}
+
+.loading-indicator[hidden] {
+    display: none;
+}
+
+.loading-indicator i {
+    color: var(--grad-purple);
+}
+
+/* ------------------------------------------------------------
+   4. 沉浸式预览（全屏 · 横向 scroll-snap 滑动切换）
+   ------------------------------------------------------------ */
+.immersive-preview {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-sheet);
+    display: flex;
+    flex-direction: column;
+    /* 全屏深色背景 */
+    background:
+        radial-gradient(ellipse 74% 46% at 16% 8%, rgba(196, 77, 255, 0.18), transparent 68%),
+        radial-gradient(ellipse 66% 42% at 86% 92%, rgba(77, 208, 255, 0.14), transparent 68%),
+        #0d0819;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease-out);
+}
+
+.immersive-preview.open {
+    opacity: 1;
+    /* .open 时立即可见，配合 opacity 做淡入 */
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* 淡出结束后由 JS 加上，避免过渡期间还占用触摸 */
+.immersive-preview.is-hidden {
+    visibility: hidden;
+}
+
+.preview-bg {
+    position: absolute;
+    inset: 0;
+    background: rgba(9, 5, 20, 0.42);
+}
+
+/* 顶部条：序号 + 关闭（触摸区 ≥44px） */
+.preview-topbar {
+    position: relative;
+    z-index: 3;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 12px;
+    padding-top: calc(8px + var(--sat));
+    padding-left: max(12px, var(--sal));
+    padding-right: max(12px, var(--sar));
+}
+
+.preview-topnum {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.68);
+}
+
+.preview-close {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.15rem;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.13);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    touch-action: manipulation;
+    transition: transform 0.22s var(--ease-spring), background 0.22s;
+}
+
+.preview-close:active {
+    transform: scale(0.9) rotate(90deg);
+    background: var(--grad-pink);
+    border-color: transparent;
+}
+
+/* 滑动舞台：一屏一张，scroll-snap 吸附 */
+.preview-stage {
+    position: relative;
+    z-index: 2;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+}
+
+.preview-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 0;
+    scroll-snap-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+}
+
+.preview-img-box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* 这是一张的渐变占位（深色玻璃感），加载失败时也不会是白框 */
+    background: linear-gradient(135deg,
+            rgba(255, 107, 157, 0.13), rgba(196, 77, 255, 0.16) 52%, rgba(77, 208, 255, 0.13)),
+        rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 14px 22px 14px 24px;
+    overflow: hidden;
+}
+
+.preview-img-box img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-out);
+}
+
+.preview-img-box.is-loaded img {
+    opacity: 1;
+}
+
+/* 加载失败：不显示破图标记，保留渐变底 + 占位图标 */
+.preview-img-box.is-media-broken img {
+    opacity: 0;
+}
+
+.preview-slide-fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.62);
+}
+
+.preview-slide-fallback i {
+    font-size: 1.9rem;
+    color: var(--grad-purple);
+    opacity: 0.75;
+}
+
+.preview-slide-fallback .fallback-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.42);
+}
+
+/* 底部信息条：序号 + 标题 */
+.preview-caption {
+    position: relative;
+    z-index: 3;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    margin: 0 max(10px, var(--pad)) calc(10px + var(--sab));
+    padding: 11px 18px;
+    border-radius: var(--r-card-sm);
+    text-align: center;
+    color: rgba(255, 255, 255, 0.86);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+}
+
+.caption-title {
+    font-size: 0.86rem;
+    font-weight: 500;
+}
+
+.caption-index {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.86rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--grad-pink);
+}
+
+.caption-swipe {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.68rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* ------------------------------------------------------------
+   5. 极窄屏（280-340px）与横屏矮屏微调
+   ------------------------------------------------------------ */
+@media (max-width: 340px) {
+    .photo-grid {
+        gap: 8px;
+    }
+
+    .gallery-photo {
+        padding: 6px 6px 23px;
+    }
+
+    .caption-swipe {
+        display: none;
+    }
+}
+
+@media (max-height: 460px) and (orientation: landscape) {
+    .gallery-hero {
+        padding: 16px var(--pad) 12px;
+    }
+
+    .gallery-title {
+        font-size: 1.25rem;
+    }
+
+    .preview-caption {
+        padding: 8px 14px;
+        margin-bottom: calc(6px + var(--sab));
+    }
+}
+
+/* 减弱动态效果：去掉循环光斑动画 */
+@media (prefers-reduced-motion: reduce) {
+
+    .gallery-hero::before,
+    .gallery-hero::after {
+        animation: none;
+    }
+}

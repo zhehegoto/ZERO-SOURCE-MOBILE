@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f5f0ff">
+    <meta name="description" content="零源机构群相册 — 散落的记忆碎片（移动端）">
+    <meta name="format-detection" content="telephone=no,email=no,address=no">
+    <title>群相册 | 零源机构</title>
+
+    <!-- 标记 JS 可用：进场动画只在此时才隐藏内容，保证禁用 JS 也能看到全部内容 -->
+    <script>document.documentElement.classList.add('has-js');</script>
+
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+    <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/fonts-google.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/wtfk.css">
+    <link rel="stylesheet" href="../css/qxc.css">
+</head>
+
+<body data-page="qxc" data-title="群相册" data-base="../">
+
+    <div class="app-bg" aria-hidden="true"></div>
+
+    <main class="app-main">
+
+        <!-- ==================== 液态头部 ==================== -->
+        <section class="gallery-hero">
+            <div class="hero-inner">
+                <span class="gallery-badge"><i class="fa fa-camera" aria-hidden="true"></i> MEMORY</span>
+                <h1 class="gallery-title">详情请看-页脚-<wbr>隐私政策-05群相册</h1>
+                <p class="gallery-subtitle">每一张照片，都是时光的碎片</p>
+                <div class="gallery-hint">
+                    <i class="fa fa-hand-pointer-o" aria-hidden="true"></i>
+                    <span>点击放大 · 左右滑动切换</span>
+                </div>
+                <!-- 照片补齐前的小提示：图集为空时占位块是有意为之，不是页面坏了 -->
+                <p class="gallery-note">
+                    <i class="fa fa-picture-o" aria-hidden="true"></i>
+                    照片整理中 · 占位待你来填满
+                </p>
+            </div>
+        </section>
+
+        <!-- ==================== 照片网格（JS 生成） ====================
+             照片文件请放到 mod/assets/images/zerozhandui/ 目录下，
+             命名规范（与 PC 版 pc/images/zerozhandui/ 完全一致）：
+                 照片 (1).jpeg  ~  照片 (118).jpeg
+             共 118 张，文件名里的空格和括号都要保留。
+             目录为空时页面会自动显示渐变占位，不会出现破图或白框。
+        ================================================================= -->
+        <section class="photo-desk" id="photoDesk" aria-label="群相册照片">
+            <!-- 照片由 qxc.js 分批生成进 #photoGrid -->
+            <div class="photo-grid" id="photoGrid"></div>
+        </section>
+
+        <!-- ==================== 加载更多 ==================== -->
+        <div class="desk-load-more" id="deskLoadMore">
+            <button class="btn primary load-more-btn" id="loadMoreBtn" type="button">
+                <i class="fa fa-plus" aria-hidden="true"></i> 拾起更多记忆
+            </button>
+            <div class="loading-indicator" id="loadingIndicator" hidden>
+                <i class="fa fa-spinner fa-spin" aria-hidden="true"></i> 正在翻找...
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ==================== 沉浸式预览（全屏 · 左右滑动切换） ==================== -->
+    <div class="immersive-preview is-hidden" id="immersivePreview" role="dialog" aria-modal="true"
+        aria-label="照片预览" aria-hidden="true">
+        <div class="preview-bg" id="previewBg"></div>
+
+        <div class="preview-topbar">
+            <span class="preview-topnum" id="previewTopNum">1 / 118</span>
+            <button class="preview-close" id="previewClose" type="button" aria-label="关闭预览">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <div class="preview-stage" id="previewStage"></div>
+
+        <div class="preview-caption">
+            <span class="caption-title" id="captionTitle">记忆碎片</span>
+            <span class="caption-index" id="captionIndex">1 / 118</span>
+            <span class="caption-swipe" aria-hidden="true">
+                <i class="fa fa-exchange"></i> 滑动切换
+            </span>
+        </div>
+    </div>
+
+    <script src="../js/core.js"></script>
+    <script src="../js/wtfk.js"></script>
+    <script src="../js/qxc.js"></script>
+</body>
+
+</html>

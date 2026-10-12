@@ -1,0 +1,581 @@
+/* ============================================================
+   零源机构 · 移动端 Z℮R∅‑SOURCE / MOD
+   duanwu_0619.css — 端午节 · 五月初五（端午安康）
+   PC 源：pc/festival/css/duanwu_0619.css + public.css
+   适配策略：单列卡片流 + 流体字号，无断点堆叠
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. 主题令牌（端午 · 液态玻璃青绿）
+   ------------------------------------------------------------ */
+body.fw-duanwu {
+    --grad-1: #2d8a5a;
+    --grad-2: #4aaa7a;
+    --grad-3: #6acaaa;
+
+    --fw-glass-bg: rgba(255, 255, 255, 0.34);
+    --fw-glass-border: rgba(255, 255, 255, 0.55);
+    --fw-glass-shadow: 0 8px 28px rgba(45, 138, 90, 0.16);
+    --fw-ink: #1a3a2a;
+    --fw-ink-light: rgba(26, 58, 42, 0.62);
+    --fw-particle: 150;
+
+    background: linear-gradient(135deg, #e8f5ee 0%, #d4ebe0 30%, #c0e0d0 60%, #e8f5ee 100%) fixed;
+    color: var(--fw-ink);
+}
+
+html {
+    background-color: #e8f5ee;
+}
+
+/* 节日氛围光斑（纯渐变，不用 filter: blur，移动端更省） */
+body.fw-duanwu::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 78% 52% at 12% 18%, rgba(45, 138, 90, 0.18), transparent 70%),
+        radial-gradient(ellipse 70% 50% at 88% 26%, rgba(74, 170, 122, 0.16), transparent 70%),
+        radial-gradient(ellipse 74% 48% at 50% 88%, rgba(106, 202, 170, 0.16), transparent 70%);
+}
+
+/* ------------------------------------------------------------
+   2. 粒子画布（在背景之上、内容之下）
+   ------------------------------------------------------------ */
+.fx-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+body.fw-duanwu .app-main {
+    z-index: 2;
+}
+
+/* base.css 的通用浅色背景层在节日页不使用（页面自带主题底色） */
+body.fw-duanwu .app-bg {
+    display: none;
+}
+
+/* ------------------------------------------------------------
+   3. 液态玻璃（PC 端 .liquid-glass 的移动端实现）
+   ------------------------------------------------------------ */
+.liquid-glass {
+    position: relative;
+    background: var(--fw-glass-bg);
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(1.5);
+    backdrop-filter: blur(var(--blur)) saturate(1.5);
+    border: 1px solid var(--fw-glass-border);
+    border-radius: var(--r-card);
+    box-shadow: var(--fw-glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    overflow: hidden;
+}
+
+.liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1) 40%, transparent 60%, rgba(255, 255, 255, 0.3));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+@supports not ((-webkit-backdrop-filter: blur(4px)) or (backdrop-filter: blur(4px))) {
+    .liquid-glass {
+        background: rgba(255, 255, 255, 0.9);
+    }
+}
+
+/* ------------------------------------------------------------
+   4. Hero
+   ------------------------------------------------------------ */
+.hero {
+    text-align: center;
+    padding: 26px 0 30px;
+}
+
+.hero-tag {
+    display: inline-block;
+    padding: 8px 20px;
+    font-size: clamp(0.72rem, 3.2vw, 0.9rem);
+    font-weight: 500;
+    letter-spacing: min(2.6px, 0.6vw);
+    color: var(--fw-ink);
+    margin-bottom: 20px;
+}
+
+.hero-title {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: min(2.6vw, 12px);
+    font-size: min(17vw, 4.6rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 16px;
+}
+
+.hero-title .char {
+    background: linear-gradient(135deg, var(--grad-1), var(--grad-2) 50%, var(--grad-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: charFloat 3s ease-in-out infinite;
+}
+
+.hero-title .char:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.hero-title .char:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.hero-title .char:nth-child(4) {
+    animation-delay: 0.6s;
+}
+
+@keyframes charFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.hero-sub {
+    font-size: clamp(0.78rem, 3.4vw, 1.05rem);
+    color: var(--fw-ink-light);
+    letter-spacing: min(5px, 1.1vw);
+}
+
+/* ------------------------------------------------------------
+   5. 品粽子（交互区）
+   ------------------------------------------------------------ */
+.zongzi-interactive {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 24px 18px;
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+.zi-display {
+    min-width: 0;
+}
+
+.zi-icon {
+    display: block;
+    margin: 0 auto 8px;
+    width: 96px;
+    height: 96px;
+    line-height: 1;
+    font-size: clamp(3rem, 15vw, 4.4rem);
+    background: none;
+    border-radius: 50%;
+    transition: transform 0.4s var(--ease-spring);
+    touch-action: manipulation;
+}
+
+.zi-icon:active {
+    transform: scale(0.88) rotate(-6deg);
+}
+
+.zi-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    color: rgba(26, 58, 42, 0.42);
+    margin-bottom: 4px;
+}
+
+.zi-name {
+    font-size: clamp(1.05rem, 4.6vw, 1.3rem);
+    font-weight: 700;
+    color: var(--grad-1);
+    margin-bottom: 4px;
+    line-height: 1.35;
+}
+
+.zi-desc {
+    font-size: clamp(0.76rem, 3.2vw, 0.85rem);
+    color: var(--fw-ink-light);
+    line-height: 1.6;
+}
+
+.zi-info {
+    min-width: 0;
+    width: 100%;
+}
+
+.zi-info h2 {
+    font-size: clamp(1.3rem, 6vw, 1.7rem);
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.zi-info p {
+    font-size: clamp(0.78rem, 3.3vw, 0.92rem);
+    line-height: 1.9;
+    color: var(--fw-ink-light);
+    margin-bottom: 18px;
+}
+
+/* ------------------------------------------------------------
+   6. 液态按钮
+   ------------------------------------------------------------ */
+.liquid-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 12px 26px;
+    border-radius: 50px 60px 45px 55px;
+    font-size: clamp(0.8rem, 3.4vw, 0.9rem);
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: inherit;
+    transition: transform 0.32s var(--ease-spring), box-shadow 0.32s, background 0.32s;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.liquid-btn:active {
+    transform: scale(0.95);
+}
+
+.liquid-btn.primary {
+    background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+    color: #fff;
+    box-shadow: 0 6px 22px rgba(45, 138, 90, 0.35);
+}
+
+.liquid-btn.ghost {
+    background: rgba(255, 255, 255, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    color: var(--fw-ink);
+}
+
+.liquid-btn[disabled] {
+    opacity: 0.62;
+    pointer-events: none;
+}
+
+/* ------------------------------------------------------------
+   7. 习俗卡片（移动端单列 / 宽屏自适应两列）
+   ------------------------------------------------------------ */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.card {
+    padding: 22px 18px;
+    text-align: center;
+    transition: transform 0.32s var(--ease-spring), box-shadow 0.32s;
+}
+
+.card:active {
+    transform: scale(0.978);
+}
+
+.card-icon {
+    display: inline-block;
+    font-size: clamp(2rem, 8.5vw, 2.5rem);
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+.card-title {
+    font-size: clamp(1rem, 4.2vw, 1.15rem);
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    color: var(--fw-ink);
+}
+
+.card-desc {
+    font-size: clamp(0.76rem, 3.2vw, 0.85rem);
+    line-height: 1.7;
+    color: var(--fw-ink-light);
+}
+
+/* ------------------------------------------------------------
+   8. 赛龙舟
+   ------------------------------------------------------------ */
+.dragonboat-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 24px 18px;
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+.db-text {
+    min-width: 0;
+}
+
+.db-text h2 {
+    font-size: clamp(1.3rem, 6vw, 1.7rem);
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.db-text p {
+    font-size: clamp(0.78rem, 3.3vw, 0.92rem);
+    line-height: 1.9;
+    color: var(--fw-ink-light);
+}
+
+.db-visual {
+    width: 100%;
+    min-width: 0;
+}
+
+/* 航道：龙舟在其中前进 */
+.db-track {
+    position: relative;
+    height: 74px;
+    margin-bottom: 14px;
+    border-radius: 20px 30px 22px 32px;
+    background:
+        radial-gradient(ellipse 60% 40% at 20% 60%, rgba(74, 170, 122, 0.28), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 80% 70%, rgba(106, 202, 170, 0.26), transparent 70%),
+        rgba(255, 255, 255, 0.26);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+}
+
+.boat {
+    position: absolute;
+    left: 10px;
+    bottom: 8px;
+    display: inline-block;
+    transition: transform 0.5s linear;
+    will-change: transform;
+}
+
+.boat.speed {
+    animation: boatShake 0.2s ease-in-out infinite;
+}
+
+@keyframes boatShake {
+
+    0%,
+    100% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateX(-3px) rotate(-2deg);
+    }
+
+    75% {
+        transform: translateX(3px) rotate(2deg);
+    }
+}
+
+.boat-emoji {
+    display: block;
+    font-size: clamp(2.1rem, 9vw, 2.8rem);
+    line-height: 1.1;
+}
+
+.boat-waves {
+    font-size: clamp(0.7rem, 3vw, 0.9rem);
+    color: var(--grad-2);
+    letter-spacing: 3px;
+    line-height: 1;
+    text-align: center;
+}
+
+/* ------------------------------------------------------------
+   9. 祝福条
+   ------------------------------------------------------------ */
+.blessing-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.blessing-item {
+    padding: 18px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: transform 0.32s var(--ease-spring);
+}
+
+.blessing-item:active {
+    transform: scale(0.978);
+}
+
+.b-num {
+    flex: 0 0 auto;
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.35rem, 6vw, 1.9rem);
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.b-text {
+    font-size: clamp(0.95rem, 4vw, 1.1rem);
+    font-weight: 600;
+    color: var(--fw-ink);
+    letter-spacing: 2px;
+}
+
+/* ------------------------------------------------------------
+   10. 返回传统节日总览
+   ------------------------------------------------------------ */
+.festival-back {
+    margin: 4px 0 8px;
+}
+
+.festival-back .btn.line {
+    border-color: rgba(45, 138, 90, 0.34);
+    color: var(--grad-1);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* ------------------------------------------------------------
+   11. 进场动画（自带实现，不依赖 core.js 的 .reveal，
+       这样即使观察器没触发也不会留下空白）
+   ------------------------------------------------------------ */
+.anim {
+    animation: fwFadeUp 0.6s var(--ease-out) both;
+}
+
+.cards-grid .card:nth-child(1) {
+    animation-delay: 0.04s;
+}
+
+.cards-grid .card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.cards-grid .card:nth-child(3) {
+    animation-delay: 0.16s;
+}
+
+.cards-grid .card:nth-child(4) {
+    animation-delay: 0.22s;
+}
+
+.cards-grid .card:nth-child(5) {
+    animation-delay: 0.28s;
+}
+
+.cards-grid .card:nth-child(6) {
+    animation-delay: 0.34s;
+}
+
+.blessing-item:nth-child(2) {
+    animation-delay: 0.06s;
+}
+
+.blessing-item:nth-child(3) {
+    animation-delay: 0.12s;
+}
+
+@keyframes fwFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ------------------------------------------------------------
+   12. 极窄屏微调（仅 280-340px，不做断点堆叠）
+   ------------------------------------------------------------ */
+@media (max-width: 340px) {
+    .hero-tag {
+        letter-spacing: 1.5px;
+    }
+
+    .zongzi-interactive,
+    .dragonboat-section {
+        padding: 20px 14px;
+    }
+
+    .b-text {
+        letter-spacing: 1px;
+    }
+}
+
+/* ------------------------------------------------------------
+   13. 横屏矮屏：压缩纵向留白
+   ------------------------------------------------------------ */
+@media (max-height: 460px) and (orientation: landscape) {
+    .hero {
+        padding: 10px 0 18px;
+    }
+
+    .hero-title {
+        font-size: min(9vh, 4rem);
+    }
+}
+
+/* ------------------------------------------------------------
+   14. 尊重系统「减弱动态效果」
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+    .hero-title .char {
+        animation: none;
+    }
+
+    .boat.speed {
+        animation: none;
+    }
+
+    .anim,
+    .cards-grid .card,
+    .blessing-item {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}

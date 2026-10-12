@@ -1,0 +1,320 @@
+/* ============================================================
+   零源机构 · 移动端 / MOD
+   gxrz.css — 更新日志（垂直时间线 + 版本卡片）
+   时间线的轴线与圆点复用 base.css 的 .timeline / .tl-item
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. 页面头部
+   ------------------------------------------------------------ */
+.cl-hero {
+    text-align: center;
+    padding: 6px 0 2px;
+}
+
+.hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    margin-bottom: 12px;
+    border-radius: var(--r-pill);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--grad-purple);
+    background: rgba(196, 77, 255, 0.09);
+    border: 1px solid rgba(196, 77, 255, 0.22);
+}
+
+.hero-title {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-weight: 400;
+    font-size: min(11vw, 2.6rem);
+    line-height: 1.2;
+    letter-spacing: min(2vw, 8px);
+    margin-right: calc(min(2vw, 8px) * -1);
+    background: linear-gradient(135deg, var(--text-dark), var(--grad-purple), var(--grad-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 0.78rem;
+    line-height: 1.75;
+    color: var(--text-light);
+    margin-top: 8px;
+}
+
+/* ------------------------------------------------------------
+   2. 顶部统计
+   ------------------------------------------------------------ */
+.cl-stats {
+    margin-top: 20px;
+}
+
+/* ------------------------------------------------------------
+   3. 版本卡片
+   ------------------------------------------------------------ */
+.cl-card {
+    border-radius: 18px 28px 20px 30px;
+    overflow: hidden;
+}
+
+/* 最新版本：加一圈渐变描边，一眼能认出来 */
+.tl-item.latest .cl-card {
+    border-color: rgba(196, 77, 255, 0.42);
+    box-shadow: 0 10px 30px rgba(196, 77, 255, 0.2);
+}
+
+.tl-item.latest .cl-card::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--grad-pink), var(--grad-purple), var(--grad-blue));
+}
+
+.tl-item.latest::before {
+    box-shadow: 0 0 0 4px rgba(196, 77, 255, 0.24);
+}
+
+/* 已废弃 / 已取消 / 已下架：整卡降饱和 */
+.tl-item.deprecated .cl-card {
+    background: rgba(200, 200, 200, 0.22);
+    border-color: rgba(180, 180, 180, 0.4);
+    box-shadow: none;
+    opacity: 0.7;
+}
+
+.tl-item.deprecated .ver-tag,
+.tl-item.deprecated .ver-date,
+.tl-item.deprecated .cl-row-title {
+    color: #8b8b8b;
+}
+
+.tl-item.deprecated .cl-row-desc {
+    color: #a2a2a2;
+}
+
+.tl-item.deprecated .cl-row-icon {
+    opacity: 0.5;
+}
+
+.tl-item.deprecated::before {
+    background: linear-gradient(135deg, #c8c8c8, #a8a8a8);
+    box-shadow: none;
+}
+
+/* ---- 卡片头部（点击展开 / 收起） ---- */
+.cl-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 14px 12px;
+    min-height: 52px;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    transition: background 0.2s var(--ease-out);
+}
+
+.cl-head:active {
+    background: rgba(255, 255, 255, 0.42);
+}
+
+.cl-badges {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+}
+
+.ver-tag {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.02rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: var(--text-dark);
+}
+
+.old-ver {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-light);
+    text-decoration: line-through;
+    margin-right: 4px;
+}
+
+.ver-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.7rem;
+    color: var(--text-light);
+}
+
+.ver-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: var(--r-pill);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.ver-badge.type-major {
+    color: var(--grad-pink);
+    background: rgba(255, 107, 157, 0.13);
+}
+
+.ver-badge.type-base {
+    color: var(--accent);
+    background: rgba(74, 158, 255, 0.13);
+}
+
+.ver-badge.type-normal {
+    color: var(--text-mid);
+    background: rgba(255, 255, 255, 0.62);
+}
+
+.ver-badge.deprecated {
+    color: #fff;
+    background: #9a9a9a;
+}
+
+/* 展开箭头 */
+.cl-toggle {
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    margin-top: 2px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: #fff;
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
+    transition: transform 0.3s var(--ease-spring);
+}
+
+.tl-item .cl-card.collapsed .cl-toggle {
+    transform: rotate(-90deg);
+}
+
+/* ---- 卡片内容 ---- */
+.cl-body {
+    overflow: hidden;
+    transition: max-height 0.36s var(--ease-out);
+}
+
+/* 默认全部展开（与 PC 端保持一致） */
+.cl-card:not(.collapsed) .cl-body {
+    max-height: none;
+}
+
+.cl-card.collapsed .cl-body {
+    max-height: 0;
+}
+
+.ver-highlight {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0 14px 12px;
+    padding: 10px 12px;
+    border-radius: 12px 18px 13px 20px;
+    font-size: 0.76rem;
+    line-height: 1.7;
+    color: var(--text-mid);
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.12), rgba(255, 107, 157, 0.1));
+    border: 1px solid rgba(255, 193, 7, 0.22);
+}
+
+.ver-highlight i {
+    flex: 0 0 auto;
+    margin-top: 3px;
+    color: #f39c12;
+}
+
+.cl-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 14px 16px;
+}
+
+.cl-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.cl-row-icon {
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.86rem;
+}
+
+.cl-row-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cl-row-title {
+    font-size: 0.84rem;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--text-dark);
+    overflow-wrap: anywhere;
+}
+
+.cl-row-desc {
+    position: relative;
+    padding-left: 12px;
+    font-size: 0.75rem;
+    line-height: 1.72;
+    color: var(--text-mid);
+    overflow-wrap: anywhere;
+}
+
+.cl-row-desc::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
+    opacity: 0.7;
+}
+
+/* ------------------------------------------------------------
+   4. 横屏矮屏：时间线留白收紧
+   ------------------------------------------------------------ */
+@media (max-height: 460px) and (orientation: landscape) {
+    .cl-hero {
+        padding-top: 0;
+    }
+
+    .hero-subtitle {
+        font-size: 0.72rem;
+    }
+}

@@ -1,0 +1,541 @@
+/* ============================================================
+   零源机构 · 移动端 Z℮R∅‑SOURCE / MOD
+   zhongqiu_0925.css — 中秋节 · 八月十五（中秋团圆）
+   PC 源：pc/festival/css/zhongqiu_0925.css + public.css
+   适配策略：单列卡片流 + 流体字号，无断点堆叠
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. 主题令牌（中秋 · 液态玻璃深蓝金）
+   ------------------------------------------------------------ */
+body.fw-zhongqiu {
+    --grad-1: #4a6fa5;
+    --grad-2: #6b8fc5;
+    --grad-3: #ffd700;
+    --fw-gold: #ffd700;
+    --fw-gold-soft: #ffed4a;
+
+    --fw-glass-bg: rgba(255, 255, 255, 0.13);
+    --fw-glass-border: rgba(255, 255, 255, 0.3);
+    --fw-glass-shadow: 0 8px 28px rgba(9, 16, 32, 0.4);
+    --fw-ink: #e8eef5;
+    --fw-ink-light: rgba(232, 238, 245, 0.64);
+    --fw-particle: 255;
+
+    background: linear-gradient(135deg, #0f1a2e 0%, #1a2a4a 30%, #243a5e 60%, #1a2540 100%) fixed;
+    color: var(--fw-ink);
+}
+
+html {
+    background-color: #0f1a2e;
+}
+
+/* 节日氛围光斑（径向渐变，不用 filter: blur） */
+body.fw-zhongqiu::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 78% 52% at 12% 16%, rgba(74, 111, 165, 0.26), transparent 70%),
+        radial-gradient(ellipse 70% 50% at 88% 24%, rgba(107, 143, 197, 0.2), transparent 70%),
+        radial-gradient(ellipse 76% 48% at 50% 88%, rgba(255, 215, 0, 0.12), transparent 70%);
+}
+
+body.fw-zhongqiu .app-bg {
+    display: none;
+}
+
+/* ------------------------------------------------------------
+   2. 粒子画布（星空 + 流星）
+   ------------------------------------------------------------ */
+.fx-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+body.fw-zhongqiu .app-main {
+    z-index: 2;
+}
+
+/* ------------------------------------------------------------
+   3. 液态玻璃
+   ------------------------------------------------------------ */
+.liquid-glass {
+    position: relative;
+    background: var(--fw-glass-bg);
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(1.4);
+    backdrop-filter: blur(var(--blur)) saturate(1.4);
+    border: 1px solid var(--fw-glass-border);
+    border-radius: var(--r-card);
+    box-shadow: var(--fw-glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+}
+
+.liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.05) 40%, transparent 60%, rgba(255, 255, 255, 0.2));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+@supports not ((-webkit-backdrop-filter: blur(4px)) or (backdrop-filter: blur(4px))) {
+    .liquid-glass {
+        background: rgba(26, 42, 74, 0.9);
+    }
+}
+
+/* ------------------------------------------------------------
+   4. Hero
+   ------------------------------------------------------------ */
+.hero {
+    text-align: center;
+    padding: 26px 0 30px;
+}
+
+.hero-tag {
+    display: inline-block;
+    padding: 8px 20px;
+    font-size: clamp(0.72rem, 3.2vw, 0.9rem);
+    font-weight: 500;
+    letter-spacing: min(2.6px, 0.6vw);
+    color: var(--fw-ink);
+    margin-bottom: 20px;
+}
+
+.hero-title {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: min(2.6vw, 12px);
+    font-size: min(17vw, 4.6rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 16px;
+}
+
+.hero-title .char {
+    background: linear-gradient(135deg, #ffd700, #ffed4a 50%, #fff8b0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: charFloat 3s ease-in-out infinite;
+}
+
+.hero-title .char:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.hero-title .char:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.hero-title .char:nth-child(4) {
+    animation-delay: 0.6s;
+}
+
+@keyframes charFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.hero-sub {
+    font-size: clamp(0.78rem, 3.4vw, 1.05rem);
+    color: var(--fw-ink-light);
+    letter-spacing: min(5px, 1.1vw);
+}
+
+/* ------------------------------------------------------------
+   5. 望月怀远（大月亮 + 诗句）
+   ------------------------------------------------------------ */
+.moon-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 18px;
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+.moon-visual {
+    flex: 0 0 auto;
+    min-width: 0;
+}
+
+/* 给放大留出空间，缩放时不会把父级撑宽 */
+.moon-pad {
+    padding: 20px;
+}
+
+.big-moon {
+    position: relative;
+    width: clamp(122px, 38vw, 168px);
+    height: clamp(122px, 38vw, 168px);
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fff8e7, #f0e0b0 40%, #d4c080 80%, #b8a060 100%);
+    box-shadow: 0 0 44px rgba(255, 230, 150, 0.42), 0 0 84px rgba(255, 215, 0, 0.22);
+    transition: transform 0.6s var(--ease-spring), box-shadow 0.6s;
+    touch-action: manipulation;
+    animation: moonBreath 6s ease-in-out infinite;
+}
+
+.big-moon:active {
+    transform: scale(0.94);
+}
+
+.big-moon.zoomed {
+    transform: scale(1.32);
+    box-shadow: 0 0 60px rgba(255, 230, 150, 0.6), 0 0 110px rgba(255, 215, 0, 0.35);
+    animation: none;
+}
+
+@keyframes moonBreath {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.035);
+    }
+}
+
+.crater {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(180, 160, 100, 0.3);
+}
+
+.c1 {
+    width: 15.5%;
+    height: 15.5%;
+    top: 15.5%;
+    left: 22%;
+}
+
+.c2 {
+    width: 11.2%;
+    height: 11.2%;
+    top: 37.5%;
+    left: 50%;
+}
+
+.c3 {
+    width: 8.7%;
+    height: 8.7%;
+    top: 59%;
+    left: 28%;
+}
+
+.moon-glow-ring {
+    position: absolute;
+    inset: -14%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 230, 150, 0.22) 0%, rgba(255, 230, 150, 0) 70%);
+    z-index: -1;
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+.moon-hint {
+    font-size: clamp(0.7rem, 3vw, 0.8rem);
+    line-height: 1.7;
+    color: var(--fw-ink-light);
+    margin-top: 12px;
+    letter-spacing: min(2px, 0.5vw);
+    min-height: 2.6em;
+}
+
+.moon-info {
+    min-width: 0;
+}
+
+.moon-info h2 {
+    font-size: clamp(1.3rem, 6vw, 1.7rem);
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #ffd700, #ffed4a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.moon-info p {
+    font-size: clamp(0.78rem, 3.3vw, 0.92rem);
+    line-height: 1.9;
+    color: var(--fw-ink-light);
+}
+
+/* ------------------------------------------------------------
+   6. 习俗卡片（移动端单列 / 宽屏自适应两列）
+   ------------------------------------------------------------ */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.card {
+    padding: 22px 18px;
+    text-align: center;
+    transition: transform 0.32s var(--ease-spring), box-shadow 0.32s;
+}
+
+.card:active {
+    transform: scale(0.978);
+}
+
+.card-icon {
+    display: inline-block;
+    font-size: clamp(2rem, 8.5vw, 2.5rem);
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+.card-title {
+    font-size: clamp(1rem, 4.2vw, 1.15rem);
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    color: #ffd700;
+}
+
+.card-desc {
+    font-size: clamp(0.76rem, 3.2vw, 0.85rem);
+    line-height: 1.7;
+    color: var(--fw-ink-light);
+}
+
+/* ------------------------------------------------------------
+   7. 诗句区（水调歌头）
+   ------------------------------------------------------------ */
+.poem-section {
+    text-align: center;
+    padding: 24px 18px;
+    margin-bottom: 22px;
+}
+
+.poem-title {
+    font-size: clamp(1.15rem, 5.2vw, 1.4rem);
+    font-weight: 800;
+    color: #ffd700;
+    letter-spacing: min(6px, 1.4vw);
+    margin-bottom: 16px;
+}
+
+.poem-lines p {
+    font-size: clamp(0.82rem, 3.5vw, 1rem);
+    line-height: 2.1;
+    color: var(--fw-ink);
+    letter-spacing: min(3px, 0.7vw);
+}
+
+.poem-author {
+    font-size: clamp(0.72rem, 3vw, 0.85rem);
+    color: var(--fw-ink-light);
+    margin-top: 14px;
+    letter-spacing: min(2px, 0.5vw);
+}
+
+/* ------------------------------------------------------------
+   8. 祝福条
+   ------------------------------------------------------------ */
+.blessing-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.blessing-item {
+    padding: 18px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: transform 0.32s var(--ease-spring);
+}
+
+.blessing-item:active {
+    transform: scale(0.978);
+}
+
+.b-num {
+    flex: 0 0 auto;
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.35rem, 6vw, 1.9rem);
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, #ffd700, #ffed4a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.b-text {
+    font-size: clamp(0.95rem, 4vw, 1.1rem);
+    font-weight: 600;
+    color: var(--fw-ink);
+    letter-spacing: 2px;
+}
+
+/* ------------------------------------------------------------
+   9. 返回传统节日总览
+   ------------------------------------------------------------ */
+.festival-back {
+    margin: 4px 0 8px;
+}
+
+.festival-back .btn.line {
+    border-color: rgba(255, 215, 0, 0.42);
+    color: #ffd700;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ------------------------------------------------------------
+   10. 进场动画（自带实现，不依赖 core.js 的 .reveal，
+       这样即使观察器没触发也不会留下空白）
+   ------------------------------------------------------------ */
+.anim {
+    animation: fwFadeUp 0.6s var(--ease-out) both;
+}
+
+.cards-grid .card:nth-child(1) {
+    animation-delay: 0.04s;
+}
+
+.cards-grid .card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.cards-grid .card:nth-child(3) {
+    animation-delay: 0.16s;
+}
+
+.cards-grid .card:nth-child(4) {
+    animation-delay: 0.22s;
+}
+
+.cards-grid .card:nth-child(5) {
+    animation-delay: 0.28s;
+}
+
+.cards-grid .card:nth-child(6) {
+    animation-delay: 0.34s;
+}
+
+.blessing-item:nth-child(2) {
+    animation-delay: 0.06s;
+}
+
+.blessing-item:nth-child(3) {
+    animation-delay: 0.12s;
+}
+
+@keyframes fwFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ------------------------------------------------------------
+   11. 极窄屏微调（仅 280-340px）
+   ------------------------------------------------------------ */
+@media (max-width: 340px) {
+    .hero-tag {
+        letter-spacing: 1.5px;
+    }
+
+    .moon-section,
+    .poem-section {
+        padding: 20px 14px;
+    }
+
+    .poem-lines p {
+        letter-spacing: 0;
+    }
+
+    .b-text {
+        letter-spacing: 1px;
+    }
+}
+
+/* ------------------------------------------------------------
+   12. 横屏矮屏：压缩纵向留白
+   ------------------------------------------------------------ */
+@media (max-height: 460px) and (orientation: landscape) {
+    .hero {
+        padding: 10px 0 18px;
+    }
+
+    .hero-title {
+        font-size: min(9vh, 4rem);
+    }
+
+    .moon-pad {
+        padding: 12px;
+    }
+}
+
+/* ------------------------------------------------------------
+   13. 尊重系统「减弱动态效果」
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+
+    .hero-title .char,
+    .big-moon,
+    .moon-glow-ring,
+    .anim,
+    .cards-grid .card,
+    .blessing-item {
+        animation: none;
+    }
+
+    .anim,
+    .cards-grid .card,
+    .blessing-item {
+        opacity: 1;
+        transform: none;
+    }
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f5f0ff">
+    <meta name="description" content="零源机构|Z℮R∅‑SOURCE 更新日志 - 记录所有更新与优化">
+    <meta name="format-detection" content="telephone=no,email=no,address=no">
+    <title>更新日志 | 零源机构</title>
+
+    <!-- 标记 JS 可用：进场动画只在此时才隐藏内容，保证禁用 JS 也能看到全部内容 -->
+    <script>document.documentElement.classList.add('has-js');</script>
+
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/fonts-google.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/wtfk.css">
+    <link rel="stylesheet" href="../css/gxrz.css">
+</head>
+
+<body data-page="gxrz" data-title="更新日志" data-base="../" data-back="1">
+
+    <div class="app-bg" aria-hidden="true"></div>
+
+    <main class="app-main">
+        <div class="wrap">
+
+            <!-- ==================== 页面头部 ==================== -->
+            <section class="section">
+                <div class="cl-hero">
+                    <div class="hero-tag"><i class="fa fa-rocket"></i> CHANGELOG</div>
+                    <h1 class="hero-title">更新日志</h1>
+                    <p class="hero-subtitle">记录零源机构|Z℮R∅‑SOURCE的所有更新与优化<br>见证我们的成长与进步</p>
+                </div>
+
+                <div class="stat-grid cl-stats">
+                    <div class="stat-card glass reveal">
+                        <div class="stat-icon icon-pink"><i class="fa fa-history"></i></div>
+                        <div class="stat-number" id="totalVersions" data-count="0">0</div>
+                        <div class="stat-label">版本更新</div>
+                    </div>
+
+                    <div class="stat-card glass reveal">
+                        <div class="stat-icon icon-blue"><i class="fa fa-clock-o"></i></div>
+                        <div class="stat-number" id="totalDays" data-count="0">0</div>
+                        <div class="stat-label">运行天数</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== 版本时间线 ==================== -->
+            <section class="section">
+                <div class="section-head">
+                    <span class="section-tag">VERSIONS</span>
+                    <h2 class="section-title">版本记录</h2>
+                    <p class="section-desc">点击版本卡片可展开 / 收起</p>
+                </div>
+
+                <!-- 版本列表由 js/gxrz.js 按 pc/js/gxrz.js 的数据逐条渲染 -->
+                <div class="timeline" id="timeline"></div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="../js/core.js"></script>
+    <script src="../js/wtfk.js"></script>
+    <script src="../js/gxrz.js"></script>
+</body>
+
+</html>

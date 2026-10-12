@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#e8edea">
+    <meta name="description" content="零源机构 · 清明节 · 慎终追远 — 清明时节雨纷纷，路上行人欲断魂">
+    <meta name="format-detection" content="telephone=no,email=no,address=no">
+    <title>清明节 · 慎终追远 | 零源机构</title>
+
+    <!-- 标记 JS 可用：进场动画只在此时才隐藏内容，保证禁用 JS 也能看到全部内容 -->
+    <script>document.documentElement.classList.add('has-js');</script>
+
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+    <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/fonts-google.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/festival.css">
+    <link rel="stylesheet" href="../css/qingming_0405.css">
+</head>
+
+<body class="festival-page" data-page="festival" data-title="清明节 · 慎终追远" data-base="../" data-tabbar="off"
+    data-back="1">
+
+    <div class="app-bg" aria-hidden="true"></div>
+
+    <!-- 细雨 / 浮动光斑背景（纯装饰，不接收触摸） -->
+    <canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+    <main class="app-main">
+        <div class="wrap container">
+
+            <!-- ==================== 首屏 ==================== -->
+            <div class="hero">
+                <div class="hero-tag liquid-glass">丙午年 · 三月初八</div>
+                <h1 class="hero-title" aria-label="清明">
+                    <span class="char">清</span><span class="char">明</span>
+                </h1>
+                <p class="hero-sub">清明时节雨纷纷 · 路上行人欲断魂</p>
+            </div>
+
+            <!-- ==================== 诗句 ==================== -->
+            <section class="liquid-glass poem-section fst-in">
+                <div class="poem-icon" aria-hidden="true">🌧️</div>
+                <div class="poem-lines">
+                    <p>清明时节雨纷纷</p>
+                    <p>路上行人欲断魂</p>
+                    <p>借问酒家何处有</p>
+                    <p>牧童遥指杏花村</p>
+                </div>
+                <div class="poem-author">—— 杜牧《清明》</div>
+            </section>
+
+            <!-- ==================== 追思 ==================== -->
+            <section class="liquid-glass remembrance-section fst-in d1">
+                <h2 class="section-title">追 思</h2>
+                <p class="remembrance-text">
+                    清明将至，细雨绵绵。我们怀着崇敬与感恩之心，缅怀先人，寄托哀思。<br>
+                    慎终追远，饮水思源。愿逝者安息，生者坚强。<br>
+                    传承家风，继往开来。让思念化作前行的力量。
+                </p>
+            </section>
+
+            <!-- ==================== 清明习俗 ==================== -->
+            <section class="cards-grid">
+                <div class="liquid-glass card fst-in">
+                    <div class="card-icon" aria-hidden="true">🌿</div>
+                    <h3 class="card-title">扫墓祭祖</h3>
+                    <p class="card-desc">祭奠先人，清扫墓地，献上鲜花与供品，表达追思与感恩。</p>
+                </div>
+                <div class="liquid-glass card fst-in d1">
+                    <div class="card-icon" aria-hidden="true">🌱</div>
+                    <h3 class="card-title">踏青郊游</h3>
+                    <p class="card-desc">春回大地，万物复苏。亲近自然，赏春景，感受生命的力量。</p>
+                </div>
+                <div class="liquid-glass card fst-in d2">
+                    <div class="card-icon" aria-hidden="true">🍡</div>
+                    <h3 class="card-title">吃青团</h3>
+                    <p class="card-desc">艾草汁拌糯米粉，包入豆沙馅。一口咬下，满嘴都是春天的味道。</p>
+                </div>
+                <div class="liquid-glass card fst-in d3">
+                    <div class="card-icon" aria-hidden="true">🌳</div>
+                    <h3 class="card-title">插柳戴柳</h3>
+                    <p class="card-desc">门前插柳，头上戴柳。柳枝辟邪，纪念神农，预报晴雨。</p>
+                </div>
+            </section>
+
+            <!-- ==================== 页脚引用 ==================== -->
+            <section class="footer-quote fst-in d2">
+                <p>万物生长此时，皆清洁而明净，故谓之清明。</p>
+            </section>
+
+            <!-- ==================== 返回节日总览 ==================== -->
+            <nav class="festival-back" aria-label="返回传统节日">
+                <p class="fb-hint">更多传统节日</p>
+                <a class="liquid-btn ghost" href="../body/ctjr.html">
+                    <i class="fa fa-calendar" aria-hidden="true"></i> 返回传统节日
+                </a>
+            </nav>
+
+        </div>
+    </main>
+
+    <script src="../js/core.js"></script>
+    <script src="../js/qingming_0405.js"></script>
+</body>
+
+</html>

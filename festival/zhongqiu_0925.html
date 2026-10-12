@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0f1a2e">
+    <meta name="description" content="中秋节 · 八月十五 — 花好月圆，千里婵娟，零源机构传统节日沉浸页">
+    <meta name="format-detection" content="telephone=no,email=no,address=no">
+    <title>中秋节 · 八月十五 | 零源机构</title>
+
+    <!-- 标记 JS 可用：进场动画只在此时才隐藏内容，保证禁用 JS 也能看到全部内容 -->
+    <script>document.documentElement.classList.add('has-js');</script>
+
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/fonts-google.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/zhongqiu_0925.css">
+</head>
+
+<body class="fw-zhongqiu" data-page="festival" data-title="中秋团圆" data-base="../" data-tabbar="off"
+    data-back="1">
+
+    <canvas class="fx-layer" id="bgCanvas" aria-hidden="true"></canvas>
+
+    <main class="app-main">
+        <div class="wrap">
+
+            <!-- ==================== 首屏 ==================== -->
+            <header class="hero">
+                <div class="hero-tag liquid-glass">丙午年 · 八月十五</div>
+                <h1 class="hero-title">
+                    <span class="char">中</span><span class="char">秋</span><span class="char">团</span><span class="char">圆</span>
+                </h1>
+                <p class="hero-sub">但愿人长久 · 千里共婵娟</p>
+            </header>
+
+            <!-- ==================== 望月怀远 ==================== -->
+            <section class="liquid-glass moon-section anim">
+                <div class="moon-visual">
+                    <div class="moon-pad">
+                        <div class="big-moon" id="bigMoon" role="button" tabindex="0" aria-label="点击月亮，看看月亮说的话">
+                            <div class="crater c1"></div>
+                            <div class="crater c2"></div>
+                            <div class="crater c3"></div>
+                            <div class="moon-glow-ring"></div>
+                        </div>
+                    </div>
+                    <p class="moon-hint" id="moonHint">点击月亮放大</p>
+                </div>
+                <div class="moon-info">
+                    <h2>望月怀远</h2>
+                    <p>八月十五月儿圆，抬头仰望皎洁明月。<br>寄托对团圆的美好期盼，对亲人的深切思念。<br>愿花好月圆人团圆，千里共婵娟。</p>
+                </div>
+            </section>
+
+            <!-- ==================== 中秋习俗卡片 ==================== -->
+            <section class="cards-grid">
+                <div class="liquid-glass card" data-tilt>
+                    <div class="card-icon">🥮</div>
+                    <h3 class="card-title">品月饼</h3>
+                    <p class="card-desc">酥皮包裹甜馅，莲蓉蛋黄豆沙。一口咬下，满嘴都是家的味道。</p>
+                </div>
+                <div class="liquid-glass card" data-tilt>
+                    <div class="card-icon">🌕</div>
+                    <h3 class="card-title">赏明月</h3>
+                    <p class="card-desc">皓月当空，清辉洒满大地。与家人围坐赏月，共享天伦之乐。</p>
+                </div>
+                <div class="liquid-glass card" data-tilt>
+                    <div class="card-icon">🐰</div>
+                    <h3 class="card-title">玉兔传说</h3>
+                    <p class="card-desc">月中玉兔捣药，陪伴嫦娥度过寂寞岁月。是中秋节最可爱的传说。</p>
+                </div>
+                <div class="liquid-glass card" data-tilt>
+                    <div class="card-icon">👨‍👩‍👧‍👦</div>
+                    <h3 class="card-title">阖家团圆</h3>
+                    <p class="card-desc">无论身在何方，中秋都要回家。一家人围坐一桌，就是最大的幸福。</p>
+                </div>
+            </section>
+
+            <!-- ==================== 诗句 ==================== -->
+            <section class="liquid-glass poem-section anim">
+                <div class="poem-title">水调歌头</div>
+                <div class="poem-lines">
+                    <p>明月几时有，把酒问青天</p>
+                    <p>不知天上宫阙，今夕是何年</p>
+                    <p>人有悲欢离合，月有阴晴圆缺</p>
+                    <p>此事古难全，但愿人长久，千里共婵娟</p>
+                </div>
+                <div class="poem-author">—— 苏轼</div>
+            </section>
+
+            <!-- ==================== 祝福条 ==================== -->
+            <section class="blessing-row">
+                <div class="liquid-glass blessing-item">
+                    <span class="b-num">01</span>
+                    <span class="b-text">花好月圆</span>
+                </div>
+                <div class="liquid-glass blessing-item">
+                    <span class="b-num">02</span>
+                    <span class="b-text">阖家团圆</span>
+                </div>
+                <div class="liquid-glass blessing-item">
+                    <span class="b-num">03</span>
+                    <span class="b-text">万事如意</span>
+                </div>
+            </section>
+
+            <!-- ==================== 返回总览 ==================== -->
+            <nav class="festival-back">
+                <a class="btn line block" href="../body/ctjr.html">
+                    <i class="fa fa-calendar" aria-hidden="true"></i> 返回传统节日
+                </a>
+            </nav>
+
+        </div>
+    </main>
+
+    <script src="../js/core.js"></script>
+    <script src="../js/zhongqiu_0925.js"></script>
+</body>
+
+</html>

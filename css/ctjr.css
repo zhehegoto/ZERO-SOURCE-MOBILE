@@ -1,0 +1,269 @@
+/* ============================================================
+   零源机构 · 移动端 / MOD
+   ctjr.css — 传统节日总览
+   与 PC 端 pc/css/ctjr.css 视觉语言一致（节日主题色、日期胶囊、
+   描述文案全部对齐），网格改为自适应列宽，不写任何断点
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   节日头部
+   ------------------------------------------------------------ */
+.festival-hero {
+    text-align: center;
+    padding-top: 6px;
+}
+
+.festival-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 18px;
+    margin-bottom: 14px;
+    border-radius: var(--r-pill);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 2.4px;
+    color: var(--grad-purple);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.festival-badge i {
+    color: var(--grad-pink);
+}
+
+.festival-title {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-weight: 400;
+    /* 与首页主标题同一套流体写法，任何屏宽都完整显示且不溢出 */
+    font-size: min(12.5vw, 2.8rem);
+    line-height: 1.2;
+    letter-spacing: min(2.2vw, 8px);
+    /* 抵消末字后的字距，保证视觉居中 */
+    margin-right: calc(min(2.2vw, 8px) * -1);
+    color: var(--text-dark);
+    white-space: nowrap;
+}
+
+.festival-subtitle {
+    font-size: min(3.9vw, 1.05rem);
+    letter-spacing: min(0.9vw, 2px);
+    line-height: 1.6;
+    color: var(--text-mid);
+    margin-top: 8px;
+}
+
+/* ------------------------------------------------------------
+   节日卡片网格：自适应列宽，单列 / 两列 / 三列随屏宽自然过渡
+   ------------------------------------------------------------ */
+.festival-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr));
+    gap: 12px;
+}
+
+/* ------------------------------------------------------------
+   节日卡片
+   ------------------------------------------------------------ */
+.festival-card {
+    --fest-1: var(--grad-pink);
+    --fest-2: var(--grad-purple);
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 168px;
+    padding: 16px 15px 15px;
+    border-radius: var(--r-card-sm);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.4));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    overflow: hidden;
+    color: inherit;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+    transition: transform 0.22s var(--ease-spring), box-shadow 0.22s var(--ease-out);
+}
+
+/* 节日主题色（与 PC 端一一对应） */
+.festival-card.chunjie {
+    --fest-1: #ff4d6d;
+    --fest-2: #ff8c42;
+}
+
+.festival-card.yuanxiao {
+    --fest-1: #ff9a56;
+    --fest-2: #ffc94d;
+}
+
+.festival-card.qingming {
+    --fest-1: #52b788;
+    --fest-2: #74c69d;
+}
+
+.festival-card.duanwu {
+    --fest-1: #2a9d8f;
+    --fest-2: #52b69a;
+}
+
+.festival-card.zhongqiu {
+    --fest-1: #6c5ce7;
+    --fest-2: #a29bfe;
+}
+
+.festival-card.guoqing {
+    --fest-1: #d62828;
+    --fest-2: #f77f00;
+}
+
+/* 主题色调的背景与顶部彩条：一条渐变搞定，不用 filter */
+.festival-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--fest-1), var(--fest-2));
+    z-index: 2;
+}
+
+.festival-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--fest-1), var(--fest-2));
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 0.24s var(--ease-out);
+}
+
+.festival-card>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* 按下反馈：移动端没有 hover，一律用 :active */
+.festival-card:active {
+    transform: scale(0.965);
+    box-shadow: 0 4px 16px rgba(120, 80, 200, 0.16);
+}
+
+.festival-card:active::after {
+    opacity: 0.2;
+}
+
+.festival-card:active .card-emoji {
+    transform: scale(1.12);
+}
+
+.festival-card:active .card-arrow {
+    background: linear-gradient(135deg, var(--fest-1), var(--fest-2));
+    border-color: transparent;
+    color: #fff;
+}
+
+.card-arrow {
+    position: absolute !important;
+    top: 13px;
+    right: 13px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    color: var(--text-mid);
+    background: rgba(255, 255, 255, 0.68);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    transition: background 0.22s var(--ease-out), color 0.22s var(--ease-out), transform 0.22s var(--ease-spring);
+}
+
+.card-emoji {
+    font-size: min(9vw, 2.3rem);
+    line-height: 1.1;
+    margin-bottom: 10px;
+    transform-origin: center center;
+    transition: transform 0.24s var(--ease-spring);
+}
+
+.card-date {
+    align-self: flex-start;
+    margin-bottom: 8px;
+    padding: 3px 11px;
+    border-radius: var(--r-pill);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--fest-1), var(--fest-2));
+    box-shadow: 0 2px 10px rgba(120, 80, 200, 0.18);
+}
+
+.card-name {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    line-height: 1.25;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+}
+
+.card-desc {
+    font-size: 0.76rem;
+    line-height: 1.65;
+    color: var(--text-mid);
+    word-break: break-word;
+}
+
+/* 卡片进场：轻量淡入上浮，低端机也稳
+   自己一套类名（不用基类的 .reveal），避免与 base.css 里
+   .has-js .reveal 的级联打架；类名由 ctjr.js 加在网格上 */
+.festival-grid.is-in .festival-card {
+    animation: festBloom 0.45s var(--ease-out) both;
+}
+
+.festival-grid.is-in .festival-card:nth-child(1) {
+    animation-delay: 0.14s;
+}
+
+.festival-grid.is-in .festival-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.festival-grid.is-in .festival-card:nth-child(3) {
+    animation-delay: 0.26s;
+}
+
+.festival-grid.is-in .festival-card:nth-child(4) {
+    animation-delay: 0.32s;
+}
+
+.festival-grid.is-in .festival-card:nth-child(5) {
+    animation-delay: 0.38s;
+}
+
+.festival-grid.is-in .festival-card:nth-child(6) {
+    animation-delay: 0.44s;
+}
+
+@keyframes festBloom {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}

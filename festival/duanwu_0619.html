@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#e8f5ee">
+    <meta name="description" content="端午节 · 五月初五 — 端阳安康，粽香龙舟，零源机构传统节日沉浸页">
+    <meta name="format-detection" content="telephone=no,email=no,address=no">
+    <title>端午节 · 五月初五 | 零源机构</title>
+
+    <!-- 标记 JS 可用：进场动画只在此时才隐藏内容，保证禁用 JS 也能看到全部内容 -->
+    <script>document.documentElement.classList.add('has-js');</script>
+
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/fonts-google.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/duanwu_0619.css">
+</head>
+
+<body class="fw-duanwu" data-page="festival" data-title="端午安康" data-base="../" data-tabbar="off" data-back="1">
+
+    <canvas class="fx-layer" id="bgCanvas" aria-hidden="true"></canvas>
+
+    <main class="app-main">
+        <div class="wrap">
+
+            <!-- ==================== 首屏 ==================== -->
+            <header class="hero">
+                <div class="hero-tag liquid-glass">丙午年 · 五月初五</div>
+                <h1 class="hero-title">
+                    <span class="char">端</span><span class="char">午</span><span class="char">安</span><span class="char">康</span>
+                </h1>
+                <p class="hero-sub">节分端午自谁言 · 万古传闻为屈原</p>
+            </header>
+
+            <!-- ==================== 品粽子 ==================== -->
+            <section class="liquid-glass zongzi-interactive anim">
+                <div class="zi-display">
+                    <button class="zi-icon" id="ziIcon" type="button" aria-label="点击粽子，换一个粽子">🥟</button>
+                    <div class="zi-num" id="ziNum">01 / 06</div>
+                    <div class="zi-name" id="ziName">点击粽子</div>
+                    <div class="zi-desc" id="ziDesc">看看今天是什么馅</div>
+                </div>
+                <div class="zi-info">
+                    <h2>品粽子</h2>
+                    <p>粽叶包裹糯米，或甜或咸，各有风味。<br>纪念屈原，传承千年。<br>愿您生活如粽，有滋有味。</p>
+                    <button class="liquid-btn primary" id="ziBtn" type="button">换一个粽子 🥟</button>
+                </div>
+            </section>
+
+            <!-- ==================== 习俗卡片 ==================== -->
+            <section class="cards-grid">
+                <div class="liquid-glass card" data-tilt>
+                    <div class="card-icon">🌿</div>
+                    <h3 class="card-title">挂艾草</h3>
+                    <p class="card-desc">门悬艾草菖蒲，驱邪避疫，保家人平安健康。</p>
+                </div>
+                <div class="liquid-glass card" data-tilt>
+                    <div class="card-icon">🧵</div>
+                    <h3 class="card-title">佩香囊</h3>
+                    <p class="card-desc">五彩丝线缠香囊，内装香料，驱虫避瘟，祈福纳祥。</p>
+                </div>
+                <div class="liquid-glass card" data-tilt>
+                    <div class="card-icon">🎨</div>
+                    <h3 class="card-title">点雄黄</h3>
+                    <p class="card-desc">额头点雄黄，驱毒虫，避邪祟，护孩童平安长大。</p>
+                </div>
+                <div class="liquid-glass card" data-tilt>
+                    <div class="card-icon">🪢</div>
+                    <h3 class="card-title">系五彩绳</h3>
+                    <p class="card-desc">五色丝线系手腕，祈福辟邪，健康长寿，端午后第一场雨摘下抛入水中。</p>
+                </div>
+            </section>
+
+            <!-- ==================== 赛龙舟 ==================== -->
+            <section class="liquid-glass dragonboat-section anim">
+                <div class="db-text">
+                    <h2>赛龙舟</h2>
+                    <p>鼓声震天，百舸争流。<br>团结协作，奋勇向前。<br>愿您一往无前，乘风破浪。</p>
+                </div>
+                <div class="db-visual">
+                    <div class="db-track">
+                        <div class="boat" id="boat">
+                            <span class="boat-emoji">🚣</span>
+                            <div class="boat-waves">〰️〰️〰️</div>
+                        </div>
+                    </div>
+                    <button class="liquid-btn ghost" id="boatBtn" type="button">加速划桨！</button>
+                </div>
+            </section>
+
+            <!-- ==================== 祝福条 ==================== -->
+            <section class="blessing-row">
+                <div class="liquid-glass blessing-item">
+                    <span class="b-num">01</span>
+                    <span class="b-text">身体健康</span>
+                </div>
+                <div class="liquid-glass blessing-item">
+                    <span class="b-num">02</span>
+                    <span class="b-text">平安顺遂</span>
+                </div>
+                <div class="liquid-glass blessing-item">
+                    <span class="b-num">03</span>
+                    <span class="b-text">万事如意</span>
+                </div>
+            </section>
+
+            <!-- ==================== 返回总览 ==================== -->
+            <nav class="festival-back">
+                <a class="btn line block" href="../body/ctjr.html">
+                    <i class="fa fa-calendar" aria-hidden="true"></i> 返回传统节日
+                </a>
+            </nav>
+
+        </div>
+    </main>
+
+    <script src="../js/core.js"></script>
+    <script src="../js/duanwu_0619.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#150f26">
+    <meta name="description" content="零源机构 Z℮R∅‑SOURCE 生日彩蛋 · ETUI 生日快乐，星辰大海，为你而来">
+    <meta name="format-detection" content="telephone=no,email=no,address=no">
+    <title>ETUI 生日快乐 | 零源机构</title>
+
+    <!-- 标记 JS 可用：进场动画只在此时才隐藏内容，保证禁用 JS 也能看到全部内容 -->
+    <script>document.documentElement.classList.add('has-js');</script>
+
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+
+    <!-- 资源里只有 .woff 一个 FontAwesome 字体文件，在引用 font-awesome.min.css 之前
+         先把 family 的 src 收敛到 woff，避免解析期预取不存在的 .woff2 造成无谓的 404 -->
+    <style>
+        @font-face {
+            font-family: 'FontAwesome';
+            src: url('../../assets/font-awesome/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+    </style>
+
+    <link rel="stylesheet" href="../../assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/fonts-google.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/sr-hehe.css">
+</head>
+
+<body class="sr-page" data-page="sr" data-title="" data-base="../../" data-tabbar="off" data-back="1">
+
+    <div class="app-bg" aria-hidden="true"></div>
+    <div class="sr-bg" aria-hidden="true"></div>
+    <div class="sr-glow" aria-hidden="true"></div>
+    <canvas id="particleCanvas" aria-hidden="true"></canvas>
+    <canvas id="fireworks-canvas" aria-hidden="true"></canvas>
+
+    <main class="app-main sr-main">
+        <div class="wrap">
+
+            <!-- ==================== 首屏 ==================== -->
+            <header class="sr-hero">
+                <h1 class="sr-hero-name">✨ ETUI ✨</h1>
+                <p class="sr-hero-sub">HAPPY BIRTHDAY</p>
+                <div class="sr-hero-badge">
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <span>星辰大海 · 为你而来</span>
+                    <i class="fa fa-leaf" aria-hidden="true"></i>
+                </div>
+            </header>
+
+            <!-- ==================== 3D 翻转卡 ==================== -->
+            <div class="sr-card-wrap">
+                <div class="sr-card" id="flipCard" role="button" tabindex="0" aria-label="轻点卡片翻转惊喜">
+                    <div class="sr-face sr-face-front">
+                        <div class="sr-avatar"><i class="fa fa-magic" aria-hidden="true"></i></div>
+                        <h2 class="sr-card-name">ETUI</h2>
+                        <p class="sr-card-role">✨ 今日主角 ✨</p>
+                        <div class="sr-click-hint">
+                            <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                            轻点卡片 · 翻转惊喜
+                            <i class="fa fa-gift" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="sr-face sr-face-back">
+                        <!-- 不规则有机圆角底（与 base.css 的 --r-card 设计语言一致） -->
+                        <svg class="sr-face-fill" viewBox="0 0 320 380" preserveAspectRatio="none" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="srBackHehe" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0" stop-color="#ffb7c5" />
+                                    <stop offset="0.55" stop-color="#e85d8e" />
+                                    <stop offset="1" stop-color="#b76eff" />
+                                </linearGradient>
+                            </defs>
+                            <path fill="url(#srBackHehe)" d="M32 0L292 0A28 28 0 0 1 320 28L320 352A28 28 0 0 1 292 380L36 380A36 36 0 0 1 0 344L0 32A32 32 0 0 1 32 0Z" />
+                        </svg>
+                        <div class="sr-msg">🎂 生 日 快 乐 🎂</div>
+                        <div class="sr-bless">
+                            愿你的世界永远辽阔，如星河滚烫<br>
+                            乘风破浪，所向披靡<br>
+                            「Zero · 零号」<br>
+                            🎂 永远热血 永远发光 🎂
+                        </div>
+                        <i class="fa fa-heart" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 惊喜关键词 ==================== -->
+            <section class="sr-grid">
+                <div class="sr-feature">
+                    <div class="sr-feature-icon"><i class="fa fa-rocket" aria-hidden="true"></i></div>
+                    <h3>一飞冲天</h3>
+                    <p>野心与实力并行，未来势不可挡。</p>
+                </div>
+                <div class="sr-feature">
+                    <div class="sr-feature-icon"><i class="fa fa-lightbulb-o" aria-hidden="true"></i></div>
+                    <h3>智勇双全</h3>
+                    <p>每一个选择都通向更耀眼的自己。</p>
+                </div>
+                <div class="sr-feature">
+                    <div class="sr-feature-icon"><i class="fa fa-line-chart" aria-hidden="true"></i></div>
+                    <h3>无限可能</h3>
+                    <p>才华横溢，年度赢家非你莫属！</p>
+                </div>
+                <div class="sr-feature">
+                    <div class="sr-feature-icon"><i class="fa fa-fire" aria-hidden="true"></i></div>
+                    <h3>热血永燃</h3>
+                    <p>保持热爱，奔赴下一场山海。</p>
+                </div>
+            </section>
+
+            <!-- ==================== 生日专属庆典计时器 ==================== -->
+            <section class="sr-countdown">
+                <h3>
+                    <i class="fa fa-hourglass-half" aria-hidden="true"></i>
+                    生日专属庆典计时器
+                    <i class="fa fa-birthday-cake" aria-hidden="true"></i>
+                </h3>
+                <div id="birthdayTimer" class="sr-timer">
+                    <div class="sr-time-box"><span class="sr-time-num" id="days">00</span>天</div>
+                    <div class="sr-time-box"><span class="sr-time-num" id="hours">00</span>时</div>
+                    <div class="sr-time-box"><span class="sr-time-num" id="mins">00</span>分</div>
+                    <div class="sr-time-box"><span class="sr-time-num" id="secs">00</span>秒</div>
+                </div>
+                <p class="sr-countdown-foot">
+                    <i class="fa fa-bolt" aria-hidden="true"></i>
+                    每一秒都在为你喝彩
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                </p>
+            </section>
+
+            <!-- ==================== 页尾祝福 ==================== -->
+            <section class="sr-outro">
+                <p>🎈 新的一岁，光芒万丈，世界因你而精彩🎈</p>
+                <p class="sr-sign"><i class="fa fa-code-fork" aria-hidden="true"></i> Z℮R∅零号</p>
+                <a class="sr-home-link" href="../../index.html">
+                    <i class="fa fa-home" aria-hidden="true"></i> 返回首页
+                </a>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- ==================== 音乐（点击后才播放） ==================== -->
+    <div class="sr-music">
+        <button class="sr-music-btn" id="musicBtn" type="button" aria-label="播放生日音乐" aria-pressed="false">
+            <i class="fa fa-play" id="musicIcon" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <script src="../../js/core.js"></script>
+    <script src="../../js/sr-core.js"></script>
+    <script src="../../js/sr-hehe.js"></script>
+</body>
+
+</html>

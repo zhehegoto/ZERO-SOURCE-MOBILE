@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#fff0f0">
+    <meta name="description" content="零源机构 · 春节 · 正月初一 — 爆竹声中一岁除，春风送暖入屠苏">
+    <meta name="format-detection" content="telephone=no,email=no,address=no">
+    <title>春节 · 正月初一 | 零源机构</title>
+
+    <!-- 标记 JS 可用：进场动画只在此时才隐藏内容，保证禁用 JS 也能看到全部内容 -->
+    <script>document.documentElement.classList.add('has-js');</script>
+
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+    <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/fonts-google.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/festival.css">
+    <link rel="stylesheet" href="../css/chunjie_0217.css">
+</head>
+
+<body class="festival-page" data-page="festival" data-title="春节 · 正月初一" data-base="../" data-tabbar="off"
+    data-back="1">
+
+    <div class="app-bg" aria-hidden="true"></div>
+
+    <!-- 烟花 / 浮动光斑背景（纯装饰，不接收触摸） -->
+    <canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+    <main class="app-main">
+        <div class="wrap container">
+
+            <!-- ==================== 首屏 ==================== -->
+            <div class="hero">
+                <div class="hero-tag liquid-glass">丙午年 · 正月初一</div>
+                <h1 class="hero-title" aria-label="新春快乐">
+                    <span class="char">新</span><span class="char">春</span><span class="char">快</span><span
+                        class="char">乐</span>
+                </h1>
+                <p class="hero-sub">爆竹声中一岁除 · 春风送暖入屠苏</p>
+            </div>
+
+            <!-- ==================== 年俗卡片 ==================== -->
+            <section class="cards-grid">
+                <div class="liquid-glass card fst-in">
+                    <div class="card-icon" aria-hidden="true">🧧</div>
+                    <h3 class="card-title">红包压岁</h3>
+                    <p class="card-desc">长辈赠予晚辈，寓意辟邪驱鬼，保佑平安。新的一年，福气满满。</p>
+                </div>
+                <div class="liquid-glass card fst-in d1">
+                    <div class="card-icon" aria-hidden="true">🎆</div>
+                    <h3 class="card-title">爆竹迎新</h3>
+                    <p class="card-desc">噼里啪啦的鞭炮声，炸开新年的喜庆，驱散旧岁的阴霾。</p>
+                </div>
+                <div class="liquid-glass card fst-in d2">
+                    <div class="card-icon" aria-hidden="true">🥟</div>
+                    <h3 class="card-title">团圆年夜饭</h3>
+                    <p class="card-desc">一家人围坐一桌，热气腾腾的饺子，是最温暖的年味。</p>
+                </div>
+                <div class="liquid-glass card fst-in d3">
+                    <div class="card-icon" aria-hidden="true">🏮</div>
+                    <h3 class="card-title">张灯结彩</h3>
+                    <p class="card-desc">红灯高挂，春联贴门，处处洋溢着喜庆祥和的节日氛围。</p>
+                </div>
+            </section>
+
+            <!-- ==================== 福字翻转 + 放烟花 ==================== -->
+            <section class="liquid-glass fu-section fst-in">
+                <div class="fu-card" id="fuCard" role="button" tabindex="0" aria-label="福字卡片，点击翻面">
+                    <div class="fu-front">
+                        <span class="fu-text">福</span>
+                        <span class="fu-hint">点击翻面</span>
+                    </div>
+                    <div class="fu-back">
+                        <span class="fu-text">到</span>
+                        <span class="fu-hint">福到啦！</span>
+                    </div>
+                </div>
+                <div class="fu-words">
+                    <h2>福到家门</h2>
+                    <p>倒贴福字，寓意"福到了"。<br>愿新的一年，福气满满，好运连连。</p>
+                    <button class="liquid-btn primary" id="fireworkBtn" type="button">🎇 点我放烟花</button>
+                </div>
+            </section>
+
+            <!-- ==================== 新年祝福 ==================== -->
+            <section class="blessing-row">
+                <div class="liquid-glass blessing-item fst-in">
+                    <span class="b-num">01</span>
+                    <span class="b-text">岁岁常欢愉</span>
+                </div>
+                <div class="liquid-glass blessing-item fst-in d1">
+                    <span class="b-num">02</span>
+                    <span class="b-text">年年皆胜意</span>
+                </div>
+                <div class="liquid-glass blessing-item fst-in d2">
+                    <span class="b-num">03</span>
+                    <span class="b-text">万事尽可期</span>
+                </div>
+            </section>
+
+            <!-- ==================== 返回节日总览 ==================== -->
+            <nav class="festival-back" aria-label="返回传统节日">
+                <p class="fb-hint">更多传统节日</p>
+                <a class="liquid-btn ghost" href="../body/ctjr.html">
+                    <i class="fa fa-calendar" aria-hidden="true"></i> 返回传统节日
+                </a>
+            </nav>
+
+        </div>
+    </main>
+
+    <script src="../js/core.js"></script>
+    <script src="../js/chunjie_0217.js"></script>
+</body>
+
+</html>

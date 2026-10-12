@@ -1,0 +1,526 @@
+/* ============================================================
+   零源机构 · 移动端 Z℮R∅‑SOURCE / MOD
+   guoqing_1001.css — 国庆节 · 十月一日（国庆快乐）
+   PC 源：pc/festival/css/guoqing_1001.css + public.css
+   适配策略：单列卡片流 + 流体字号，无断点堆叠
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. 主题令牌（国庆 · 液态玻璃红金庄严）
+   ------------------------------------------------------------ */
+body.fw-guoqing {
+    --grad-1: #c41e3a;
+    --grad-2: #e63946;
+    --grad-3: #ffd700;
+    --fw-gold: #ffd700;
+    --fw-gold-soft: #ffed4a;
+
+    --fw-glass-bg: rgba(255, 255, 255, 0.16);
+    --fw-glass-border: rgba(255, 255, 255, 0.36);
+    --fw-glass-shadow: 0 8px 28px rgba(40, 0, 8, 0.4);
+    --fw-ink: #fff5f5;
+    --fw-ink-light: rgba(255, 245, 245, 0.68);
+    --fw-particle: 45;
+
+    background: linear-gradient(135deg, #6b0010 0%, #8b0000 30%, #a01020 60%, #6b0010 100%) fixed;
+    color: var(--fw-ink);
+}
+
+html {
+    background-color: #6b0010;
+}
+
+/* 节日氛围光斑（径向渐变，不用 filter: blur） */
+body.fw-guoqing::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 78% 52% at 12% 16%, rgba(196, 30, 58, 0.4), transparent 70%),
+        radial-gradient(ellipse 70% 50% at 88% 24%, rgba(230, 57, 70, 0.3), transparent 70%),
+        radial-gradient(ellipse 76% 48% at 50% 88%, rgba(255, 215, 0, 0.14), transparent 70%);
+}
+
+body.fw-guoqing .app-bg {
+    display: none;
+}
+
+/* ------------------------------------------------------------
+   2. 粒子画布（烟花）
+   ------------------------------------------------------------ */
+.fx-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+body.fw-guoqing .app-main {
+    z-index: 2;
+}
+
+/* ------------------------------------------------------------
+   3. 液态玻璃
+   ------------------------------------------------------------ */
+.liquid-glass {
+    position: relative;
+    background: var(--fw-glass-bg);
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(1.4);
+    backdrop-filter: blur(var(--blur)) saturate(1.4);
+    border: 1px solid var(--fw-glass-border);
+    border-radius: var(--r-card);
+    box-shadow: var(--fw-glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+}
+
+.liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.05) 40%, transparent 60%, rgba(255, 255, 255, 0.2));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+@supports not ((-webkit-backdrop-filter: blur(4px)) or (backdrop-filter: blur(4px))) {
+    .liquid-glass {
+        background: rgba(120, 0, 18, 0.9);
+    }
+}
+
+/* ------------------------------------------------------------
+   4. Hero
+   ------------------------------------------------------------ */
+.hero {
+    text-align: center;
+    padding: 26px 0 30px;
+}
+
+.hero-tag {
+    display: inline-block;
+    padding: 8px 20px;
+    font-size: clamp(0.72rem, 3.2vw, 0.9rem);
+    font-weight: 500;
+    letter-spacing: min(2.6px, 0.6vw);
+    color: var(--fw-ink);
+    margin-bottom: 20px;
+}
+
+.hero-title {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: min(2.6vw, 12px);
+    font-size: min(17vw, 4.6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 16px;
+}
+
+.hero-title .char {
+    background: linear-gradient(135deg, #ffd700, #ffed4a 50%, #fff8b0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: charFloat 3s ease-in-out infinite;
+}
+
+.hero-title .char:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.hero-title .char:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.hero-title .char:nth-child(4) {
+    animation-delay: 0.6s;
+}
+
+@keyframes charFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.hero-sub {
+    font-size: clamp(0.74rem, 3.3vw, 1.05rem);
+    color: var(--fw-ink-light);
+    letter-spacing: min(4px, 0.9vw);
+    line-height: 1.7;
+}
+
+/* ------------------------------------------------------------
+   5. 盛世华诞（国徽 + 按钮）
+   ------------------------------------------------------------ */
+.emblem-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 18px;
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+.emblem-visual {
+    flex: 0 0 auto;
+    width: clamp(122px, 38vw, 160px);
+    height: clamp(122px, 38vw, 160px);
+    position: relative;
+    animation: emblemSpin 25s linear infinite;
+}
+
+@keyframes emblemSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.emblem-ring {
+    position: absolute;
+    inset: 0;
+    border: 3px solid #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), inset 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.star-big {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    line-height: 1;
+    color: #ffd700;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+}
+
+.star-small {
+    position: absolute;
+    font-size: clamp(0.8rem, 3.2vw, 1rem);
+    line-height: 1;
+    color: #ffd700;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+.s1 {
+    top: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.s2 {
+    top: 32%;
+    right: 14%;
+}
+
+.s3 {
+    bottom: 22%;
+    right: 18%;
+}
+
+.s4 {
+    bottom: 22%;
+    left: 18%;
+}
+
+.emblem-info {
+    min-width: 0;
+}
+
+.emblem-info h2 {
+    font-size: clamp(1.4rem, 6.4vw, 1.9rem);
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #ffd700, #ffed4a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.emblem-info p {
+    font-size: clamp(0.78rem, 3.3vw, 0.92rem);
+    line-height: 2;
+    color: var(--fw-ink-light);
+    margin-bottom: 20px;
+}
+
+/* ------------------------------------------------------------
+   6. 液态按钮
+   ------------------------------------------------------------ */
+.liquid-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 13px 26px;
+    border-radius: 50px 60px 45px 55px;
+    font-size: clamp(0.8rem, 3.4vw, 0.95rem);
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-family: inherit;
+    transition: transform 0.32s var(--ease-spring), box-shadow 0.32s, background 0.32s;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.liquid-btn:active {
+    transform: scale(0.95);
+}
+
+.liquid-btn.primary {
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    color: #8b0000;
+    box-shadow: 0 6px 24px rgba(255, 215, 0, 0.4);
+}
+
+.liquid-btn[disabled] {
+    opacity: 0.62;
+    pointer-events: none;
+}
+
+/* ------------------------------------------------------------
+   7. 祝福卡片（移动端单列 / 宽屏自适应两列）
+   ------------------------------------------------------------ */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.card {
+    padding: 22px 18px;
+    text-align: center;
+    transition: transform 0.32s var(--ease-spring), box-shadow 0.32s;
+}
+
+.card:active {
+    transform: scale(0.978);
+}
+
+.card-icon {
+    display: inline-block;
+    font-size: clamp(2rem, 8.5vw, 2.5rem);
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+.card-title {
+    font-size: clamp(1rem, 4.2vw, 1.15rem);
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    color: #ffd700;
+}
+
+.card-desc {
+    font-size: clamp(0.76rem, 3.2vw, 0.85rem);
+    line-height: 1.7;
+    color: var(--fw-ink-light);
+}
+
+/* ------------------------------------------------------------
+   8. 引言引用区
+   ------------------------------------------------------------ */
+.quote-section {
+    text-align: center;
+    padding: 24px 18px;
+    margin-bottom: 22px;
+}
+
+.quote-text {
+    font-size: clamp(0.86rem, 3.7vw, 1.1rem);
+    line-height: 2.15;
+    color: var(--fw-ink);
+    letter-spacing: min(2px, 0.5vw);
+    font-style: italic;
+    margin-bottom: 14px;
+}
+
+.quote-from {
+    font-size: clamp(0.72rem, 3vw, 0.85rem);
+    color: var(--fw-ink-light);
+    letter-spacing: min(2px, 0.5vw);
+}
+
+/* ------------------------------------------------------------
+   9. 祝福条
+   ------------------------------------------------------------ */
+.blessing-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.blessing-item {
+    padding: 18px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: transform 0.32s var(--ease-spring);
+}
+
+.blessing-item:active {
+    transform: scale(0.978);
+}
+
+.b-num {
+    flex: 0 0 auto;
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.35rem, 6vw, 1.9rem);
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, #ffd700, #ffed4a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.b-text {
+    font-size: clamp(0.95rem, 4vw, 1.1rem);
+    font-weight: 700;
+    color: #ffd700;
+    letter-spacing: 2px;
+}
+
+/* ------------------------------------------------------------
+   10. 返回传统节日总览
+   ------------------------------------------------------------ */
+.festival-back {
+    margin: 4px 0 8px;
+}
+
+.festival-back .btn.line {
+    border-color: rgba(255, 215, 0, 0.42);
+    color: #ffd700;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ------------------------------------------------------------
+   11. 进场动画（自带实现，不依赖 core.js 的 .reveal，
+       这样即使观察器没触发也不会留下空白）
+   ------------------------------------------------------------ */
+.anim {
+    animation: fwFadeUp 0.6s var(--ease-out) both;
+}
+
+.cards-grid .card:nth-child(1) {
+    animation-delay: 0.04s;
+}
+
+.cards-grid .card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.cards-grid .card:nth-child(3) {
+    animation-delay: 0.16s;
+}
+
+.cards-grid .card:nth-child(4) {
+    animation-delay: 0.22s;
+}
+
+.cards-grid .card:nth-child(5) {
+    animation-delay: 0.28s;
+}
+
+.cards-grid .card:nth-child(6) {
+    animation-delay: 0.34s;
+}
+
+.blessing-item:nth-child(2) {
+    animation-delay: 0.06s;
+}
+
+.blessing-item:nth-child(3) {
+    animation-delay: 0.12s;
+}
+
+@keyframes fwFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ------------------------------------------------------------
+   12. 极窄屏微调（仅 280-340px）
+   ------------------------------------------------------------ */
+@media (max-width: 340px) {
+    .hero-tag {
+        letter-spacing: 1.5px;
+    }
+
+    .emblem-section,
+    .quote-section {
+        padding: 20px 14px;
+    }
+
+    .b-text {
+        letter-spacing: 1px;
+    }
+}
+
+/* ------------------------------------------------------------
+   13. 横屏矮屏：压缩纵向留白
+   ------------------------------------------------------------ */
+@media (max-height: 460px) and (orientation: landscape) {
+    .hero {
+        padding: 10px 0 18px;
+    }
+
+    .hero-title {
+        font-size: min(9vh, 4rem);
+    }
+}
+
+/* ------------------------------------------------------------
+   14. 尊重系统「减弱动态效果」
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+    .hero-title .char {
+        animation: none;
+    }
+
+    .emblem-visual {
+        animation: none;
+    }
+
+    .anim,
+    .cards-grid .card,
+    .blessing-item {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}

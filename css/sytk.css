@@ -1,0 +1,221 @@
+/* ============================================================
+   零源机构 · 移动端 / MOD
+   sytk.css — 使用条款
+   （折叠面板 .acc 的基础样式来自 base.css，这里只做页面级调整）
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   页头
+   ------------------------------------------------------------ */
+.legal-hero {
+    padding: 6px 0 16px;
+    text-align: center;
+}
+
+.legal-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    border-radius: var(--r-pill);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    color: var(--accent);
+    background: rgba(77, 208, 255, 0.12);
+    border: 1px solid rgba(77, 208, 255, 0.28);
+    margin-bottom: 12px;
+}
+
+.legal-title {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-weight: 400;
+    font-size: min(11vw, 2.1rem);
+    letter-spacing: 4px;
+    line-height: 1.25;
+    margin-bottom: 10px;
+}
+
+.legal-sub {
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: var(--text-light);
+}
+
+/* ------------------------------------------------------------
+   简介卡片
+   ------------------------------------------------------------ */
+.intro-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    border-radius: var(--r-card-sm);
+    background: linear-gradient(135deg, rgba(77, 208, 255, 0.12), rgba(196, 77, 255, 0.12));
+}
+
+.intro-card>i {
+    flex: 0 0 auto;
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin-top: 3px;
+}
+
+.intro-card p {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.83rem;
+    line-height: 1.9;
+    color: var(--text-mid);
+}
+
+/* ------------------------------------------------------------
+   条款手风琴
+   ------------------------------------------------------------ */
+.term-card {
+    display: block;
+    scroll-margin-top: calc(var(--appbar-h) + var(--sat) + 12px);
+}
+
+.term-card:last-of-type {
+    margin-bottom: 0;
+}
+
+.term-card[open] {
+    box-shadow: var(--glass-shadow-lg);
+}
+
+/* 注意：不要给 summary 加 position:sticky ——
+   卡片有 overflow:hidden，吸顶的标题会盖住正文最后几行。
+   这里只做展开态的背景强调。 */
+.term-card[open]>summary {
+    background: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid rgba(196, 77, 255, 0.16);
+}
+
+.term-card>summary {
+    transition: background 0.25s var(--ease-out);
+}
+
+.term-card:not([open])>summary {
+    background: rgba(255, 255, 255, 0.66);
+}
+
+/* 展开 / 收起动画：只在 JS 加上状态类时播放，
+   避免 base.css 的 accIn 在每次展开时重复触发（默认展开的第一条会莫名闪一下） */
+.term-card .acc-body {
+    font-size: 0.88rem;
+    line-height: 1.95;
+    color: var(--text-mid);
+    padding: 14px 16px 18px;
+    overflow: hidden;
+    animation: none;
+}
+
+@keyframes termOpen {
+    from {
+        max-height: 0;
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        max-height: 1600px;
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes termClose {
+    from {
+        max-height: 1600px;
+        opacity: 1;
+    }
+
+    to {
+        max-height: 0;
+        opacity: 0;
+    }
+}
+
+.term-card.is-opening .acc-body {
+    animation: termOpen 0.4s var(--ease-out) both;
+}
+
+.term-card.is-closing .acc-body {
+    animation: termClose 0.3s var(--ease-out) both;
+}
+
+.term-card .acc-body p+p {
+    margin-top: 12px;
+}
+
+.term-card .acc-body ul {
+    margin: 10px 0 0;
+}
+
+.term-card .acc-body li {
+    padding-left: 18px;
+    margin-bottom: 9px;
+    line-height: 1.85;
+}
+
+.term-card .acc-body li::before {
+    top: 0.75em;
+    background: linear-gradient(135deg, var(--grad-blue), var(--grad-purple));
+}
+
+.term-card .acc-body strong {
+    color: var(--text-dark);
+}
+
+/* ------------------------------------------------------------
+   底部提示
+   ------------------------------------------------------------ */
+.footer-note {
+    margin-top: 26px;
+    padding: 18px 16px;
+    border-radius: var(--r-card);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    flex-wrap: wrap;
+    background: linear-gradient(135deg, rgba(77, 208, 255, 0.14), rgba(196, 77, 255, 0.14));
+    border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.footer-note i {
+    color: var(--grad-pink);
+    font-size: 1rem;
+}
+
+.footer-note p {
+    font-size: 0.84rem;
+    color: var(--text-mid);
+    margin: 0;
+}
+
+/* ------------------------------------------------------------
+   极窄屏（280-340px）微调
+   ------------------------------------------------------------ */
+@media (max-width: 340px) {
+    .legal-title {
+        letter-spacing: 2px;
+    }
+
+    .intro-card {
+        padding: 13px;
+        gap: 9px;
+    }
+
+    .term-card .acc-body {
+        padding: 12px 13px 16px;
+    }
+
+    .footer-note {
+        padding: 15px 12px;
+    }
+}
