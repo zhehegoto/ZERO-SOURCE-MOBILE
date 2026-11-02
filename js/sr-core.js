@@ -353,7 +353,8 @@
 
         function syncMusicUI(playing) {
             if (!musicBtn || !musicIcon) return;
-            musicIcon.className = 'fa ' + (playing ? 'fa-music' : 'fa-play');
+            /* v1.1 去掉图标后，按钮直接显示「播放 / 暂停」文字 */
+            musicIcon.textContent = playing ? '暂停' : '播放';
             musicBtn.classList.toggle('is-playing', playing);
             musicBtn.setAttribute('aria-pressed', playing ? 'true' : 'false');
             musicBtn.setAttribute('aria-label', playing ? '暂停生日音乐' : '播放生日音乐');

@@ -12,7 +12,28 @@
     /* ==================== 版本数据（与 PC 端一一对应） ==================== */
     var versions = [
         {
-            version: 'v4.6', date: '2026年10月7日', type: '重大更新', latest: true,
+            version: 'v4.8', date: '2026年10月15日', type: '重大更新', latest: true,
+            items: [
+                { icon: 'zap', title: '字体全面瘦身', descs: ['原先 550 KB 的字体样式（内含 508 段 @font-face）精简到 5.6 KB', '92 个中文艺术字分片合并并按本站用字子集化，合成 1 个 102 KB 文件', '首页首屏从 1991 KB 降到 490 KB，请求数从 33 个降到 11 个'] },
+                { icon: 'refresh', title: '中文改用系统字体', descs: ['中文正文不再下载网络字库，直接调用系统字体（iOS 苹方 / 安卓思源 / Windows 微软雅黑）', '英文艺术字 Syne 与中文艺术字 ZCOOL 仍然保留，首页大标题观感不变', '标题与正文的视觉层级不变，只有中文字形随系统略有差异'] },
+                { icon: 'remove', title: '图标全部移除', descs: ['原来图标依赖一个样式表加一个 77 KB 字体文件，而全站只用到 68 个图标', '现全部去掉：页面以文字标签表达，不再有任何图标字体请求', '底部标签栏改为纯文字，按钮改为「返回 / 更多 / 反馈 / 顶部」等中文'] },
+                { icon: 'refresh', title: '图片加载优化', descs: ['动态卡片图片统一启用懒加载与异步解码', '不再使用 1.5 MB 的重复大图，改用压缩后的同款 JPG', '首屏只加载真正可见的图片'] },
+                { icon: 'plus', title: '清理无用文件', descs: ['删除 font-awesome 图标目录（7.4 MB、576 个文件）', '删除已不再引用的 fonts-google.css 与 1.5 MB 的重复大图', '站点体积从 12.8 MB 降到 3.4 MB'] },
+                { icon: 'plus', title: '内容与 PC 端 v4.7 / v4.8 对齐', descs: ['网站地图「新浪微博」更新为 GitHub，状态改为运行中', '微信公众号卡片改为点击复制账号名', '官方网站卡片增加「已在该网站」提示，不再重复跳转'] }
+            ]
+        },
+        {
+            version: 'v4.7', date: '2026年10月12日', type: '重大更新',
+            items: [
+                { icon: 'refresh', title: '移动端同步 PC 端 v4.7 修复', descs: ['节日页面统一接入公共样式与页脚脚本', '隐私政策 / 使用条款的联系方式统一指向「网站地图」', '更新日志的运行天数改由统一入口计算', '清理不再执行的冗余代码与重复事件绑定'] },
+                { icon: 'fix', title: '更新日志运行天数纠正', descs: ['运行天数统一由公共配置提供，修复脚本执行顺序导致的日期读取错误'] },
+                { icon: 'fix', title: '首页数据面板数字不动', descs: ['计数动画在内容不可见时就播完了，改为进入视口才开始计数'] },
+                { icon: 'fix', title: '时间轴页面内容被裁切', descs: ['每屏写死一屏高，矮屏下末尾的里程碑卡片被裁掉且无法滚动查看', '改为按内容自适应高度'] },
+                { icon: 'plus', title: '微信公众号一键复制', descs: ['微信没有可用的公开跳转链接，改为点击复制账号名', '复制后提示到微信「搜一搜」粘贴关注'] }
+            ]
+        },
+        {
+            version: 'v4.6', date: '2026年10月7日', type: '重大更新',
             items: [
                 { icon: 'plus', title: '网站正式上线', descs: ['零源机构官网正式上线'] },
                 { icon: 'refresh', title: '时间轴页面移动端优化', descs: ['修复页眉字体在移动端显示过小的问题', '修复页面缺失字体文件导致页眉样式不一致', '隔离时间轴专属CSS变量，不再覆盖公共变量', '移动端图片和文字间距优化', '移动端时间轴文字放大适配'] },
@@ -115,7 +136,7 @@
             ]
         },
         {
-            version: 'v3.2', date: '2026年4月18日',
+            version: 'v3.2', date: '2026年4月19日',
             items: [
                 { icon: 'refresh', title: '响应优化', descs: ['优化css编写，提升运行速度'] },
                 { icon: 'refresh', title: '细节打磨', descs: ['部分页面细节补充'] },
@@ -123,13 +144,13 @@
             ]
         },
         {
-            version: 'v3.1', date: '2026年4月7日', deprecated: true, deprecatedLabel: '已下架',
+            version: 'v3.1', date: '2026年4月18日', deprecated: true, deprecatedLabel: '已下架',
             items: [
                 { icon: 'refresh', title: '网页上线', descs: ['经过不懈努力。。。我们终于上线了'] }
             ]
         },
         {
-            version: 'v3.0', date: '2026年4月18日', type: '重大更新', oldVersion: 'v2.8',
+            version: 'v3.0', date: '2026年4月9日', type: '重大更新', oldVersion: 'v2.8',
             items: [
                 { icon: 'refresh', title: '发布第一条前瞻视频', descs: ['点击可观看前瞻视频'] },
                 { icon: 'refresh', title: '代码优化', descs: ['全页面重写，交互体验MAX++'] },
@@ -262,24 +283,35 @@
         plus: { cls: 'fa-plus-circle', color: '#2ecc71' },
         fix: { cls: 'fa-wrench', color: '#f39c12' },
         remove: { cls: 'fa-trash', color: '#e74c3c' },
-        lightbulb: { cls: 'fa-lightbulb-o', color: '#f39c12' }
+        lightbulb: { cls: 'fa-lightbulb-o', color: '#f39c12' },
+        zap: { cls: 'fa-bolt', color: '#c44dff' }
     };
 
     /* ==================== 顶部统计 ==================== */
+    /* 直接写入最终数字并标记 data-counted，跳过 core.js 的逐帧计数。
+       原因与 cyjs.js 里的处理一致：数字用的是「渐变文字」
+       (-webkit-background-clip:text)，移动端 GPU 合成对「逐帧改文本」
+       会丢栅格，数字顶部被裁掉、甚至停在动画中间值。
+       这些数字不是要「看得见它跳动」的元素，稳定可读更重要。 */
     function seedStats() {
         var vNode = document.getElementById('totalVersions');
         if (vNode) {
             vNode.dataset.count = versions.length;
-            vNode.textContent = '0';
+            vNode.textContent = versions.length;
+            vNode.dataset.counted = '1';
         }
 
         var dNode = document.getElementById('totalDays');
         if (dNode) {
-            // 运行天数起点与 PC 端 js/gxrz.js 相同
-            var start = new Date('2025/11/16').getTime();
+            // 起点统一取 core.js 的 CONFIG.changelogStart，
+            // 不再自己写死一份日期（与 PC 端 public.js 的做法一致）
+            var startStr = (window.MOD && MOD.config && MOD.config.changelogStart) || '2025-11-16';
+            var start = new Date(startStr.replace(/-/g, '/')).getTime();
             var days = Math.floor((Date.now() - start) / 86400000);
-            dNode.dataset.count = days > 0 ? days : 0;
-            dNode.textContent = '0';
+            days = days > 0 ? days : 0;
+            dNode.dataset.count = days;
+            dNode.textContent = days;
+            dNode.dataset.counted = '1';
         }
     }
 
@@ -301,7 +333,7 @@
                     (v.oldVersion ? '<span class="old-ver">' + MOD.esc(v.oldVersion) + '</span>' : '') +
                     MOD.esc(v.version) + '</span>';
             }
-            badges += '<span class="ver-date"><i class="fa fa-calendar"></i> ' +
+            badges += '<span class="ver-date">' +
                 MOD.esc(v.date) + '</span>';
             if (v.latest) badges += '<span class="tag grad">最新</span>';
             if (v.deprecated) {
@@ -315,9 +347,10 @@
 
             var rows = (v.items || []).map(function (item) {
                 var icon = iconMap[item.icon] || iconMap.refresh;
+                /* v1.1 去掉图标后，这里用一个小圆点保留「变更类型」的配色：
+                   蓝=更新 / 红=移除 / 绿=新增 / 橙=修复，比纯文字更好扫读 */
                 return '<div class="cl-row">' +
-                    '<span class="cl-row-icon" style="color:' + icon.color + '">' +
-                    '<i class="fa ' + icon.cls + '"></i></span>' +
+                    '<span class="cl-row-icon" style="background:' + icon.color + '"></span>' +
                     '<span class="cl-row-main">' +
                     '<span class="cl-row-title">' + MOD.esc(item.title) + '</span>' +
                     (item.descs || []).map(function (d) {
@@ -331,11 +364,11 @@
                 '<article class="cl-card glass">' +
                 '<header class="cl-head" role="button" tabindex="0" aria-expanded="true">' +
                 '<div class="cl-badges">' + badges + '</div>' +
-                '<span class="cl-toggle" aria-hidden="true"><i class="fa fa-chevron-down"></i></span>' +
+                '<span class="cl-toggle">收起</span>' +
                 '</header>' +
                 '<div class="cl-body">' +
                 (v.highlight
-                    ? '<div class="ver-highlight"><i class="fa fa-lightbulb-o"></i> ' +
+                    ? '<div class="ver-highlight">' +
                       MOD.esc(v.highlight) + '</div>'
                     : '') +
                 '<div class="cl-items">' + rows + '</div>' +
@@ -356,6 +389,9 @@
                 var collapsed = !card.classList.contains('collapsed');
                 card.classList.toggle('collapsed', collapsed);
                 head.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+                // 图标去掉后，用文字提示当前可执行的动作
+                var tg = card.querySelector('.cl-toggle');
+                if (tg) tg.textContent = collapsed ? '展开' : '收起';
                 MOD.haptic();
             }
 

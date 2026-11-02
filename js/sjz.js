@@ -333,7 +333,7 @@
             if (!sheet) {
                 sheet = MOD.sheet({ id: 'endSheet' });
                 sheet.setTitle('故事还在继续');
-                sheet.setSub('<i class="fa fa-clock-o"></i> 零源编年史 · 未完结');
+                sheet.setSub('零源编年史 · 未完结');
             }
             sheet.setBody(
                 '<div class="tz-today">' +

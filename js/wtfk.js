@@ -30,7 +30,7 @@
         fab.type = 'button';
         fab.className = 'fab pulse';
         fab.setAttribute('aria-label', '问题反馈');
-        fab.innerHTML = '<i class="fa fa-headphones"></i>';
+        fab.innerHTML = '<span class="ib-txt">反馈</span>';
         fab.addEventListener('click', function () { open(); });
         document.body.appendChild(fab);
     }
@@ -47,7 +47,7 @@
         var head = panel.querySelector('.sheet-head');
         var avatar = document.createElement('div');
         avatar.className = 'fw-avatar';
-        avatar.innerHTML = '<i class="fa fa-headphones"></i>';
+        avatar.innerHTML = '';
         head.insertBefore(avatar, head.firstChild);
 
         // 消息区
@@ -65,7 +65,7 @@
             '<input class="fw-input" id="fwInput" type="text" autocomplete="off" ' +
             'enterkeyhint="send" placeholder="输入你的回复...">' +
             '<button class="fw-send" id="fwSend" type="button" aria-label="发送">' +
-            '<i class="fa fa-paper-plane"></i></button>';
+            '</button>';
 
         panel.appendChild(quickEl);
         panel.appendChild(row);
@@ -119,7 +119,7 @@
         wrap.className = 'fw-msg ' + (kind === 'bot' ? 'fw-bot' : 'fw-user');
         if (kind === 'bot') {
             wrap.innerHTML =
-                '<div class="fw-msg-avatar"><i class="fa fa-comments"></i></div>' +
+                '<div class="fw-msg-avatar"></div>' +
                 '<div class="fw-bubble">' + (isHTML ? text : MOD.esc(text)) + '</div>';
         } else {
             wrap.innerHTML = '<div class="fw-bubble">' + MOD.esc(text) + '</div>';
@@ -135,7 +135,7 @@
         wrap.className = 'fw-msg fw-bot';
         wrap.id = 'fwTyping';
         wrap.innerHTML =
-            '<div class="fw-msg-avatar"><i class="fa fa-comments"></i></div>' +
+            '<div class="fw-msg-avatar"></div>' +
             '<div class="fw-bubble"><div class="fw-typing">' +
             '<span></span><span></span><span></span></div></div>';
         messagesEl.appendChild(wrap);

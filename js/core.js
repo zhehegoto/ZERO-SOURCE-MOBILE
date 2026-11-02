@@ -7,13 +7,17 @@
 (function () {
     'use strict';
 
-    /* ---------- 站点配置（与 PC 端一致） ---------- */
+    /* ---------- 站点配置（与 PC 端 public.js 保持一致） ---------- */
     var CONFIG = {
-        /* 建站时间：与更新日志 v1.0「网站基础版本发布」的日期一致。
-           全站的「已运行 / 天运行」都从这里取值，
-           其它页面不要再各自硬编码一份（曾经 4 处写的不一样，导致
-           页脚显示 159 天、更新日志显示 329 天）。 */
+        /* 站点的「两个起算点」，全站只在这里定义一次
+           （与 PC 端 public.js 的 CONFIG 一致）：
+           siteStartTime —— 站点头上线时间，用于首页「天运行」统计卡与页脚「已运行」
+           changelogStart —— 更新日志开始记录的时间，用于更新日志页的「运行天数」
+           两者取同一个日期：全站的「天运行 / 已运行 / 运行天数」显示同一个数字。
+           不要在其它 js 里再写死一遍
+           （曾经 4 处各写一份，导致页脚与更新日志的天数对不上）。 */
         siteStartTime: '2025-11-16 00:00:00',
+        changelogStart: '2025-11-16',
         siteUrl: 'index.html',
         birthdayPages: {
             '1-10': 'sr/liu/liu.html',
@@ -126,15 +130,15 @@
         root.innerHTML =
             '<div class="sheet-backdrop"></div>' +
             '<div class="sheet-panel" role="dialog" aria-modal="true">' +
-            '  <div class="sheet-grip"></div>' +
-            '  <div class="sheet-head">' +
-            '    <div class="sh-main">' +
-            '      <h2 class="sheet-title"></h2>' +
-            '      <div class="sheet-sub"></div>' +
-            '    </div>' +
-            '    <button class="sheet-close" type="button" aria-label="关闭">&times;</button>' +
-            '  </div>' +
-            '  <div class="sheet-body"></div>' +
+            ' <div class="sheet-grip"></div>' +
+            ' <div class="sheet-head">' +
+            ' <div class="sh-main">' +
+            ' <h2 class="sheet-title"></h2>' +
+            ' <div class="sheet-sub"></div>' +
+            ' </div>' +
+            ' <button class="sheet-close" type="button" aria-label="关闭">&times;</button>' +
+            ' </div>' +
+            ' <div class="sheet-body"></div>' +
             '</div>';
 
         this.el = root;
@@ -293,7 +297,7 @@
         var left = '';
         if (HAS_BACK) {
             left = '<button class="icon-btn" id="appbarBack" type="button" aria-label="返回">' +
-                '<i class="fa fa-chevron-left"></i></button>';
+                '<span class="ib-txt">返回</span></button>';
         }
 
         var middle = PAGE === 'home' || !TITLE
@@ -308,7 +312,7 @@
             left +
             middle +
             '<button class="icon-btn" id="appbarMore" type="button" aria-label="更多">' +
-            '<i class="fa fa-ellipsis-h"></i></button>' +
+            '<span class="ib-txt">更多</span></button>' +
             '</div>';
 
         document.body.insertBefore(bar, document.body.firstChild);
@@ -352,7 +356,6 @@
             var on = t.key === PAGE ? ' active' : '';
             return '<a class="tab-item' + on + '" href="' + BASE + t.href + '"' +
                 (on ? ' aria-current="page"' : '') + '>' +
-                '<i class="fa ' + t.icon + '" aria-hidden="true"></i>' +
                 '<span>' + t.label + '</span></a>';
         }).join('');
 
@@ -373,15 +376,15 @@
                 '<div class="list">' +
                 SUBPAGES.map(function (p) {
                     return '<a class="list-item" href="' + BASE + p.href + '">' +
-                        '<span class="li-icon ' + p.cls + '"><i class="fa ' + p.icon + '"></i></span>' +
+                        '<span class="li-icon ' + p.cls + '"></span>' +
                         '<span class="li-main"><span class="li-title">' + p.label + '</span></span>' +
-                        '<i class="fa fa-chevron-right li-arrow"></i></a>';
+                        '</a>';
                 }).join('') +
                 '</div>' +
                 '<button class="btn ghost block mt-2" id="moreFeedback" type="button">' +
-                '<i class="fa fa-comments"></i> 问题反馈</button>' +
+                '问题反馈</button>' +
                 '<button class="btn ghost block mt-1" id="moreTop" type="button">' +
-                '<i class="fa fa-arrow-up"></i> 回到顶部</button>'
+                '回到顶部</button>'
             );
             $('#moreFeedback', moreSheet.bodyEl).addEventListener('click', function () {
                 moreSheet.close();
@@ -506,7 +509,7 @@
        ============================================================ */
     function buildBackTop() {
         var btn = el('button', 'back-top',
-            '<i class="fa fa-arrow-up" aria-hidden="true"></i>');
+            '<span class="ib-txt">顶部</span>');
         btn.type = 'button';
         btn.setAttribute('aria-label', '回到顶部');
         document.body.appendChild(btn);
@@ -617,7 +620,7 @@
             sweepAttached = true;
             window.addEventListener('scroll', onSweepScroll, { passive: true });
         }
-        onSweepScroll();   // 立即扫一次
+        onSweepScroll(); // 立即扫一次
     }
 
     /* ============================================================

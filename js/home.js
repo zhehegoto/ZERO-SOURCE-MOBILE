@@ -24,7 +24,7 @@
             tag: '网站更新',
             title: '官网全新液态玻璃设计上线',
             desc: '零源机构官网迎来全面视觉升级，采用全新液态玻璃设计语言，带来更沉浸的浏览体验。',
-            img: IMG + 'dt/zx-1.png',
+            img: IMG + 'dt/zx-2.jpg',
             date: '2026-09-23',
             content: '零源机构官网全新改版上线！\n\n本次更新采用全新的液态玻璃设计语言，完全放弃了旧版的布局和视觉风格。\n\n主要更新内容：\n· 全新液态玻璃卡片设计\n· 多色流动渐变背景\n· 不规则有机圆角\n· 全新交互体验\n· 全站响应式优化\n\n欢迎各位成员体验并反馈！'
         },
@@ -131,7 +131,7 @@
         MOD.haptic();
         var s = getNewsSheet();
         s.setTitle(item.title || '动态详情');
-        s.setSub('<i class="fa fa-calendar"></i> ' + MOD.esc(item.date) +
+        s.setSub('' + MOD.esc(item.date) +
             ' &nbsp;·&nbsp; <span class="tag grad">' + MOD.esc(item.tag) + '</span>');
         s.setBody(
             '<div class="sheet-hero" id="newsHero"></div>' +
@@ -150,7 +150,7 @@
         MOD.haptic();
         var s = getAnnSheet();
         s.setTitle(item.title || '公告详情');
-        s.setSub('<i class="fa fa-calendar"></i> ' + MOD.esc(item.date) +
+        s.setSub('' + MOD.esc(item.date) +
             ' &nbsp;·&nbsp; <span class="tag ' + (item.tagClass || 'info') + '">' + MOD.esc(item.tag) + '</span>');
         s.setBody('<div class="detail-content">' + MOD.esc(item.content) + '</div>');
         s.open();
@@ -213,8 +213,8 @@
                 '<h3 class="news-card-title">' + MOD.esc(item.title) + '</h3>' +
                 '<p class="news-card-desc">' + MOD.esc(item.desc) + '</p>' +
                 '<div class="news-card-meta">' +
-                '<span><i class="fa fa-calendar"></i>' + MOD.esc(item.date) + '</span>' +
-                '<span class="news-card-more">查看详情 <i class="fa fa-arrow-right"></i></span>' +
+                '<span>' + MOD.esc(item.date) + '</span>' +
+                '<span class="news-card-more">查看详情</span>' +
                 '</div></div></article>';
         }).join('');
 
@@ -292,7 +292,7 @@
                 '<article class="ann-item" role="button" tabindex="0">' +
                 '<div class="ann-meta">' +
                 '<span class="tag ' + (item.tagClass || 'info') + '">' + MOD.esc(item.tag) + '</span>' +
-                '<span class="ann-time"><i class="fa fa-calendar"></i>' + MOD.esc(item.date) + '</span>' +
+                '<span class="ann-time">' + MOD.esc(item.date) + '</span>' +
                 '</div>' +
                 '<h3 class="ann-title">' + MOD.esc(item.title) + '</h3>' +
                 '<p class="ann-desc">' + MOD.esc(item.desc) + '</p>' +

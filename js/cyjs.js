@@ -51,7 +51,7 @@
        直接写入最终数字并标记 data-counted，跳过 core.js 的逐帧计数：
        移动端 GPU 合成对「-webkit-background-clip:text + 逐帧改文本」
        会丢栅格，数字顶部被裁掉；这里保证数字完整、可读。
-       运行天数统一取自 core.js 的 MOD.config.siteStartTime（建站日 2025-11-16） ==================== */
+       运行天数统一取自 core.js 的 MOD.config.siteStartTime（站点头上线时间） ==================== */
     (function seedCounters() {
         var runtime = document.getElementById('teamRuntimeDays');
         if (runtime) {
@@ -102,7 +102,7 @@
         MOD.haptic();
         var s = getDetailSheet();
         s.setTitle(member.name + ' · 成员档案');
-        s.setSub('<i class="fa fa-id-card-o"></i> ' + MOD.esc(member.code) +
+        s.setSub('' + MOD.esc(member.code) +
             ' &nbsp;·&nbsp; <span class="tag grad">' + MOD.esc(member.role) + '</span>');
         s.setBody(
             '<div class="member-detail">' +
@@ -111,11 +111,11 @@
             '<div class="member-detail-code">' + MOD.esc(member.code) + '</div>' +
             '<div class="member-detail-role">' + MOD.esc(member.role) + '</div>' +
             '<div class="member-detail-list">' +
-            '<div class="member-detail-item"><i class="fa fa-envelope-o"></i>' +
+            '<div class="member-detail-item">' +
             '<span><b>联系方式</b>' + MOD.esc(member.email) + '</span></div>' +
-            '<div class="member-detail-item"><i class="fa fa-phone"></i>' +
+            '<div class="member-detail-item">' +
             '<span><b>电话</b>' + MOD.esc(member.phone) + '</span></div>' +
-            '<div class="member-detail-item"><i class="fa fa-quote-left"></i>' +
+            '<div class="member-detail-item">' +
             '<span><b>成员简介</b>' + MOD.esc(member.desc) + '</span></div>' +
             '</div></div>'
         );
@@ -169,7 +169,7 @@
             '<div class="fc-name">' + MOD.esc(member.name) + '</div>' +
             '<div class="fc-code">' + MOD.esc(member.code) + '</div>' +
             '<div class="fc-role">' + MOD.esc(member.role) + '</div>' +
-            '<div class="fc-flip-hint"><i class="fa fa-refresh"></i><span>点击翻转</span></div>' +
+            '<div class="fc-flip-hint"><span>点击翻转</span></div>' +
             '</div>' +
 
             /* ---- 背面 ---- */
@@ -182,22 +182,22 @@
             '</div>' +
             '</div>' +
             '<div class="fc-back-info">' +
-            '<div class="fc-info-item"><i class="fa fa-id-card-o"></i>' +
+            '<div class="fc-info-item">' +
             '<span><b>代号</b>' + MOD.esc(member.code) + '</span></div>' +
-            '<div class="fc-info-item"><i class="fa fa-star-o"></i>' +
+            '<div class="fc-info-item">' +
             '<span><b>定位</b>' + MOD.esc(member.role) + '</span></div>' +
-            '<div class="fc-info-item"><i class="fa fa-envelope"></i>' +
+            '<div class="fc-info-item">' +
             '<span><b>联系方式</b>' + MOD.esc(member.email) + '</span></div>' +
-            '<div class="fc-info-item"><i class="fa fa-phone"></i>' +
+            '<div class="fc-info-item">' +
             '<span><b>电话</b>' + MOD.esc(member.phone) + '</span></div>' +
-            '<div class="fc-info-quote"><i class="fa fa-quote-left"></i> ' +
+            '<div class="fc-info-quote">' +
             MOD.esc(member.desc) + '</div>' +
             '</div>' +
             '<div class="fc-back-actions">' +
             '<button class="fc-btn primary" type="button" data-act="detail">' +
-            '<i class="fa fa-id-card-o"></i> 查看详情</button>' +
+            '查看详情</button>' +
             '<button class="fc-btn ghost" type="button" data-act="flipback">' +
-            '<i class="fa fa-rotate-right"></i> 翻回</button>' +
+            '翻回</button>' +
             '</div>' +
             '</div>' +
 

@@ -8,8 +8,8 @@
     'use strict';
 
     /* ==================== 与 PC 端一致的常量 ==================== */
-    var MAX_IMAGE = 118;        // 照片总数（PC 端页面同样写 118）
-    var PAGE_SIZE = 15;         // 每批加载数量
+    var MAX_IMAGE = 118; // 照片总数（PC 端页面同样写 118）
+    var PAGE_SIZE = 15; // 每批加载数量
     // 与 PC 端 pc/js/qxc.js 的 '../images/zerozhandui/照片 (N).jpeg' 对应：
     // qxc 页在 mod/body/ 下，所以前缀是 ../assets/…（空格与括号保留，浏览器自动编码）
     var IMG_DIR = '../assets/images/zerozhandui/';
@@ -38,10 +38,10 @@
 
     /* ==================== 网格状态 ==================== */
     var grid = null;
-    var row = null;             // 当前正在填的行；已满的行会冻结高度
-    var cards = [];             // 已生成的全部卡片（对应 PC 端 loadedPhotos）
-    var page = 0;               // 已加载批次数
-    var deckDone = false;       // 118 张是否已全部生成
+    var row = null; // 当前正在填的行；已满的行会冻结高度
+    var cards = []; // 已生成的全部卡片（对应 PC 端 loadedPhotos）
+    var page = 0; // 已加载批次数
+    var deckDone = false; // 118 张是否已全部生成
 
     var loadMoreBtn = null;
     var loadingIndicator = null;
@@ -53,11 +53,11 @@
     var captionTitleEl = null;
     var captionIndexEl = null;
     var slides = [];
-    var lifted = [];            // 打开预览时被搬进预览器的卡片（关闭时复位）
+    var lifted = []; // 打开预览时被搬进预览器的卡片（关闭时复位）
     var current = -1;
     var isOpen = false;
-    var pushed = false;         // 是否往历史里压了记录
-    var ignorePop = false;      // 自己 back() 关闭时跳过一次 popstate
+    var pushed = false; // 是否往历史里压了记录
+    var ignorePop = false; // 自己 back() 关闭时跳过一次 popstate
     var stateNonce = null;
     var syncTimer = null;
     var scrollTimer = null;
@@ -103,7 +103,7 @@
        2. 生成照片卡片（与 PC 端同构）
        ============================================================ */
     function createPhoto(index) {
-        var num = MAX_IMAGE - index;        // 与 PC 端一致：碎片编号从 118 递减
+        var num = MAX_IMAGE - index; // 与 PC 端一致：碎片编号从 118 递减
         var card = document.createElement('div');
         card.className = 'gallery-photo photo-enter';
         card.dataset.index = String(index);
@@ -192,14 +192,14 @@
         var fallback = document.createElement('div');
         fallback.className = 'preview-slide-fallback is-loading';
         fallback.innerHTML =
-            '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>' +
+            '' +
             '<span>正在翻找这张碎片...</span>';
         fallback._name = photoName(num);
 
         var notFound = document.createElement('div');
         notFound.className = 'preview-slide-fallback';
         notFound.innerHTML =
-            '<i class="fa fa-image" aria-hidden="true"></i>' +
+            '' +
             '<span>这张碎片找不到了</span>' +
             '<span class="fallback-name">' + photoName(num) + '</span>';
 
@@ -245,7 +245,7 @@
             box.classList.add('is-media-broken');
         });
         box.insertBefore(img, box.firstChild);
-        box.appendChild(slide._fallback);   // 加载中的占位；加载完成或失败时被替换/移除
+        box.appendChild(slide._fallback); // 加载中的占位；加载完成或失败时被替换/移除
         img.src = photoSrc(MAX_IMAGE - index);
     }
 
@@ -347,7 +347,7 @@
                 return;
             }
             tries++;
-            if (tries > 5) {                 // 平滑滚动没生效，直接落位
+            if (tries > 5) { // 平滑滚动没生效，直接落位
                 stageEl.scrollLeft = current * stageEl.clientWidth;
                 return;
             }
@@ -359,7 +359,7 @@
 
     function setStageIndex(index, smooth) {
         if (!stageEl) return;
-        current = wrapIndex(index);        // 与 PC 端一致：序号环绕
+        current = wrapIndex(index); // 与 PC 端一致：序号环绕
         // 序号 / 标题立即更新，视觉位置随后落位（两者最终一致）
         updateViewer();
         try {
@@ -494,7 +494,7 @@
             history.pushState({ modGallery: stateNonce }, '');
             pushed = true;
         } catch (e) {
-            stateNonce = null;   // 压栈失败就不要自作主张 back()
+            stateNonce = null; // 压栈失败就不要自作主张 back()
         }
     }
 
@@ -507,9 +507,9 @@
 
         window.clearTimeout(fadeTimer);
         viewer.classList.remove('is-hidden');
-        viewer.classList.add('open');   // CSS 中的 .open 立即置为 visible
+        viewer.classList.add('open'); // CSS 中的 .open 立即置为 visible
         viewer.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('no-scroll');   // 锁定页面滚动
+        document.body.classList.add('no-scroll'); // 锁定页面滚动
         pushHistory();
 
         liftCards();
@@ -532,7 +532,7 @@
 
         viewer.classList.remove('open');
         viewer.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('no-scroll');   // 恢复页面滚动
+        document.body.classList.remove('no-scroll'); // 恢复页面滚动
 
         // 淡出结束后再真正隐藏（不依赖 visibility 过渡，行为更可控）
         window.clearTimeout(fadeTimer);

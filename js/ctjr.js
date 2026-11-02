@@ -71,7 +71,7 @@
         grid.innerHTML = festivals.map(function (f) {
             return '<a class="festival-card ' + f.key + '" href="' + MOD.esc(f.link) + '"' +
                 ' aria-label="传统节日：' + MOD.esc(f.name) + '（' + MOD.esc(f.date) + '）">' +
-                '<span class="card-arrow" aria-hidden="true"><i class="fa fa-arrow-right"></i></span>' +
+                '<span class="card-arrow" aria-hidden="true"></span>' +
                 '<span class="card-emoji" aria-hidden="true">' + f.emoji + '</span>' +
                 '<span class="card-date">' + MOD.esc(f.date) + '</span>' +
                 '<span class="card-name">' + MOD.esc(f.name) + '</span>' +

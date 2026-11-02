@@ -340,7 +340,32 @@
     }
 
     /* ============================================================
+       线上平台卡片：已经是当前网站时给出提示，不再重复跳转
+       （域名从卡片自己的 href 解析，因此本地调试时不会被误判为已在官网）
+       ——与 PC 端 v4.7 js/wzdt.js 的行为一致
+       ============================================================ */
+    var SELF_HOST = String(location.hostname || '').replace(/^www\./i, '').toLowerCase();
+
+    Array.prototype.forEach.call(document.querySelectorAll('.platform-card[href]'), function (card) {
+        var target = null;
+        try {
+            target = new URL(card.getAttribute('href') || '', location.href);
+        } catch (e) {
+            return;
+        }
+        var host = String(target.hostname || '').replace(/^www\./i, '').toLowerCase();
+        if (host !== SELF_HOST) return;   // 外站链接保持正常跳转
+
+        card.addEventListener('click', function (e) {
+            e.preventDefault();
+            MOD.haptic();
+            MOD.toast('你已经在当前网站上了');
+        });
+    });
+
+    /* ============================================================
        点击复制（统一用 MOD.toast 反馈）
+       放在「当前网站」检测之后：两类卡片互斥，上面命中时这里不会再绑一次
        ============================================================ */
     var copyCards = document.querySelectorAll('[data-copy]');
     Array.prototype.forEach.call(copyCards, function (card) {
@@ -360,10 +385,13 @@
     function copyText(text, card) {
         if (!text) return;
 
+        // 卡片可以自带提示文案（如「去微信『搜一搜』粘贴」）
+        var tip = (card && card.getAttribute('data-copy-tip')) || '已复制到剪贴板';
+
         function done() {
             MOD.haptic();
             flashCopied(card);
-            MOD.toast('已复制到剪贴板');
+            MOD.toast(tip);
         }
 
         if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -397,19 +425,6 @@
         document.body.removeChild(ta);
         return ok;
     }
-
-    /* ============================================================
-       微信公众号卡片：没有可跳转的真实链接，点击给出提示即可，
-       避免空 href="#" 造成无意义跳转
-       ============================================================ */
-    var noLinkCards = document.querySelectorAll('[data-nolink="wechat"]');
-    Array.prototype.forEach.call(noLinkCards, function (card) {
-        card.addEventListener('click', function (e) {
-            e.preventDefault();
-            MOD.haptic();
-            MOD.toast('公众号：ZERO-SOURCE零源机构，可在微信内搜索');
-        });
-    });
 
     /* ============================================================
        进场动画
