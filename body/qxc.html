@@ -14,8 +14,8 @@
 
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 
-    <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../assets/fonts-google.css">
+    <link rel="stylesheet" href="../css/icons.css">
+    <link rel="stylesheet" href="../assets/fonts-min.css">
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/wtfk.css">
     <link rel="stylesheet" href="../css/qxc.css">
@@ -30,16 +30,16 @@
         <!-- ==================== 液态头部 ==================== -->
         <section class="gallery-hero">
             <div class="hero-inner">
-                <span class="gallery-badge"><i class="fa fa-camera" aria-hidden="true"></i> MEMORY</span>
+                <span class="gallery-badge">MEMORY</span>
                 <h1 class="gallery-title">详情请看-页脚-<wbr>隐私政策-05群相册</h1>
                 <p class="gallery-subtitle">每一张照片，都是时光的碎片</p>
                 <div class="gallery-hint">
-                    <i class="fa fa-hand-pointer-o" aria-hidden="true"></i>
+
                     <span>点击放大 · 左右滑动切换</span>
                 </div>
                 <!-- 照片补齐前的小提示：图集为空时占位块是有意为之，不是页面坏了 -->
                 <p class="gallery-note">
-                    <i class="fa fa-picture-o" aria-hidden="true"></i>
+
                     照片整理中 · 占位待你来填满
                 </p>
             </div>
@@ -48,7 +48,7 @@
         <!-- ==================== 照片网格（JS 生成） ====================
              照片文件请放到 mod/assets/images/zerozhandui/ 目录下，
              命名规范（与 PC 版 pc/images/zerozhandui/ 完全一致）：
-                 照片 (1).jpeg  ~  照片 (118).jpeg
+                 照片 (1).jpeg ~ 照片 (118).jpeg
              共 118 张，文件名里的空格和括号都要保留。
              目录为空时页面会自动显示渐变占位，不会出现破图或白框。
         ================================================================= -->
@@ -60,10 +60,10 @@
         <!-- ==================== 加载更多 ==================== -->
         <div class="desk-load-more" id="deskLoadMore">
             <button class="btn primary load-more-btn" id="loadMoreBtn" type="button">
-                <i class="fa fa-plus" aria-hidden="true"></i> 拾起更多记忆
+拾起更多记忆
             </button>
             <div class="loading-indicator" id="loadingIndicator" hidden>
-                <i class="fa fa-spinner fa-spin" aria-hidden="true"></i> 正在翻找...
+                正在翻找照片…
             </div>
         </div>
 
@@ -76,9 +76,7 @@
 
         <div class="preview-topbar">
             <span class="preview-topnum" id="previewTopNum">1 / 118</span>
-            <button class="preview-close" id="previewClose" type="button" aria-label="关闭预览">
-                <i class="fa fa-times" aria-hidden="true"></i>
-            </button>
+            <button class="preview-close" id="previewClose" type="button" aria-label="关闭预览">关闭</button>
         </div>
 
         <div class="preview-stage" id="previewStage"></div>
@@ -87,7 +85,7 @@
             <span class="caption-title" id="captionTitle">记忆碎片</span>
             <span class="caption-index" id="captionIndex">1 / 118</span>
             <span class="caption-swipe" aria-hidden="true">
-                <i class="fa fa-exchange"></i> 滑动切换
+滑动切换
             </span>
         </div>
     </div>
