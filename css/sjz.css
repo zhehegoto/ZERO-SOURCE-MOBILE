@@ -418,8 +418,8 @@
 }
 
 .tz-img.broken::before {
-    content: '\f03e';
-    font-family: FontAwesome;
+    /* 图片加载失败时的占位符：用文字字形代替原来的 fa-image */
+    content: '\25EB';
     position: absolute;
     inset: 0;
     display: flex;

@@ -67,19 +67,11 @@
 }
 
 /* ------------------------------------------------------------
-   1b. 图标字体覆盖
-   自带的 font-awesome.min.css 依次引用 eot / woff2 / woff / ttf / svg，
-   但资源里只有 .woff 一个文件，其余会各产生一次 404。
-   这里用同一个 family 重新声明 src，只保留真实存在的 woff，
-   （后声明的 @font-face 生效）从而去掉无谓的失败请求。
+   1b. 图标
+   v1.1 起不再使用 Font Awesome 字体图标：那需要额外下载一个 css
+   加一个约 77 KB 的字体文件，而全站只用到 70 个图标。
+   现在改用 css/icons.css 里的「文字字形」，零下载、零 404。
    ------------------------------------------------------------ */
-@font-face {
-    font-family: 'FontAwesome';
-    src: url('../assets/font-awesome/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
 
 /* ------------------------------------------------------------
    2. 复位与基础
@@ -103,8 +95,11 @@ html {
 }
 
 body {
-    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC',
-        'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    /* 中文正文直接使用系统字体：不再下载任何中文字库。
+       与 PC 端 v4.8「中文改用系统字体」保持一致，
+       英文艺术字（Syne）与数字标题（Oswald）仍然保留网络字体。 */
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC',
+        'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
     background: var(--bg-base);
     color: var(--text-dark);
     line-height: 1.6;
@@ -399,36 +394,28 @@ body[data-tabbar='off'] .tabbar {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3px;
     position: relative;
     color: var(--text-light);
     transition: color 0.25s var(--ease-out);
-}
-
-.tab-item i {
-    font-size: 1.16rem;
-    line-height: 1;
-    transition: transform 0.3s var(--ease-spring);
+    /* v1.1 起标签栏只保留文字（图标已全部移除），
+       所以这里不再需要给图标预留上边距和间距 */
+    padding-top: 4px;
 }
 
 .tab-item span {
-    font-size: 0.64rem;
+    font-size: 0.78rem;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     white-space: nowrap;
 }
 
-/* 激活态：渐变文字 + 顶部指示球 */
+/* 激活态：渐变文字 + 顶部指示条 */
 .tab-item.active {
     color: transparent;
     background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-}
-
-.tab-item.active i {
-    transform: translateY(-2px) scale(1.1);
 }
 
 .tab-item.active::before {

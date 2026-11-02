@@ -191,24 +191,27 @@
     background: #9a9a9a;
 }
 
-/* 展开箭头 */
+/* 展开 / 收起（v1.1 去掉图标后改为文字按钮） */
 .cl-toggle {
     flex: 0 0 auto;
-    width: 30px;
-    height: 30px;
+    height: 26px;
+    padding: 0 9px;
     margin-top: 2px;
-    border-radius: 50%;
+    border-radius: 13px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.7rem;
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
     color: #fff;
     background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
-    transition: transform 0.3s var(--ease-spring);
+    transition: opacity 0.25s var(--ease-out);
 }
 
 .tl-item .cl-card.collapsed .cl-toggle {
-    transform: rotate(-90deg);
+    opacity: 0.82;
 }
 
 /* ---- 卡片内容 ---- */
@@ -261,12 +264,13 @@
 
 .cl-row-icon {
     flex: 0 0 auto;
-    width: 24px;
-    height: 24px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.86rem;
+    /* v1.1 去掉图标后，这里只保留一个彩色小圆点作为「变更类型」标识 */
+    width: 7px;
+    height: 7px;
+    margin-top: 0.62em;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 6px rgba(196, 77, 255, 0.28);
 }
 
 .cl-row-main {

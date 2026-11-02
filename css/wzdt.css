@@ -138,7 +138,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.95rem;
+    /* v1.1 去掉图标后按钮内是「说明 / 放大 / 缩小 / 复位」文字 */
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    white-space: nowrap;
     color: var(--text-mid);
     background: rgba(255, 255, 255, 0.72);
     border: 1px solid rgba(255, 255, 255, 0.85);
@@ -396,6 +400,20 @@
 .platform-card.disabled {
     opacity: 0.55;
     pointer-events: none;
+}
+
+/* 可点击复制的平台卡片（微信公众号）：复制成功的一次性反馈 */
+.platform-card[data-copy] {
+    cursor: pointer;
+}
+
+.platform-card.copied {
+    border-color: rgba(77, 255, 184, 0.6);
+}
+
+.platform-card.copied .platform-status.on {
+    color: #fff;
+    background: linear-gradient(135deg, var(--grad-green), #22c55e);
 }
 
 .platform-icon {

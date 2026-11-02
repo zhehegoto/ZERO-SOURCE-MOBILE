@@ -240,9 +240,8 @@
 
 .photo-shot.has-media.is-loading::after,
 .photo-shot.is-broken::after {
-    content: '\f03e';
-    /* fa-image */
-    font-family: 'FontAwesome';
+    /* 图片加载失败 / 加载中的占位符：用文字字形代替原来的 fa-image */
+    content: '\25EB';
     position: absolute;
     inset: 0;
     display: flex;
@@ -388,7 +387,11 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    font-size: 1.15rem;
+    /* v1.1 去掉图标后按钮内是「关闭」文字 */
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    white-space: nowrap;
     color: #fff;
     background: rgba(255, 255, 255, 0.13);
     border: 1px solid rgba(255, 255, 255, 0.22);
@@ -399,7 +402,7 @@
 }
 
 .preview-close:active {
-    transform: scale(0.9) rotate(90deg);
+    transform: scale(0.9);
     background: var(--grad-pink);
     border-color: transparent;
 }

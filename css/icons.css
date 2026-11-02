@@ -1,0 +1,81 @@
+/* ============================================================
+   零源机构 · 移动端 v1.1
+   icons.css — 图标关闭
+
+   原来全站图标依赖 Font Awesome：一个样式表 + 一个 77 KB 字体文件，
+   而实际只用到 68 个图标。移动端走 GitHub Pages，这一来一回很拖首屏。
+
+   v1.1 直接不要图标了：
+   · 图标本身全部隐藏，页面靠文字标签表达（标签本来就有）
+   · 只为放图标而存在的装饰容器（彩色小方块 / 圆形头像位）一并隐藏，
+     避免留下空白色块
+   · 少数「只有图标、没有文字」的按钮，已改为中文文字
+     （返回 / 更多 / 反馈 / 顶部 / 播放）
+   · 图片加载失败的占位符改用纯文字字形，不再依赖图标字体
+
+   想恢复某个图标，把对应 <i class="fa ..."> 写回来并删掉下面的
+   .fa 隐藏规则即可。
+   ============================================================ */
+
+/* ---------- 1. 图标全部隐藏 ---------- */
+.fa,
+.fa::before {
+    display: none !important;
+    content: none !important;
+}
+
+/* 加载中的旋转动画也不再需要 */
+.fa-spin {
+    animation: none !important;
+}
+
+/* ---------- 2. 只为图标而存在的容器 ---------- */
+/* 这些元素里除了一个 <i> 什么都没有，图标没了就是一块空白色块 */
+.li-icon,
+.info-icon,
+.stat-icon,
+.sr-feature-icon,
+.platform-icon,
+.contact-icon,
+.fw-msg-avatar,
+.fw-chat-avatar,
+.contact-copy,
+.li-arrow,
+.card-arrow {
+    display: none !important;
+}
+
+/* 注意：.sr-avatar 不能隐藏 —— 生日页的头像圆是它自己的
+   background-image（成员照片），图标只是叠在上面的装饰。 */
+
+/* ---------- 3. 原来只有图标的按钮：改用文字 ---------- */
+/* 文字尺寸按按钮大小收紧，保证「返回 / 更多 / 反馈 / 顶部」不溢出 */
+.icon-btn .ib-txt {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.fab .ib-txt {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1;
+}
+
+.back-top .ib-txt {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1;
+}
+
+/* 音乐按钮：播放 / 暂停 */
+.sr-music-btn .ib-txt {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    line-height: 1;
+}
