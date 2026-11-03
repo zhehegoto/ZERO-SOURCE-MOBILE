@@ -1,0 +1,52 @@
+.fa,
+.fa::before {
+    display: none !important;
+    content: none !important;
+}
+
+.fa-spin {
+    animation: none !important;
+}
+
+.li-icon,
+.info-icon,
+.stat-icon,
+.sr-feature-icon,
+.platform-icon,
+.contact-icon,
+.fw-msg-avatar,
+.fw-chat-avatar,
+.contact-copy,
+.li-arrow,
+.card-arrow {
+    display: none !important;
+}
+
+.icon-btn .ib-txt {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.fab .ib-txt {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1;
+}
+
+.back-top .ib-txt {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1;
+}
+
+.sr-music-btn .ib-txt {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    line-height: 1;
+}

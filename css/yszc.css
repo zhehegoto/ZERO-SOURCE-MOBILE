@@ -1,0 +1,208 @@
+.legal-hero {
+    padding: 6px 0 16px;
+    text-align: center;
+}
+
+.legal-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    border-radius: var(--r-pill);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    color: var(--grad-purple);
+    background: rgba(196, 77, 255, 0.09);
+    border: 1px solid rgba(196, 77, 255, 0.22);
+    margin-bottom: 12px;
+}
+
+.legal-title {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-weight: 400;
+    font-size: min(11vw, 2.1rem);
+    letter-spacing: 4px;
+    line-height: 1.25;
+    margin-bottom: 10px;
+}
+
+.legal-sub {
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: var(--text-light);
+}
+
+.toc-chips {
+
+    position: sticky;
+    top: calc(var(--appbar-h) + var(--sat));
+    z-index: 20;
+    padding-top: 8px;
+
+    background: linear-gradient(180deg, rgba(245, 240, 255, 0.99) 0%, rgba(245, 240, 255, 0.94) 90%, rgba(245, 240, 255, 0) 100%);
+}
+
+.toc-chips a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 36px;
+    padding: 8px 14px;
+    touch-action: manipulation;
+    transition: transform 0.22s var(--ease-spring), background 0.25s var(--ease-out), color 0.25s;
+}
+
+.toc-chips a .toc-n {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 800;
+    color: var(--grad-purple);
+    opacity: 0.75;
+}
+
+.toc-chips a:active {
+    transform: scale(0.94);
+}
+
+.toc-chips a.on {
+    box-shadow: 0 5px 16px rgba(196, 77, 255, 0.28);
+}
+
+.toc-chips a.on .toc-n {
+    color: rgba(255, 255, 255, 0.78);
+    opacity: 1;
+}
+
+.legal-card {
+    display: block;
+
+    scroll-margin-top: calc(var(--appbar-h) + var(--sat) + 60px);
+}
+
+.legal-card:last-child {
+    margin-bottom: 0;
+}
+
+.legal-card[open] {
+    box-shadow: var(--glass-shadow-lg);
+}
+
+.legal-card>summary {
+    background: rgba(255, 255, 255, 0.72);
+    transition: background 0.25s var(--ease-out);
+}
+
+.legal-card[open]>summary {
+    background: rgba(255, 255, 255, 0.88);
+    border-bottom: 1px solid rgba(196, 77, 255, 0.16);
+}
+
+.legal-card .acc-body {
+    font-size: 0.88rem;
+    line-height: 1.95;
+    color: var(--text-mid);
+    padding: 14px 16px 18px;
+}
+
+.legal-card .acc-body p+p {
+    margin-top: 12px;
+}
+
+.legal-card .acc-body ul {
+    margin: 10px 0 0;
+}
+
+.legal-card .acc-body li {
+    padding-left: 18px;
+    margin-bottom: 9px;
+    line-height: 1.85;
+}
+
+.legal-card .acc-body li::before {
+    top: 0.75em;
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
+}
+
+.legal-card .acc-body strong {
+    color: var(--text-dark);
+}
+
+.update-info {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: var(--r-card-sm);
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(196, 77, 255, 0.1));
+    border: 1px solid rgba(196, 77, 255, 0.18);
+    font-size: 0.8rem;
+    color: var(--text-mid);
+}
+
+.update-info p {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 0;
+    line-height: 1.7;
+}
+
+.update-info i {
+    color: var(--grad-purple);
+    margin-right: 2px;
+}
+
+.contact-card {
+    padding: 24px 18px;
+    text-align: center;
+    border-radius: var(--r-card);
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.14), rgba(196, 77, 255, 0.14));
+}
+
+.contact-icon {
+    width: 54px;
+    height: 54px;
+    margin: 0 auto 12px;
+    border-radius: 18px 24px 18px 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: #fff;
+    background: linear-gradient(135deg, var(--grad-pink), var(--grad-purple));
+    box-shadow: 0 8px 24px rgba(196, 77, 255, 0.3);
+}
+
+.contact-card h3 {
+    font-family: 'ZCOOL QingKe HuangYou', 'Syne', sans-serif;
+    font-weight: 400;
+    font-size: 1.22rem;
+    letter-spacing: 0.5px;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+}
+
+.contact-card p {
+    font-size: 0.82rem;
+    line-height: 1.85;
+    color: var(--text-mid);
+    margin-bottom: 16px;
+    text-align: left;
+    padding: 0 2px;
+}
+
+@media (max-width: 340px) {
+    .legal-title {
+        letter-spacing: 2px;
+    }
+
+    .legal-card .acc-body {
+        padding: 12px 13px 16px;
+    }
+
+    .toc-chips a {
+        padding: 8px 11px;
+        font-size: 0.72rem;
+    }
+}
