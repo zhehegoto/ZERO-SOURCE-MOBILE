@@ -1,0 +1,370 @@
+:root {
+    --fst-blur: 12px;
+    --fst-glass: rgba(255, 255, 255, 0.3);
+    --fst-glass-line: rgba(255, 255, 255, 0.5);
+    --fst-glass-shadow: 0 8px 26px rgba(120, 80, 200, 0.1);
+    --fst-shadow: 0 8px 26px rgba(120, 80, 200, 0.14);
+    --fst-shadow-lg: 0 14px 40px rgba(120, 80, 200, 0.2);
+    --r-organic: 20px 30px 22px 34px;
+    --fst-pad: clamp(18px, 5.4vw, 34px);
+}
+
+body {
+    overscroll-behavior-y: none;
+}
+
+.festival-page {
+    background: var(--fst-bg);
+    color: var(--fst-text);
+}
+
+.festival-page .app-bg {
+    background:
+        radial-gradient(ellipse 78% 52% at 12% 14%, var(--fst-glow-1), transparent 68%),
+        radial-gradient(ellipse 70% 48% at 88% 24%, var(--fst-glow-2), transparent 68%),
+        radial-gradient(ellipse 76% 44% at 48% 88%, var(--fst-glow-3), transparent 70%),
+        var(--fst-bg);
+}
+
+.festival-page .app-bg::after {
+    animation-duration: 34s;
+}
+
+#bgCanvas {
+    position: fixed;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: clamp(26px, 8vw, 50px);
+}
+
+.hero-tag {
+    display: inline-block;
+    max-width: 100%;
+    padding: 7px 20px;
+    border-radius: var(--r-pill);
+    font-size: clamp(0.72rem, 3vw, 0.9rem);
+    font-weight: 500;
+    letter-spacing: clamp(1.5px, 0.9vw, 3px);
+    color: var(--fst-text);
+    margin-bottom: clamp(14px, 4.5vw, 26px);
+}
+
+.hero-title {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: clamp(4px, 2vw, 12px);
+    margin-bottom: clamp(12px, 3.6vw, 20px);
+    line-height: 1.1;
+    font-weight: 800;
+}
+
+.hero-title .char {
+    display: inline-block;
+
+    font-size: clamp(2.6rem, 19vw, 5rem);
+    background: linear-gradient(135deg, var(--fst-grad-1), var(--fst-grad-2) 50%, var(--fst-grad-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--fst-grad-1);
+    animation: fstCharFloat 3.4s ease-in-out infinite;
+}
+
+.hero-title .char:nth-child(2) {
+    animation-delay: 0.22s;
+}
+
+.hero-title .char:nth-child(3) {
+    animation-delay: 0.44s;
+}
+
+.hero-title .char:nth-child(4) {
+    animation-delay: 0.66s;
+}
+
+@keyframes fstCharFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+.hero-sub {
+    font-size: clamp(0.74rem, 3.1vw, 1rem);
+    color: var(--fst-text-light);
+    letter-spacing: clamp(1px, 0.75vw, 4px);
+
+    margin-right: calc(clamp(1px, 0.75vw, 4px) * -1);
+    line-height: 1.7;
+}
+
+.liquid-glass {
+    position: relative;
+    background: var(--fst-glass);
+    -webkit-backdrop-filter: blur(var(--fst-blur)) saturate(1.4);
+    backdrop-filter: blur(var(--fst-blur)) saturate(1.4);
+    border: 1px solid var(--fst-glass-line);
+    border-radius: var(--r-organic);
+    box-shadow: var(--fst-glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    overflow: hidden;
+}
+
+.liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.12) 42%, transparent 62%, rgba(255, 255, 255, 0.32));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+@supports not ((-webkit-backdrop-filter: blur(4px)) or (backdrop-filter: blur(4px))) {
+
+    .liquid-glass,
+    .hero-tag {
+        background: rgba(255, 255, 255, 0.82);
+    }
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+    gap: clamp(13px, 3.6vw, 22px);
+    margin-bottom: clamp(26px, 7vw, 50px);
+}
+
+.card {
+    padding: clamp(20px, 5.5vw, 30px) clamp(15px, 4.4vw, 24px);
+    text-align: center;
+    transition: transform 0.3s var(--ease-spring);
+}
+
+.card:active {
+    transform: scale(0.975);
+}
+
+.card-icon {
+    display: inline-block;
+    font-size: clamp(2.1rem, 9vw, 2.8rem);
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+.card-title {
+    font-size: clamp(1.02rem, 4.2vw, 1.22rem);
+    font-weight: 700;
+    color: var(--fst-text);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.card-desc {
+    font-size: clamp(0.79rem, 3.3vw, 0.9rem);
+    line-height: 1.75;
+    color: var(--fst-text-light);
+}
+
+.blessing-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+    gap: clamp(11px, 3.2vw, 20px);
+}
+
+.blessing-item {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 3.6vw, 18px);
+    padding: clamp(17px, 4.8vw, 26px) clamp(15px, 4.2vw, 22px);
+    transition: transform 0.3s var(--ease-spring);
+}
+
+.blessing-item:active {
+    transform: scale(0.975);
+}
+
+.b-num {
+    flex: 0 0 auto;
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.35rem, 6vw, 2rem);
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--fst-grad-1), var(--fst-grad-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--fst-grad-1);
+    opacity: 0.75;
+}
+
+.b-text {
+    font-size: clamp(0.94rem, 3.9vw, 1.1rem);
+    font-weight: 600;
+    color: var(--fst-text);
+    letter-spacing: clamp(1px, 0.5vw, 2px);
+    min-width: 0;
+    overflow-wrap: break-word;
+}
+
+.liquid-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 12px clamp(18px, 6vw, 30px);
+    border-radius: var(--r-pill);
+    font-family: inherit;
+    font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--fst-text);
+    background: rgba(255, 255, 255, 0.44);
+    border: 1px solid rgba(255, 255, 255, 0.66);
+    box-shadow: 0 4px 14px rgba(120, 80, 200, 0.1);
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    transition: transform 0.24s var(--ease-spring), box-shadow 0.24s, background 0.24s;
+}
+
+.liquid-btn:active {
+    transform: scale(0.95);
+}
+
+.liquid-btn.primary {
+    color: #fff;
+    background: linear-gradient(135deg, var(--fst-grad-1), var(--fst-grad-2));
+    border-color: transparent;
+    box-shadow: 0 6px 22px var(--fst-shadow);
+}
+
+.liquid-btn.ghost {
+    background: rgba(255, 255, 255, 0.42);
+    border-color: rgba(255, 255, 255, 0.68);
+    color: var(--fst-text);
+}
+
+.liquid-btn.sm {
+    min-height: 44px;
+    padding: 10px 20px;
+    font-size: 0.82rem;
+}
+
+.fst-in {
+    animation: fstIn 0.55s var(--ease-out) both;
+}
+
+.fst-in.d1 {
+    animation-delay: 0.08s;
+}
+
+.fst-in.d2 {
+    animation-delay: 0.16s;
+}
+
+.fst-in.d3 {
+    animation-delay: 0.24s;
+}
+
+.fst-in.d4 {
+    animation-delay: 0.32s;
+}
+
+@keyframes fstIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes fstFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(9px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.festival-back {
+    margin-top: clamp(26px, 7vw, 44px);
+    text-align: center;
+}
+
+.festival-back .fb-hint {
+    font-size: clamp(0.76rem, 3.2vw, 0.86rem);
+    color: var(--fst-text-light);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 340px) {
+    .hero-title .char {
+        font-size: clamp(2.3rem, 18vw, 2.9rem);
+    }
+
+    .hero-tag {
+        padding: 6px 14px;
+    }
+
+    .blessing-item {
+        padding: 14px 13px;
+        gap: 10px;
+    }
+
+    .liquid-btn {
+        padding: 11px 16px;
+    }
+}
+
+@media (max-height: 460px) and (orientation: landscape) {
+    .hero {
+        margin-bottom: 22px;
+    }
+
+    .hero-title .char {
+        font-size: min(15vh, 4.6rem);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-title .char {
+        animation: none;
+    }
+
+    .fst-in {
+        animation: none;
+    }
+}
